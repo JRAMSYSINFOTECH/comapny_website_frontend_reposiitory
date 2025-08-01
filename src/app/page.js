@@ -5,6 +5,7 @@ export default function Home() {
     <div>
       <h1 className="text-4xl font-bold">JRAMSYS INFOTECH</h1>
       <h1>Navbar</h1>
+      <h1>About us</h1>
     </div>
   );
 }
