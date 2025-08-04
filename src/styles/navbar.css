@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-link {
+  @apply px-4 py-2 font-medium text-gray-700 transition duration-200 ease-in-out hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600 hover:text-white rounded;
+}
+
+.nav-button {
+  @apply bg-gradient-to-r from-green-500 to-green-600 text-white font-bold py-2 px-4 rounded shadow-md hover:brightness-110;
+}
