@@ -1,0 +1,16 @@
+/* footer.css */
+
+/* Override footer background */
+footer {
+  background-color: #f9f9f9;
+}
+
+/* Style footer links */
+footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #0056b3;
+}
