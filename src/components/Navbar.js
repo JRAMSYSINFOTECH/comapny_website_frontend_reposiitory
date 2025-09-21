@@ -1,7 +1,5 @@
-'use client';
-import React from 'react';
+// src/components/Navbar.js
 import "../styles/navbar.css";
-
 
 export default function Navbar() {
   return (
@@ -36,12 +34,9 @@ export default function Navbar() {
               SOLUTIONS <span className="ml-1">▼</span>
             </a>
             <ul className="absolute left-0 hidden group-hover:block bg-white shadow-lg py-2 mt-1 w-48 z-10 text-sm rounded">
-              {['SMART SIGNALING', 'SMART BUILDINGS', 'SMART CITY SOLUTIONS','IOT SOLUTIONS',].map((item) => (
+              {["SMART SIGNALING","SMART BUILDINGS","SMART CITY SOLUTIONS","IOT SOLUTIONS"].map(item => (
                 <li key={item}>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gradient-to-r hover:from-green-100 hover:to-green-200"
-                  >
+                  <a href="#" className="block px-4 py-2 hover:bg-gradient-to-r hover:from-green-100 hover:to-green-200">
                     {item}
                   </a>
                 </li>
@@ -57,12 +52,9 @@ export default function Navbar() {
               SERVICES <span className="ml-1">▼</span>
             </a>
             <ul className="absolute left-0 hidden group-hover:block bg-white shadow-lg py-2 mt-1 w-50 z-20 text-sm rounded">
-              {['IOT Services', 'CUSTOMER SERVICES', 'PRODUCT DEVELOPMENT SERVICES'].map((item) => (
+              {["IOT Services","CUSTOMER SERVICES","PRODUCT DEVELOPMENT SERVICES"].map(item => (
                 <li key={item}>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gradient-to-r hover:from-green-100 hover:to-green-200"
-                  >
+                  <a href="#" className="block px-4 py-2 hover:bg-gradient-to-r hover:from-green-100 hover:to-green-200">
                     {item}
                   </a>
                 </li>
@@ -70,13 +62,7 @@ export default function Navbar() {
             </ul>
           </li>
 
-          {[
-            'CUSTOMERS',
-            'SUPPORT',
-            'NEWS & EVENTS',
-            'CAREERS',
-            'CONTACT'
-          ].map((item) => (
+          {["CUSTOMERS","SUPPORT","NEWS & EVENTS","CAREERS","CONTACT"].map(item => (
             <li key={item}>
               <a
                 href="#"
@@ -85,7 +71,6 @@ export default function Navbar() {
                 {item}
               </a>
             </li>
-            
           ))}
         </ul>
       </nav>
