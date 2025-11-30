@@ -196,17 +196,16 @@ export default function ComingSoonPage() {
                   padding: "10px 14px",
                   borderRadius: "999px",
                   background:
-                    "radial-gradient(circle at 0 0, rgba(45,212,191,0.18), transparent 60%)",
-                  backdropFilter: "blur(6px)",
-                  boxShadow: "0 0 0 1px rgba(255,255,255,0.02)",
+                    "radial-gradient(circle at 0 0, rgba(242, 245, 245, 1))",
+                  boxShadow: "0 0 0 1px rgba(26, 23, 23, 1)",
                 }}
               >
                 <Image
                   src="/JRAMSYS_logo-removebg-preview.png"
                   alt="JRAMSYS Infotech Logo"
-                  width={160}
-                  height={40}
-                  className="h-auto w-[120px] md:w-[160px]"
+                  width={500}
+                  height={55}
+                  className="h-auto w-auto md:w-[160px]"
                   priority
                 />
               </div>
