@@ -6,7 +6,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="w-screen overflow-none bg-gray-100">
         {children}
       </body>
     </html>
