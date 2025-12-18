@@ -1,10 +1,9 @@
-'use client';
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import "../styles/navbar.css";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -12,10 +11,9 @@ export default function Navbar() {
 
   const companyDropdown = [
     { label: "About Us", href: "/about" },
-    { label: "Our Team", href: "/about/team" }
+    { label: "Our Team", href: "/about/team" },
   ];
 
-  // Updated: now each has a proper label and exact route pathname!
   const solutionsDropdown = [
     { label: "Contextual QR Code Solutions", href: "/solutions/contextual-qr" },
     { label: "Smart Waste Management", href: "/solutions/smart-waste" },
@@ -27,52 +25,77 @@ export default function Navbar() {
   ];
 
   const servicesDropdown = [
-  { label: "IoT Services", href: "/services/iot-services" },
-  { label: "Customer Services", href: "/services/customer-services" },
-  { label: "Product Development Services", href: "/services/product-development" }
+    { label: "IoT Services", href: "/services/iot-services" },
+    { label: "Customer Services", href: "/services/customer-services" },
+    { label: "Product Development Services", href: "/services/product-development" },
   ];
 
-  const getLinkClass = (path) => {
-    const active = pathname === path || pathname.startsWith(path + "/")
-      ? "text-[#0F3B57]"
-      : "text-[#222A35]";
-    return active;
-  };
+  const isActive = (path) =>
+    pathname === path || pathname.startsWith(path + "/");
 
-  const dropdownOverlayClass = "absolute left-0 bg-white shadow-lg py-2 mt-1 w-56 z-10 text-sm rounded";
   const dropdownVariants = {
     hidden: { opacity: 0, y: -8 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
-    exit: { opacity: 0, y: -8, transition: { duration: 0.2 } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
+    exit: { opacity: 0, y: -8, transition: { duration: 0.15 } },
   };
 
+  const linkClass = (path) =>
+    `relative px-1 pb-1 text-[15px] font-medium transition-colors duration-300
+     ${isActive(path) ? "text-[#0F3B57]" : "text-[#222A35] hover:text-[#0F3B57]"}`;
+
   return (
-    <header className="w-full shadow-md bg-white relative z-50">
-      <nav className="flex items-center justify-between px-8 py-3">
-        <div className="flex items-center">
-          <Image src="/JRAMSYS_logo-removebg-preview.png" alt="JRAMSYS Logo" width={160} height={40} priority />
-        </div>
-        <ul className="flex items-center space-x-6">
+    <header className="sticky top-0 z-50 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
+      <nav className="flex items-center justify-between px-10 py-4">
+
+        {/* LOGO */}
+        <Link href="/" className="flex items-center h-12">
+          <Image
+            src="/JRAMSYS_logo-removebg-preview.png"
+            alt="JRAMSYS Logo"
+            width={160}
+            height={40}
+            priority
+          />
+        </Link>
+
+        {/* NAV LINKS */}
+        <ul className="flex items-center space-x-8">
+
           <li>
-            <Link href="/" className={`nav-link ${getLinkClass("/")}`}>
-              <span>Home</span>
+            <Link href="/" className={linkClass("/")}>
+              Home
+              <span
+                className={`absolute left-0 -bottom-1 h-[2px] bg-[#0F3B57] transition-all duration-300
+                ${isActive("/") ? "w-full" : "w-0 group-hover:w-full"}`}
+              />
             </Link>
           </li>
-          {/* Company Dropdown */}
+
+          {/* COMPANY */}
           <li
             className="relative"
             onMouseEnter={() => setOpenMenu("company")}
             onMouseLeave={() => setOpenMenu(null)}
           >
-            <button className={`nav-link ${getLinkClass("/about")}`}>
-              <span>Our Company <span className="ml-1">▼</span></span>
+            <button className={linkClass("/about")}>
+              Our Company <span className="ml-1">▼</span>
             </button>
+
             <AnimatePresence>
               {openMenu === "company" && (
-                <motion.ul className={dropdownOverlayClass} initial="hidden" animate="visible" exit="exit" variants={dropdownVariants}>
-                  {companyDropdown.map(item => (
+                <motion.ul
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className="absolute left-0 top-[130%] w-56 rounded-lg bg-white shadow-xl py-2"
+                >
+                  {companyDropdown.map((item) => (
                     <li key={item.label}>
-                      <Link href={item.href} className="dropdown-link">
+                      <Link
+                        href={item.href}
+                        className="block px-4 py-2 text-sm text-[#222A35] hover:bg-[#F2F6F9] hover:text-[#0F3B57]"
+                      >
                         {item.label}
                       </Link>
                     </li>
@@ -81,21 +104,32 @@ export default function Navbar() {
               )}
             </AnimatePresence>
           </li>
-          {/* Solutions Dropdown */}
+
+          {/* SOLUTIONS */}
           <li
             className="relative"
             onMouseEnter={() => setOpenMenu("solutions")}
             onMouseLeave={() => setOpenMenu(null)}
           >
-            <button className={`nav-link ${getLinkClass("/solutions")}`}>
-              <span>Solutions <span className="ml-1">▼</span></span>
+            <button className={linkClass("/solutions")}>
+              Solutions <span className="ml-1">▼</span>
             </button>
+
             <AnimatePresence>
               {openMenu === "solutions" && (
-                <motion.ul className={dropdownOverlayClass} initial="hidden" animate="visible" exit="exit" variants={dropdownVariants}>
-                  {solutionsDropdown.map(item => (
+                <motion.ul
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className="absolute left-0 top-[130%] w-72 rounded-lg bg-white shadow-xl py-2"
+                >
+                  {solutionsDropdown.map((item) => (
                     <li key={item.label}>
-                      <Link href={item.href} className="dropdown-link">
+                      <Link
+                        href={item.href}
+                        className="block px-4 py-2 text-sm text-[#222A35] hover:bg-[#F2F6F9] hover:text-[#0F3B57]"
+                      >
                         {item.label}
                       </Link>
                     </li>
@@ -104,22 +138,32 @@ export default function Navbar() {
               )}
             </AnimatePresence>
           </li>
-          {/* Services Dropdown */}
+
+          {/* SERVICES */}
           <li
             className="relative"
             onMouseEnter={() => setOpenMenu("services")}
             onMouseLeave={() => setOpenMenu(null)}
           >
-            <button className={`nav-link ${getLinkClass("/services")}`}>
-              <span>Services <span className="ml-1">▼</span></span>
+            <button className={linkClass("/services")}>
+              Services <span className="ml-1">▼</span>
             </button>
+
             <AnimatePresence>
               {openMenu === "services" && (
-                <motion.ul className={dropdownOverlayClass} initial="hidden" animate="visible" exit="exit" variants={dropdownVariants}>
-                  {servicesDropdown.map(item => (
+                <motion.ul
+                  variants={dropdownVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  className="absolute left-0 top-[130%] w-64 rounded-lg bg-white shadow-xl py-2"
+                >
+                  {servicesDropdown.map((item) => (
                     <li key={item.label}>
-                      {/* Update these hrefs when you create service pages */}
-                      <Link href={item.href} className="dropdown-link">
+                      <Link
+                        href={item.href}
+                        className="block px-4 py-2 text-sm text-[#222A35] hover:bg-[#F2F6F9] hover:text-[#0F3B57]"
+                      >
                         {item.label}
                       </Link>
                     </li>
@@ -128,14 +172,19 @@ export default function Navbar() {
               )}
             </AnimatePresence>
           </li>
-          {/* Other pages */}
-          {["customers", "support", "news", "careers", "contact"].map((route, idx) => (
-            <li key={idx}>
-              <Link href={`/${route}`} className={`nav-link ${getLinkClass(`/${route}`)}`}>
-                <span>{route.charAt(0).toUpperCase() + route.slice(1)}</span>
-              </Link>
-            </li>
-          ))}
+
+          <li>
+            <Link href="/careers" className={linkClass("/careers")}>
+              Careers
+            </Link>
+          </li>
+
+          <li>
+            <Link href="/contact" className={linkClass("/contact")}>
+              Contact
+            </Link>
+          </li>
+
         </ul>
       </nav>
     </header>

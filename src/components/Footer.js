@@ -15,7 +15,7 @@ export default function Footer() {
           {/* Logo */}
           <div className="bg-white rounded-lg p-4 w-fit">
             <Image
-              src="/JRAMSYS-logo.png"
+              src="/JRAMSYS_logo-removebg-preview.png"
               alt="JRAMSYS Infotech"
               width={150}
               height={60}
