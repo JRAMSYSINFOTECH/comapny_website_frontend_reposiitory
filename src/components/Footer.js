@@ -24,16 +24,7 @@ export default function Footer() {
             />
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="text-lg font-semibold mb-3">Contact Us</h4>
-            <a
-              href="mailto:officejram@gmail.com"
-              className="text-sm text-[#7DD3E8] hover:text-white transition"
-            >
-              officejram@gmail.com
-            </a>
-          </div>
+          
 
           {/* Services */}
           <div>
@@ -78,6 +69,17 @@ export default function Footer() {
               CV1 5FB<br />
               United Kingdom
             </p>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="text-lg font-semibold mb-3">Contact Us</h4>
+            <a
+              href="mailto:officejram@gmail.com"
+              className="text-sm text-[#7DD3E8] hover:text-white transition"
+            >
+              officejram@gmail.com
+            </a>
           </div>
 
         </div>

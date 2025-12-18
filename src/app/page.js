@@ -561,7 +561,7 @@ export default function HomePage() {
             Let's build something extraordinary together. Our team is ready to bring your vision to life.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          {/* <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <button 
               className="group relative px-14 py-6 text-2xl font-bold text-white rounded-full overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300"
               style={{ background: logoGreen }}
@@ -576,7 +576,7 @@ export default function HomePage() {
             >
               View Our Work
             </button>
-          </div>
+          </div> */}
 
           <div className="mt-16 flex items-center justify-center gap-12 text-lg text-gray-600">
             <div className="flex items-center gap-3">
@@ -590,7 +590,7 @@ export default function HomePage() {
               <svg className="w-8 h-8" style={{ color: logoGreen }} fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
               </svg>
-              <span className="font-semibold">Coventry, UK</span>
+              <span className="font-semibold">Priory Street, Coventry CV1 5FB, UK</span>
             </div>
           </div>
         </motion.div>

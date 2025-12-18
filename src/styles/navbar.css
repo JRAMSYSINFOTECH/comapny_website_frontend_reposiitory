@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+/* /* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 @import "tailwindcss";
 
 @tailwind base;
@@ -6,25 +6,25 @@
 @tailwind utilities;
 
 /* Main nav links - bold, black, exact logo green on hover */
-.nav-link {
+/* .nav-link {
   @apply relative px-4 py-2 text-[16px] font-bold transition-colors duration-200 rounded bg-transparent outline-none;
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
   color: #222A35;
   letter-spacing: 0.02em;
-}
-
+} */
+/* 
 .nav-link:hover,
 .nav-link:focus-visible {
   color: #19B49A !important; /* Exact logo green */
-}
 
-.nav-link span {
+
+/* .nav-link span {
   position: relative;
   z-index: 1;
-}
+} */
 
 /* Dropdown submenu links - bold, black, exact green on hover, NO bg */
-.dropdown-link {
+/* .dropdown-link {
   @apply block px-4 py-2 text-[15px] font-bold transition-colors duration-200 rounded;
   font-family: 'Montserrat', Arial, Helvetica, sans-serif;
   color: #222A35;
@@ -35,4 +35,3 @@
 .dropdown-link:focus-visible {
   color: #19B49A !important; /* Exact logo green */
   /* background-color removed! */
-}
