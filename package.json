@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "d3-geo": "^3.1.1",
     "framer-motion": "^11.18.2",
     "next": "^15.5.9",
@@ -17,12 +16,6 @@
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
     "topojson-client": "^3.1.0"
-=======
-    "next": "15.4.5",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "sweetalert2": "^11.26.10"
->>>>>>> 14e68cedbfa6dfeeb259b39fbecb18b82d2a0efd
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
