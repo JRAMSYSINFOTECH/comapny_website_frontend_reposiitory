@@ -111,9 +111,10 @@ export default function Navbar() {
             onMouseEnter={() => setOpenMenu("solutions")}
             onMouseLeave={() => setOpenMenu(null)}
           >
-            <button className={linkClass("/solutions")}>
-              Solutions <span className="ml-1">▼</span>
-            </button>
+            <Link href="/solutions" className={linkClass("/solutions")}>
+            Solutions <span className="ml-1">▼</span>
+            </Link>
+
 
             <AnimatePresence>
               {openMenu === "solutions" && (

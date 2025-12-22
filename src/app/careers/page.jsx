@@ -1,129 +1,94 @@
 "use client";
 import React, { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 
-// Brand color
-const mainGreen = "#19B49A";
-const lightGreenBg = "#ECFDF5";
+const brandTeal = "#1B5B6F";
+const brandLight = "#2D8BA3";
 
 // ---- FilterSection ----
 function FilterSection({ title, children, defaultOpen = true }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="mb-4">
+    <div className="mb-6">
       <div
         onClick={() => setOpen(o => !o)}
-        className="flex items-center justify-between cursor-pointer select-none"
+        className="flex items-center justify-between cursor-pointer select-none py-2"
       >
-        <h3 className="text-lg font-semibold" style={{ color: mainGreen }}>{title}</h3>
+        <h3 className="text-base font-bold" style={{ color: brandTeal }}>{title}</h3>
         <svg
           className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180" : "rotate-0"}`}
-          style={{ color: mainGreen }}
+          style={{ color: brandTeal }}
           fill="none"
           stroke="currentColor"
-          strokeWidth="2.2"
+          strokeWidth="2.5"
           viewBox="0 0 24 24"
         >
           <path d="M19 9l-7 7-7-7" />
         </svg>
       </div>
-      {open && <div className="mt-2">{children}</div>}
-    </div>
-  );
-}
-
-// ---- TopRightBarInline ----
-function TopRightBarInline({ savedJobs, accessApplications, openSaved, openApps }) {
-  return (
-    <div className="flex gap-4 items-center ml-auto">
-      <button
-        className="bg-white border-2 rounded-full px-4 py-2 font-semibold flex items-center shadow"
-        style={{ borderColor: mainGreen, color: mainGreen }}
-        onClick={openSaved}
-      >
-        <svg className="w-6 h-6 mr-1" style={{ color: mainGreen }} fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-            2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
-            C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
-            c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
-        Saved Jobs ({savedJobs.length})
-      </button>
-      <button
-        className="bg-white border-2 rounded-full px-4 py-2 font-semibold flex items-center shadow"
-        style={{ borderColor: mainGreen, color: mainGreen }}
-        onClick={openApps}
-      >
-        <svg className="w-6 h-6 mr-1" style={{ color: mainGreen }} fill="none" stroke="currentColor" strokeWidth={2.0} viewBox="0 0 24 24">
-          <path d="M16 2H8c-1.1 0-2 .9-2 2v16l6-3 6 3V4c0-1.1-.9-2-2-2z"/>
-        </svg>
-        Access Applications ({accessApplications.length})
-      </button>
+      {open && <div className="mt-3 space-y-2">{children}</div>}
     </div>
   );
 }
 
 // ---- SaveHeart ----
 function SaveHeart({ saved, onSave }) {
-  const [hovered, setHovered] = useState(false);
   return (
-    <div className="relative flex flex-col items-center">
-      <button
-        onClick={onSave}
-        aria-label={saved ? "Saved" : "Save"}
-        className="p-1"
-        style={{ outline: "none", background: "transparent", border: "none" }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {saved ? (
-          <svg className="w-7 h-7" style={{ color: mainGreen }} fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
-              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
-              C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
-              c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-          </svg>
-        ) : (
-          <svg className="w-7 h-7" style={{ color: mainGreen }} fill="none" stroke="currentColor" strokeWidth="2.0" viewBox="0 0 24 24">
-            <path d="M12.1 18.55l-.1.1-.11-.11C7.14 14.24 4 11.39 4 8.5A4.5 4.5 0 0 1 8.5 4 5.54 5.54 0 0 1 12 6.09 5.54 5.54 0 0 1 15.5 4 4.5 4.5 0 0 1 20 8.5c0 2.89-3.14 5.74-7.9 10.05z"/>
-          </svg>
-        )}
-      </button>
-      <div className="h-5">
-        {saved
-          ? <span className="block mt-1 text-xs select-none" style={{ color: mainGreen }}>Saved</span>
-          : hovered && <span className="block mt-1 text-xs select-none" style={{ color: mainGreen }}>Save</span>
-        }
-      </div>
-    </div>
+    <button
+      onClick={onSave}
+      aria-label={saved ? "Saved" : "Save"}
+      className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+    >
+      {saved ? (
+        <svg className="w-6 h-6" style={{ color: brandTeal }} fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+      ) : (
+        <svg className="w-6 h-6" style={{ color: brandTeal }} fill="none" stroke="currentColor" strokeWidth="2.0" viewBox="0 0 24 24">
+          <path d="M12.1 18.55l-.1.1-.11-.11C7.14 14.24 4 11.39 4 8.5A4.5 4.5 0 0 1 8.5 4 5.54 5.54 0 0 1 12 6.09 5.54 5.54 0 0 1 15.5 4 4.5 4.5 0 0 1 20 8.5c0 2.89-3.14 5.74-7.9 10.05z"/>
+        </svg>
+      )}
+    </button>
   );
 }
 
 // ---- JobCard ----
 function JobCard({ title, location, type, experience, onViewDetails, saved, onToggleSave }) {
   return (
-    <div className="relative bg-white rounded-lg shadow p-4 mb-4 border border-gray-200 transition-all duration-300 text-gray-900 hover:shadow-2xl hover:-translate-y-1 group"
-         style={{ borderColor: saved ? mainGreen : "#E5E7EB" }}>
-      <div className="absolute top-2 right-2 flex gap-2 z-20">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-white rounded-2xl border-2 border-gray-200 p-6 hover:border-cyan-400 hover:shadow-xl transition-all group"
+    >
+      <div className="flex justify-between items-start mb-4">
+        <div className="flex-1">
+          <h3 className="text-2xl font-bold mb-2 group-hover:text-cyan-600 transition-colors" style={{ color: brandTeal }}>
+            {title}
+          </h3>
+          <div className="flex flex-wrap gap-3 text-sm text-gray-600">
+            <span className="flex items-center gap-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              {location}
+            </span>
+            <span>•</span>
+            <span>{type}</span>
+            <span>•</span>
+            <span>{experience}+ years exp</span>
+          </div>
+        </div>
         <SaveHeart saved={saved} onSave={onToggleSave} />
       </div>
-      <div>
-        <div className="text-xl md:text-2xl font-bold mb-2" style={{ color: mainGreen }}>{title}</div>
-        <div className="mb-2 text-gray-600 text-base flex gap-3 flex-wrap">
-          <span>{location}</span>
-          <span>|</span>
-          <span>{type}</span>
-          <span>|</span>
-          <span>Experience: {experience} years</span>
-        </div>
-        <button
-          className="mt-3 rounded py-1 px-4 font-semibold transition"
-          style={{ background: mainGreen, color: "white" }}
-          onClick={onViewDetails}
-        >
-          View Details
-        </button>
-      </div>
-    </div>
+      <button
+        className="px-6 py-2 rounded-xl font-semibold transition-all hover:scale-105"
+        style={{ backgroundColor: brandLight, color: "white" }}
+        onClick={onViewDetails}
+      >
+        View Details
+      </button>
+    </motion.div>
   );
 }
 
@@ -131,14 +96,30 @@ function JobCard({ title, location, type, experience, onViewDetails, saved, onTo
 function JobAccordion({ sections }) {
   const [openIndex, setOpenIndex] = useState(null);
   return (
-    <div className="mb-4">
+    <div className="space-y-3">
       {sections.map((section, idx) => (
-        <div key={section.title}>
-          <button className="w-full flex justify-between items-center py-2 border-b border-gray-300 text-left transition" onClick={() => setOpenIndex(openIndex === idx ? null : idx)}>
-            <span className="font-bold" style={{ color: mainGreen }}>{section.title}</span>
-            <svg className={`w-5 h-5 transition-transform duration-200 ${openIndex === idx ? "rotate-180" : ""}`} style={{ color: mainGreen }} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+        <div key={section.title} className="border-2 border-gray-200 rounded-xl overflow-hidden">
+          <button
+            className="w-full flex justify-between items-center p-4 text-left hover:bg-gray-50 transition-colors"
+            onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+          >
+            <span className="font-bold" style={{ color: brandTeal }}>{section.title}</span>
+            <svg
+              className={`w-5 h-5 transition-transform duration-200 ${openIndex === idx ? "rotate-180" : ""}`}
+              style={{ color: brandTeal }}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19 9l-7 7-7-7"/>
+            </svg>
           </button>
-          {openIndex === idx && <div className="pl-2 py-2" style={{ background: lightGreenBg, color: "#225046" }}>{section.content}</div>}
+          {openIndex === idx && (
+            <div className="p-4 bg-gray-50 text-gray-700 border-t-2 border-gray-200">
+              {section.content}
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -148,24 +129,53 @@ function JobAccordion({ sections }) {
 // ---- JobsPopup ----
 function JobsPopup({ title, jobs, onClose, onOpenJob }) {
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex justify-center items-start pt-24">
-      <div className="bg-white rounded shadow p-6 w-full max-w-2xl relative">
-        <h2 className="text-2xl font-bold mb-5" style={{ color: mainGreen }}>{title}</h2>
-        <button onClick={onClose} className="absolute top-2 right-4 text-lg font-bold" style={{ color: mainGreen }}>×</button>
-        <div className="max-h-[50vh] overflow-y-auto flex flex-col gap-3">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex justify-center items-center p-6">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white rounded-3xl shadow-2xl w-full max-w-3xl relative max-h-[80vh] flex flex-col"
+      >
+        <div className="p-6 border-b border-gray-200">
+          <h2 className="text-3xl font-bold" style={{ color: brandTeal }}>{title}</h2>
+          <button
+            onClick={onClose}
+            className="absolute top-6 right-6 w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors"
+          >
+            <svg className="w-6 h-6" style={{ color: brandTeal }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6">
           {jobs.length === 0 ? (
-            <div className="text-gray-400 text-center py-12">No jobs yet.</div>
+            <div className="text-center py-20 text-gray-400">
+              <svg className="w-20 h-20 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+              </svg>
+              <p className="text-lg">No jobs yet</p>
+            </div>
           ) : (
-            jobs.map(j => (
-              <div key={j.id} className="flex items-center gap-4 p-3 border-b last:border-b-0 cursor-pointer hover:bg-[#ECFDF5]" onClick={() => onOpenJob(j)}>
-                <div className="font-semibold">{j.title}</div>
-                <div className="flex-grow text-xs text-gray-500">{j.location} | {j.type}</div>
-                <div className="text-xs">Exp: {j.experience} yrs</div>
-              </div>
-            ))
+            <div className="space-y-3">
+              {jobs.map(j => (
+                <div
+                  key={j.id}
+                  className="p-4 border-2 border-gray-200 rounded-xl cursor-pointer hover:border-cyan-400 hover:shadow-lg transition-all"
+                  onClick={() => onOpenJob(j)}
+                >
+                  <h4 className="font-bold text-lg mb-2" style={{ color: brandTeal }}>{j.title}</h4>
+                  <div className="flex flex-wrap gap-2 text-sm text-gray-600">
+                    <span>{j.location}</span>
+                    <span>•</span>
+                    <span>{j.type}</span>
+                    <span>•</span>
+                    <span>{j.experience}+ years</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -173,53 +183,100 @@ function JobsPopup({ title, jobs, onClose, onOpenJob }) {
 // ---- JobFullDetails ----
 function JobFullDetails({ job, onClose, onToggleSave, saved, onApply, isApplied, similarJobs, onOpenJob }) {
   return (
-    <div className="fixed inset-0 z-50 flex bg-black bg-opacity-80 animate-slide-in-right">
-      <div className="flex-1 flex justify-center overflow-auto bg-white relative">
-        <button onClick={onClose} aria-label="Close" className="absolute top-3 left-3 text-3xl font-bold rounded-full px-2.5 py-1 shadow hover:bg-green-100 z-50" style={{ color: mainGreen, background: lightGreenBg }}>×</button>
-        <div className="absolute top-4 right-6 flex gap-5 z-30 bg-white p-1 rounded shadow">
+    <div className="fixed inset-0 z-50 flex bg-black bg-opacity-70">
+      <motion.div
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
+        transition={{ type: "spring", damping: 25 }}
+        className="flex-1 bg-white overflow-auto relative"
+      >
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center z-10">
+          <button
+            onClick={onClose}
+            className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors"
+            style={{ color: brandTeal }}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
           <SaveHeart saved={saved} onSave={onToggleSave} />
         </div>
-        <div className="w-full max-w-4xl min-h-screen px-8 pt-8 pb-4">
-          <h1 className="text-2xl sm:text-4xl font-bold mb-2" style={{ color: mainGreen }}>{job.title}</h1>
-          <div className="mb-2 text-gray-700 flex flex-wrap gap-4"><span>{job.location}</span><span>|</span><span>{job.type}</span><span>|</span><span>Experience: {job.experience} years</span></div>
-          <div className="mb-4 text-sm" style={{ color: mainGreen }}><span>Job No. {job.jobNumber}</span><span>{job.jobName ? ` | ${job.jobName}` : ""}</span></div>
-          <button disabled={isApplied} onClick={onApply}
-            className={`mb-8 rounded px-6 py-2 font-semibold transition${isApplied ? "" : ""}`}
+
+        <div className="max-w-4xl mx-auto px-6 py-8">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: brandTeal }}>
+            {job.title}
+          </h1>
+          
+          <div className="flex flex-wrap gap-4 text-gray-600 mb-4">
+            <span className="flex items-center gap-2">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              </svg>
+              {job.location}
+            </span>
+            <span>•</span>
+            <span>{job.type}</span>
+            <span>•</span>
+            <span>{job.experience}+ years experience</span>
+          </div>
+
+          <div className="text-sm mb-6" style={{ color: brandLight }}>
+            Job No. {job.jobNumber} {job.jobName && `| ${job.jobName}`}
+          </div>
+
+          <button
+            disabled={isApplied}
+            onClick={onApply}
+            className="px-8 py-3 rounded-xl font-bold text-lg transition-all mb-8"
             style={{
-              background: mainGreen,
-              opacity: isApplied ? .7 : 1,
+              backgroundColor: brandTeal,
+              opacity: isApplied ? 0.6 : 1,
               color: "#fff"
-            }}>
-            {isApplied ? "Application Sent" : "Apply for this job"}
+            }}
+          >
+            {isApplied ? "✓ Application Sent" : "Apply for this job"}
           </button>
-          <hr className="mb-6 mt-1" style={{ borderColor: mainGreen }} />
-          <h2 className="mb-2 text-lg font-bold" style={{ color: mainGreen }}>Job Description</h2>
-          <div className="whitespace-pre-line text-gray-900 mb-8">{job.fullDescription || job.overview}</div>
+
+          <div className="border-t-2 pt-8 mb-8" style={{ borderColor: brandLight }}>
+            <h2 className="text-2xl font-bold mb-4" style={{ color: brandTeal }}>
+              Job Description
+            </h2>
+            <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+              {job.fullDescription || job.overview}
+            </div>
+          </div>
+
           <JobAccordion
             sections={[
               { title: "Qualification", content: job.qualification || "B.Tech/B.E., MBA, M.Tech or related." },
               { title: "Locations", content: job.location || "Multiple locations" },
               { title: "Additional Information", content: job.extraInfo || "See company website." },
-              { title: "About Company", content: "JRamsys is a leader in global IT and engineering solutions." },
+              { title: "About Company", content: "JRAMSYS is a leader in global IT and engineering solutions." },
               { title: "Important Notice", content: "Apply only via official portal. Beware of recruiting scams." },
             ]}
           />
-          <div className="flex gap-6 pt-6 mt-6 flex-wrap text-sm" style={{ color: mainGreen, borderTop: `2px solid ${mainGreen}` }}>
-            <a href="#" className="flex items-center hover:underline"><span className="mr-2">→</span> Benefits information</a>
-            <a href="#" className="flex items-center hover:underline"><span className="mr-2">→</span> Hiring process (Q&A)</a>
-            <a href="#" className="flex items-center hover:underline"><span className="mr-2">→</span> Interview tips</a>
-          </div>
         </div>
-      </div>
-      <div className="hidden lg:block w-96" style={{ background: lightGreenBg, borderLeft: `3px solid ${mainGreen}` }}>
-        <h3 className="pt-8 pb-3 text-lg font-semibold" style={{ color: mainGreen }}>Similar jobs</h3>
-        <div className="flex flex-col gap-4">
+      </motion.div>
+
+      {/* Similar Jobs Sidebar */}
+      <div className="hidden lg:block w-96 bg-gray-50 border-l border-gray-200 overflow-auto p-6">
+        <h3 className="text-xl font-bold mb-6" style={{ color: brandTeal }}>
+          Similar Jobs
+        </h3>
+        <div className="space-y-4">
           {similarJobs.map(j => (
-            <div key={j.id} className="bg-white border rounded px-4 py-3 shadow flex flex-col gap-2 cursor-pointer"
-                 style={{ borderColor: mainGreen }}
-                 onClick={() => onOpenJob(j)}>
-              <div className="font-bold text-base" style={{ color: mainGreen }}>{j.title}</div>
-              <div className="text-sm text-gray-500">{j.location} | {j.type} | {j.experience} years</div>
+            <div
+              key={j.id}
+              className="bg-white border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-cyan-400 hover:shadow-lg transition-all"
+              onClick={() => onOpenJob(j)}
+            >
+              <h4 className="font-bold mb-2" style={{ color: brandTeal }}>{j.title}</h4>
+              <div className="text-sm text-gray-600 space-y-1">
+                <div>{j.location}</div>
+                <div>{j.type} • {j.experience}+ years</div>
+              </div>
             </div>
           ))}
         </div>
@@ -304,98 +361,192 @@ export default function CareerPage() {
   }, [viewJob, jobs]);
 
   return (
-    <div className="relative min-h-screen bg-gray-50 font-sans">
-      <div className="flex items-center gap-4 px-8 pt-6 pb-3 bg-transparent">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          className="flex-1 p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-400 min-w-0 text-lg"
-          placeholder="Search by title, skill, area or location..."
-        />
-        <TopRightBarInline
-          savedJobs={savedJobs}
-          accessApplications={apps}
-          openSaved={() => setShowSaved(true)}
-          openApps={() => setShowApps(true)}
-        />
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Header */}
+      <div className="bg-gradient-to-br from-teal-900 to-cyan-900 py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+              Join Our Team
+            </h1>
+            <p className="text-xl text-cyan-100 max-w-3xl">
+              Build your career with innovative technology solutions
+            </p>
+          </motion.div>
+        </div>
       </div>
-      <div className="flex p-4">
-        <aside className="w-64 bg-white p-4 rounded shadow sticky top-4 max-h-screen overflow-y-auto animate-slide-in-left">
-          <FilterSection title="Locations">
-            {allLocations.map(loc => (
-              <label key={loc} className="flex items-center mb-1 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={locations.includes(loc)}
-                  onChange={() => handleToggle(loc, locations, setLocations)}
-                  className="mr-2 accent-green-600"
-                />
-                {loc}
-              </label>
-            ))}
-          </FilterSection>
-          <FilterSection title="Areas of Interest">
-            {allAreas.map(area => (
-              <label key={area} className="flex items-center mb-1 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={areas.includes(area)}
-                  onChange={() => handleToggle(area, areas, setAreas)}
-                  className="mr-2 accent-green-600"
-                />
-                {area}
-              </label>
-            ))}
-          </FilterSection>
-          <FilterSection title="Job Type">
-            {allTypes.map(type => (
-              <label key={type} className="flex items-center mb-1 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={types.includes(type)}
-                  onChange={() => handleToggle(type, types, setTypes)}
-                  className="mr-2 accent-green-600"
-                />
-                {type}
-              </label>
-            ))}
-          </FilterSection>
-          <FilterSection title="Experience">
-            {allExperiences.map(range => (
-              <label key={range.label} className="flex items-center mb-1 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={experiences.some(r => r.label === range.label)}
-                  onChange={() => handleExpToggle(range)}
-                  className="mr-2 accent-green-600"
-                />
-                {range.label}
-              </label>
-            ))}
-          </FilterSection>
+
+      {/* Search and Actions Bar */}
+      <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex gap-4 items-center">
+          <div className="flex-1 relative">
+            <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-cyan-400 text-lg text-gray-900"
+              placeholder="Search jobs by title, location, or skill..."
+            />
+          </div>
+          <button
+            className="px-6 py-3 rounded-xl font-semibold border-2 hover:bg-gray-50 transition-colors flex items-center gap-2"
+            style={{ borderColor: brandTeal, color: brandTeal }}
+            onClick={() => setShowSaved(true)}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.0" viewBox="0 0 24 24">
+              <path d="M12.1 18.55l-.1.1-.11-.11C7.14 14.24 4 11.39 4 8.5A4.5 4.5 0 0 1 8.5 4 5.54 5.54 0 0 1 12 6.09 5.54 5.54 0 0 1 15.5 4 4.5 4.5 0 0 1 20 8.5c0 2.89-3.14 5.74-7.9 10.05z"/>
+            </svg>
+            Saved ({savedJobs.length})
+          </button>
+          <button
+            className="px-6 py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity flex items-center gap-2"
+            style={{ backgroundColor: brandTeal, color: "white" }}
+            onClick={() => setShowApps(true)}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            Applications ({apps.length})
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 py-8 flex gap-6">
+        {/* Filters Sidebar */}
+        <aside className="w-80 flex-shrink-0">
+          <div className="bg-white rounded-2xl border-2 border-gray-200 p-6 sticky top-24">
+            <h2 className="text-xl font-bold mb-6" style={{ color: brandTeal }}>Filters</h2>
+            
+            <FilterSection title="Locations">
+              {allLocations.map(loc => (
+                <label key={loc} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={locations.includes(loc)}
+                    onChange={() => handleToggle(loc, locations, setLocations)}
+                    className="mr-3 w-4 h-4 rounded"
+                    style={{ accentColor: brandTeal }}
+                  />
+                  <span className="text-gray-700">{loc}</span>
+                </label>
+              ))}
+            </FilterSection>
+
+            <FilterSection title="Areas of Interest">
+              {allAreas.map(area => (
+                <label key={area} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={areas.includes(area)}
+                    onChange={() => handleToggle(area, areas, setAreas)}
+                    className="mr-3 w-4 h-4 rounded"
+                    style={{ accentColor: brandTeal }}
+                  />
+                  <span className="text-gray-700 text-sm">{area}</span>
+                </label>
+              ))}
+            </FilterSection>
+
+            <FilterSection title="Job Type">
+              {allTypes.map(type => (
+                <label key={type} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={types.includes(type)}
+                    onChange={() => handleToggle(type, types, setTypes)}
+                    className="mr-3 w-4 h-4 rounded"
+                    style={{ accentColor: brandTeal }}
+                  />
+                  <span className="text-gray-700">{type}</span>
+                </label>
+              ))}
+            </FilterSection>
+
+            <FilterSection title="Experience">
+              {allExperiences.map(range => (
+                <label key={range.label} className="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={experiences.some(r => r.label === range.label)}
+                    onChange={() => handleExpToggle(range)}
+                    className="mr-3 w-4 h-4 rounded"
+                    style={{ accentColor: brandTeal }}
+                  />
+                  <span className="text-gray-700">{range.label}</span>
+                </label>
+              ))}
+            </FilterSection>
+          </div>
         </aside>
-        <main className="flex-1 ml-4 p-4 bg-white rounded shadow overflow-y-auto max-h-screen animate-slide-in-right">
+
+        {/* Jobs List */}
+        <main className="flex-1">
+          <div className="mb-6 flex justify-between items-center">
+            <h2 className="text-2xl font-bold" style={{ color: brandTeal }}>
+              {filteredJobs.length} {filteredJobs.length === 1 ? 'Position' : 'Positions'} Available
+            </h2>
+          </div>
+
           {filteredJobs.length === 0 ? (
-            <div className="text-center py-20 text-gray-500">
-              <h2 className="text-xl font-semibold mb-4">No jobs match your filters</h2>
-              <p>Try clearing some filters or search keywords.</p>
+            <div className="text-center py-20 bg-white rounded-2xl border-2 border-gray-200">
+              <svg className="w-20 h-20 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <h3 className="text-xl font-semibold text-gray-600 mb-2">No matching jobs found</h3>
+              <p className="text-gray-500">Try adjusting your filters or search terms</p>
             </div>
           ) : (
-            filteredJobs.map(job => (
-              <JobCard key={job.id} {...job} saved={!!savedJobs.find(j => j.id === job.id)} onToggleSave={() => handleToggleSave(job)} onViewDetails={() => setViewJob(job)} />
-            ))
+            <div className="space-y-4">
+              {filteredJobs.map(job => (
+                <JobCard
+                  key={job.id}
+                  {...job}
+                  saved={!!savedJobs.find(j => j.id === job.id)}
+                  onToggleSave={() => handleToggleSave(job)}
+                  onViewDetails={() => setViewJob(job)}
+                />
+              ))}
+            </div>
           )}
         </main>
       </div>
+
+      {/* Modals */}
       {viewJob && (
-        <JobFullDetails job={viewJob} onClose={() => setViewJob(null)} onToggleSave={() => handleToggleSave(viewJob)} saved={!!savedJobs.find(j => j.id === viewJob.id)} onApply={() => handleApply(viewJob)} isApplied={!!apps.find(j => j.id === viewJob.id)} similarJobs={similarJobs} onOpenJob={job => setViewJob(job)} />
+        <JobFullDetails
+          job={viewJob}
+          onClose={() => setViewJob(null)}
+          onToggleSave={() => handleToggleSave(viewJob)}
+          saved={!!savedJobs.find(j => j.id === viewJob.id)}
+          onApply={() => handleApply(viewJob)}
+          isApplied={!!apps.find(j => j.id === viewJob.id)}
+          similarJobs={similarJobs}
+          onOpenJob={job => setViewJob(job)}
+        />
       )}
       {showSaved && (
-        <JobsPopup title="Saved Jobs" jobs={savedJobs} onClose={() => setShowSaved(false)} onOpenJob={job => { setViewJob(job); setShowSaved(false); }} />
+        <JobsPopup
+          title="Saved Jobs"
+          jobs={savedJobs}
+          onClose={() => setShowSaved(false)}
+          onOpenJob={job => { setViewJob(job); setShowSaved(false); }}
+        />
       )}
       {showApps && (
-        <JobsPopup title="Access Applications" jobs={apps} onClose={() => setShowApps(false)} onOpenJob={job => { setViewJob(job); setShowApps(false); }} />
+        <JobsPopup
+          title="Your Applications"
+          jobs={apps}
+          onClose={() => setShowApps(false)}
+          onOpenJob={job => { setViewJob(job); setShowApps(false); }}
+        />
       )}
     </div>
   );

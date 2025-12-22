@@ -633,15 +633,6 @@ export default function HomePage() {
             transition={{ delay: 0.6 }}
             className="text-center mt-16"
           >
-            <Link href="/contact">
-              <button className="group relative px-12 py-5 text-xl font-bold text-slate-900 bg-white rounded-full overflow-hidden transition-all duration-300 hover:scale-105 shadow-2xl cursor-pointer">
-                <span className="relative z-10">Start Your Journey</span>
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: logoGreen }}
-                ></div>
-              </button>
-            </Link>
           </motion.div>
         </div>
       </section>
@@ -676,19 +667,11 @@ export default function HomePage() {
                 className="group relative px-14 py-6 text-2xl font-bold text-white rounded-full overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 cursor-pointer"
                 style={{ background: logoGreen }}
               >
-                <span className="relative z-10">Schedule Consultation</span>
+                <span className="relative z-10">Contact Us</span>
                 <div className="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
               </button>
             </Link>
 
-            <Link href="/solutions">
-              <button
-                className="px-14 py-6 text-2xl font-bold rounded-full border-4 transition-all duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
-                style={{ borderColor: logoGreen, color: logoGreen }}
-              >
-                View Our Work
-              </button>
-            </Link>
           </div>
 
           <div className="mt-16 flex items-center justify-center gap-12 text-lg text-gray-600">
