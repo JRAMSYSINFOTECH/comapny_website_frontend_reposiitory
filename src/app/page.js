@@ -403,7 +403,7 @@ export default function HomePage() {
                 className="group relative rounded-3xl overflow-hidden shadow-2xl cursor-pointer"
               >
                 <div className="aspect-video overflow-hidden">
-                  <img
+                  <image
                     src={product.image}
                     alt={product.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
@@ -595,7 +595,7 @@ export default function HomePage() {
               {
                 icon: "🤝",
                 title: "Partnership Approach",
-                desc: "We're not just vendors—we're your long-term technology partners invested in your growth"
+                desc: "We are not just vendors—we are your long-term technology partners invested in your growth"
               },
               {
                 icon: "🔒",
@@ -657,7 +657,7 @@ export default function HomePage() {
           </h2>
 
           <p className="text-2xl text-gray-600 mb-12 max-w-3xl mx-auto">
-            Let's build something extraordinary together. Our team is ready to
+            Lets build something extraordinary together. Our team is ready to
             bring your vision to life.
           </p>
 
