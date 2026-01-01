@@ -260,7 +260,7 @@ export default function TeamPage() {
               Want to Join Us?
             </h2>
             <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
-              We're always looking for talented individuals who share our passion for technology and innovation.
+              We are always looking for talented individuals who share our passion for technology and innovation.
             </p>
             <a 
               href="/careers" 

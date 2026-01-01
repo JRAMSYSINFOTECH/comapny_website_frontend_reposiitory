@@ -30,7 +30,7 @@ export default function About() {
               🚀 Building the Future
             </div>
             <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 leading-tight">
-              We're <span className="text-cyan-300">JRAMSYS</span>
+              We are <span className="text-cyan-300">JRAMSYS</span>
             </h1>
             <p className="text-xl text-gray-200 mb-8 leading-relaxed">
               A startup IT company passionate about creating smart technology solutions that make a real difference. We turn complex problems into elegant, scalable systems.
@@ -216,7 +216,7 @@ export default function About() {
               Our Culture
             </h2>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              We're a team of passionate engineers, designers, and problem-solvers who believe great technology comes from great teamwork.
+              We are a team of passionate engineers, designers, and problem-solvers who believe great technology comes from great teamwork.
             </p>
             <div className="space-y-6">
               {[
