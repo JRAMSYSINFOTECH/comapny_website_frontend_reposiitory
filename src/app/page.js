@@ -102,9 +102,15 @@ const solutions = [
     tagline: "Intelligence at Scale",
     desc: "Predictive models, business intelligence dashboards, and custom AI tools for every sector.",
     gradient: "from-purple-500 to-pink-500",
+    link: "/solutions/ai-ml-data-analytics",
     icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+        />
       </svg>
     )
   },
@@ -113,9 +119,15 @@ const solutions = [
     tagline: "Scale Without Limits",
     desc: "IaaS, PaaS, SaaS on AWS, Azure, GCP with DevOps automation and 24/7 managed services.",
     gradient: "from-blue-500 to-cyan-500",
+    link: "/solutions/cloud-computing",
     icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+        />
       </svg>
     )
   },
@@ -124,9 +136,15 @@ const solutions = [
     tagline: "Connect Everything",
     desc: "Automate workflows with IoT sensors, real-time monitoring, and intelligent process orchestration.",
     gradient: "from-green-500 to-teal-500",
+    link: "/solutions/bpm-iot",
     icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M13 10V3L4 14h7v7l9-11h-7z"
+        />
       </svg>
     )
   },
@@ -135,9 +153,15 @@ const solutions = [
     tagline: "Smart Connections",
     desc: "Dynamic QR ecosystems for education, healthcare, smart cities, and digital transformation.",
     gradient: "from-orange-500 to-red-500",
+    link: "/solutions/contextual-qr",
     icon: (
-      <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+      <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={1.5}
+          d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"
+        />
       </svg>
     )
   }
@@ -228,17 +252,21 @@ export default function HomePage() {
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto px-10 py-4 text-lg font-semibold text-white rounded-lg shadow-lg transition-all"
+                className="w-full sm:w-auto px-6 py-4 text-lg font-semibold text-white rounded-full shadow-lg transition-all"
                 style={{ background: logoGreen }}
               >
-                Explore Solutions
+                <a href="/solutions" className="text-white no-underline">
+                  Explore Solutions
+                </a>
               </motion.button>
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto px-10 py-4 text-lg font-semibold text-white rounded-lg border-2 border-white hover:bg-white hover:text-slate-900 transition-all"
+                className="w-full sm:w-auto px-6 py-4 text-lg font-semibold text-white rounded-full border-2 border-white hover:bg-white hover:text-slate-900 transition-all"
               >
+                <a href="/contact">
                 Contact Us
+                </a>
               </motion.button>
             </div>
           </motion.div>
@@ -249,14 +277,14 @@ export default function HomePage() {
             transition={{ delay: 0.5 }} 
             className="mt-20"
           >
-            <div className="inline-block bg-white/10 backdrop-blur-lg rounded-2xl px-12 py-6 border border-white/20">
+            <div className="inline-block bg-white/10 backdrop-blur-lg rounded-full px-9 py-6 border border-white/20">
               <motion.div 
                 key={currentStat} 
                 initial={{ opacity: 0, y: 10 }} 
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="text-5xl font-bold mb-2" style={{ color: logoGreen }}>
+                <div className="text-3xl font-bold mb-2" style={{ color: logoGreen }}>
                   {stats[currentStat].value}{stats[currentStat].suffix}
                 </div>
                 <div className="text-white text-sm uppercase tracking-wider font-medium">
@@ -305,12 +333,12 @@ export default function HomePage() {
                   <p className="text-gray-600 leading-relaxed mb-6">
                     {solution.desc}
                   </p>
-                  <div className="flex items-center text-base font-semibold" style={{ color: logoGreen }}>
+                  <Link href={solution.link} className="flex items-center text-base font-semibold hover:underline" style={{ color: logoGreen }}>
                     Learn More
                     <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
-                  </div>
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -342,7 +370,7 @@ export default function HomePage() {
                 className="relative rounded-2xl overflow-hidden shadow-2xl"
               >
                 <div className="aspect-video overflow-hidden">
-                  <image
+                  <img
                     src={product.image} 
                     alt={product.title}
                     className="w-full h-full object-cover"
@@ -486,7 +514,7 @@ export default function HomePage() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-            className="px-6 py-4 text-xl font-semibold text-white rounded-lg shadow-xl transition-all"
+            className="px-6 py-4 text-xl font-semibold text-white rounded-full shadow-xl transition-all"
             style={{ background: logoGreen }}
           >
             <a href="/contact" className="text-white no-underline">
