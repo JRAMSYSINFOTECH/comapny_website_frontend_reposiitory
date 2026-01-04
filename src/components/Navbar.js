@@ -8,6 +8,7 @@ import Image from "next/image";
 export default function Navbar() {
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const companyDropdown = [
     { label: "About Us", href: "/about" },
@@ -33,19 +34,20 @@ export default function Navbar() {
   const isActive = (path) =>
     pathname === path || pathname.startsWith(path + "/");
 
+  const linkClass = (path) =>
+    `relative px-1 pb-1 text-[15px] font-medium transition-colors duration-300
+     ${isActive(path) ? "text-[#0F3B57]" : "text-[#222A35] hover:text-[#0F3B57]"}`;
+
   const dropdownVariants = {
     hidden: { opacity: 0, y: -8 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
     exit: { opacity: 0, y: -8, transition: { duration: 0.15 } },
   };
 
-  const linkClass = (path) =>
-    `relative px-1 pb-1 text-[15px] font-medium transition-colors duration-300
-     ${isActive(path) ? "text-[#0F3B57]" : "text-[#222A35] hover:text-[#0F3B57]"}`;
-
   return (
     <header className="sticky top-0 z-50 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)]">
-      <nav className="flex items-center justify-between px-10 py-4">
+      {/* NAVBAR */}
+      <nav className="flex items-center justify-between px-10 py-4 h-[72px]">
 
         {/* LOGO */}
         <Link href="/" className="flex items-center h-12">
@@ -58,17 +60,11 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* NAV LINKS */}
-        <ul className="flex items-center space-x-8">
+        {/* DESKTOP MENU */}
+        <ul className="hidden lg:flex items-center space-x-8">
 
           <li>
-            <Link href="/" className={linkClass("/")}>
-              Home
-              <span
-                className={`absolute left-0 -bottom-1 h-[2px] bg-[#0F3B57] transition-all duration-300
-                ${isActive("/") ? "w-full" : "w-0 group-hover:w-full"}`}
-              />
-            </Link>
+            <Link href="/" className={linkClass("/")}>Home</Link>
           </li>
 
           {/* COMPANY */}
@@ -112,9 +108,8 @@ export default function Navbar() {
             onMouseLeave={() => setOpenMenu(null)}
           >
             <Link href="/solutions" className={linkClass("/solutions")}>
-            Solutions <span className="ml-1">▼</span>
+              Solutions <span className="ml-1">▼</span>
             </Link>
-
 
             <AnimatePresence>
               {openMenu === "solutions" && (
@@ -175,19 +170,69 @@ export default function Navbar() {
           </li>
 
           <li>
-            <Link href="/careers" className={linkClass("/careers")}>
-              Careers
-            </Link>
+            <Link href="/careers" className={linkClass("/careers")}>Careers</Link>
           </li>
 
           <li>
-            <Link href="/contact" className={linkClass("/contact")}>
-              Contact
-            </Link>
+            <Link href="/contact" className={linkClass("/contact")}>Contact</Link>
           </li>
-
         </ul>
+
+        {/* MOBILE HAMBURGER */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="lg:hidden flex items-center h-12 text-2xl"
+          aria-label="Toggle Menu"
+        >
+          {mobileOpen ? "✕" : "☰"}
+        </button>
       </nav>
+
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: "auto" }}
+            exit={{ height: 0 }}
+            className="lg:hidden overflow-hidden bg-white border-t"
+          >
+            <div className="flex flex-col px-6 py-2 space-y-2">
+              <Link href="/" onClick={() => setMobileOpen(false)}>Home</Link>
+
+              <details>
+                <summary className="cursor-pointer">Our Company</summary>
+                {companyDropdown.map((item) => (
+                  <Link key={item.label} href={item.href} className="block pl-4 py-1">
+                    {item.label}
+                  </Link>
+                ))}
+              </details>
+
+              <details>
+                <summary className="cursor-pointer">Solutions</summary>
+                {solutionsDropdown.map((item) => (
+                  <Link key={item.label} href={item.href} className="block pl-4 py-1">
+                    {item.label}
+                  </Link>
+                ))}
+              </details>
+
+              <details>
+                <summary className="cursor-pointer">Services</summary>
+                {servicesDropdown.map((item) => (
+                  <Link key={item.label} href={item.href} className="block pl-4 py-1">
+                    {item.label}
+                  </Link>
+                ))}
+              </details>
+
+              <Link href="/careers">Careers</Link>
+              <Link href="/contact">Contact</Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

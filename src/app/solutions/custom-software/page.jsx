@@ -4,496 +4,430 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const logoGreen = "#19B49A";
-const darkTeal = "#0A3D3E";
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.18 },
-  },
+// Updated color palette for this page
+const colors = {
+  primary: "#7C3AED", // Purple
+  secondary: "#EC4899", // Pink
+  accent: "#F59E0B", // Amber
+  blue: "#3B82F6", // Blue
+  teal: "#14B8A6", // Teal
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.25, 0.46, 0.45, 0.94],
+// Floating code blocks animation
+const FloatingCodeBlocks = () => {
+  const codeSnippets = [
+    { code: "</>", color: "from-purple-500 to-pink-500", delay: 0 },
+    { code: "{ }", color: "from-blue-500 to-cyan-500", delay: 0.5 },
+    { code: "[ ]", color: "from-pink-500 to-rose-500", delay: 1 },
+    { code: "=>", color: "from-amber-500 to-orange-500", delay: 1.5 },
+  ];
+
+  return (
+    <div className="relative w-full h-full">
+      {codeSnippets.map((snippet, i) => (
+        <motion.div
+          key={i}
+          className={`absolute bg-gradient-to-br ${snippet.color} rounded-2xl p-6 shadow-2xl text-white font-mono text-3xl font-bold`}
+          style={{
+            left: `${20 + i * 20}%`,
+            top: `${15 + (i % 2) * 30}%`,
+          }}
+          initial={{ opacity: 0, y: 50, scale: 0.8 }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
+          transition={{
+            duration: 0.8,
+            delay: snippet.delay,
+          }}
+        >
+          <motion.div
+            animate={{
+              y: [0, -15, 0],
+              rotate: [0, 5, 0],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: snippet.delay,
+            }}
+          >
+            {snippet.code}
+          </motion.div>
+        </motion.div>
+      ))}
+
+      {/* Connecting lines */}
+      <svg className="absolute inset-0 w-full h-full" style={{ zIndex: -1 }}>
+        <motion.path
+          d="M 50 50 Q 150 100 250 80"
+          stroke="url(#gradient1)"
+          strokeWidth="2"
+          fill="none"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, delay: 0.5 }}
+        />
+        <motion.path
+          d="M 250 80 Q 350 60 400 100"
+          stroke="url(#gradient2)"
+          strokeWidth="2"
+          fill="none"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, delay: 1 }}
+        />
+        <defs>
+          <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#7C3AED" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#EC4899" stopOpacity="0.5" />
+          </linearGradient>
+          <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#14B8A6" stopOpacity="0.5" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  );
+};
+
+// Timeline with icons
+const DevelopmentTimeline = () => {
+  const phases = [
+    {
+      title: "Consultation & Discovery",
+      desc: "Understanding your business, users, and systems to define a clear solution vision.",
+      icon: "💡",
+      color: "purple",
     },
-  },
+    {
+      title: "Design & Blueprinting",
+      desc: "Wireframes, UX flows, and technical specs that validate features before development.",
+      icon: "🎨",
+      color: "pink",
+    },
+    {
+      title: "Agile Development",
+      desc: "Building in short sprints with regular demos so you can see progress early.",
+      icon: "⚙️",
+      color: "blue",
+    },
+    {
+      title: "Testing & Launch",
+      desc: "Comprehensive testing ensures a stable release with training and documentation.",
+      icon: "🚀",
+      color: "amber",
+    },
+    {
+      title: "Support & Enhancement",
+      desc: "Continuous improvement with fixes, optimizations, and new features.",
+      icon: "🔄",
+      color: "teal",
+    },
+  ];
+
+  return (
+    <div className="relative">
+      {phases.map((phase, idx) => (
+        <motion.div
+          key={idx}
+          initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: idx * 0.15 }}
+          className="mb-16 last:mb-0"
+        >
+          <div className="flex flex-col md:flex-row items-start gap-6">
+            {/* Icon */}
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              className={`shrink-0 w-20 h-20 rounded-2xl bg-gradient-to-br ${
+                phase.color === "purple"
+                  ? "from-purple-500 to-violet-500"
+                  : phase.color === "pink"
+                  ? "from-pink-500 to-rose-500"
+                  : phase.color === "blue"
+                  ? "from-blue-500 to-cyan-500"
+                  : phase.color === "amber"
+                  ? "from-amber-500 to-orange-500"
+                  : "from-teal-500 to-cyan-500"
+              } flex items-center justify-center text-4xl shadow-xl`}
+            >
+              {phase.icon}
+            </motion.div>
+
+            {/* Content */}
+            <div className="flex-1">
+              <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-slate-100 hover:border-purple-300 transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-3xl font-black text-purple-600">0{idx + 1}</span>
+                  <h3 className="text-xl font-bold text-slate-900">{phase.title}</h3>
+                </div>
+                <p className="text-slate-600 leading-relaxed">{phase.desc}</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
 };
-
-const steps = [
-  {
-    title: "Consultation & Requirements Discovery",
-    desc: "We start by understanding your business, users, and systems, then define a clear solution vision and roadmap.",
-  },
-  {
-    title: "Design & Blueprinting",
-    desc: "Wireframes, UX flows, and technical specs validate features, integrations, and usability before development.",
-  },
-  {
-    title: "Agile Development & Iteration",
-    desc: "Engineers build in short sprints with regular demos so you can see progress and refine scope early.",
-  },
-  {
-    title: "Testing, QA & Launch",
-    desc: "Functional, security, and performance testing ensure a stable release, supported by training and documentation.",
-  },
-  {
-    title: "Support & Continuous Enhancement",
-    desc: "We keep improving your platform with fixes, optimisations, and new features as your business evolves.",
-  },
-];
-
-const exampleUses = [
-  { title: "Education", desc: "Student portals, LMS integrations, exam and results workflows." },
-  { title: "Healthcare", desc: "Scheduling, EMR dashboards, telemedicine and patient apps." },
-  { title: "Retail", desc: "E‑commerce, inventory, loyalty, and POS extensions." },
-  { title: "Manufacturing", desc: "Shop‑floor systems, production tracking, and maintenance tools." },
-  { title: "Logistics", desc: "Order management, fleet tracking, and last‑mile delivery apps." },
-  { title: "Government", desc: "Citizen portals, case management, and digital workflows." },
-];
 
 export default function CustomSoftwareDevelopmentPage() {
+  const features = [
+    {
+      title: "Product & Solution Design",
+      desc: "Discovery workshops, UX, and technical blueprints so the right product is defined before any code is written.",
+      icon: "💡",
+      gradient: "from-purple-500 to-violet-500",
+    },
+    {
+      title: "Engineering & Integrations",
+      desc: "Web, mobile, and API-first backends on modern stacks, connected cleanly to your existing systems.",
+      icon: "⚙️",
+      gradient: "from-blue-500 to-cyan-500",
+    },
+    {
+      title: "Testing, QA & Launch",
+      desc: "Functional, security, and performance testing plus rollout support, training, and documentation.",
+      icon: "✅",
+      gradient: "from-pink-500 to-rose-500",
+    },
+    {
+      title: "Support & Evolution",
+      desc: "Ongoing monitoring, fixes, and new features so your platform keeps pace with your business.",
+      icon: "🔄",
+      gradient: "from-amber-500 to-orange-500",
+    },
+  ];
+
+  const industries = [
+    { name: "Education", icon: "🎓", desc: "Student portals, LMS integrations, exam workflows" },
+    { name: "Healthcare", icon: "🏥", desc: "Scheduling, EMR dashboards, patient apps" },
+    { name: "Retail", icon: "🛍️", desc: "E-commerce, inventory, loyalty programs" },
+    { name: "Manufacturing", icon: "🏭", desc: "Production tracking, maintenance tools" },
+    { name: "Logistics", icon: "🚚", desc: "Fleet tracking, delivery apps" },
+    { name: "Government", icon: "🏛️", desc: "Citizen portals, digital workflows" },
+  ];
+
   return (
-    <div className="bg-slate-950 text-white min-h-screen overflow-hidden">
-      {/* HERO */}
-      <section className="relative px-6 py-32 md:py-44">
-        {/* colourful hero background */}
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -left-32 -top-32 h-80 w-80 rounded-full bg-emerald-500/35 blur-3xl" />
-          <div className="absolute -right-40 -top-10 h-72 w-72 rounded-full bg-fuchsia-500/30 blur-3xl" />
-          <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-sky-500/30 blur-3xl" />
-          <div className="absolute -left-10 bottom-[-120px] h-80 w-[420px] rotate-[-18deg] bg-gradient-to-r from-emerald-400/25 via-cyan-400/25 to-fuchsia-400/25 blur-3xl" />
-          <div
-            className="absolute inset-0 opacity-18"
+    <div className="bg-slate-50 min-h-screen">
+      {/* HERO SECTION */}
+      <section className="relative bg-gradient-to-br from-purple-950 via-slate-900 to-pink-950 text-white overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 opacity-20">
+          <motion.div
+            className="absolute inset-0"
             style={{
               backgroundImage: `
-                linear-gradient(${logoGreen} 1px, transparent 1px),
-                linear-gradient(90deg, ${logoGreen} 1px, transparent 1px)
+                linear-gradient(#7C3AED 1px, transparent 1px),
+                linear-gradient(90deg, #7C3AED 1px, transparent 1px)
               `,
-              backgroundSize: "46px 46px",
+              backgroundSize: "50px 50px",
+            }}
+            animate={{
+              backgroundPosition: ["0px 0px", "50px 50px"],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear",
             }}
           />
         </div>
 
-        <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:items-center">
-          {/* hero text */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="md:w-3/5"
-          >
-            <p
-              className="mb-3 inline-flex items-center rounded-full px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.25em]"
-              style={{ backgroundColor: "rgba(25,180,154,0.12)", color: logoGreen }}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 lg:py-40 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left content */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              CUSTOM SOFTWARE DEVELOPMENT
-            </p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 bg-purple-500/20 border border-purple-400/30 rounded-full px-5 py-2 mb-6"
+              >
+                <span className="text-sm font-semibold tracking-wider uppercase">Custom Software Development</span>
+              </motion.div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4">
-              Build software that
-              <br />
-              <span style={{ color: logoGreen }}>moves with your business</span>
-            </h1>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
+                Build software that{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400">
+                  moves with
+                </span>{" "}
+                your business
+              </h1>
 
-            <p className="text-sm md:text-base text-slate-200 mb-7 max-w-xl">
-              Design, build, and scale digital platforms tailored to your goals, industry, and
-              future roadmap—without fighting rigid off‑the‑shelf tools.
-            </p>
+              <p className="text-lg sm:text-xl text-slate-300 mb-8 max-w-xl">
+                Design, build, and scale digital platforms tailored to your goals, industry, and future roadmap—without fighting rigid off-the-shelf tools.
+              </p>
 
-            <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-300">
-              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-400/40 px-3 py-1 bg-slate-950/40 backdrop-blur">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                94% on‑time sprint delivery
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-sky-400/40 px-3 py-1 bg-slate-950/40 backdrop-blur">
-                ⚙️ Built on modern stack
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-fuchsia-400/40 px-3 py-1 bg-slate-950/40 backdrop-blur">
-                ✅ Post‑launch support included
-              </span>
-            </div>
-          </motion.div>
+              {/* <div className="flex flex-wrap gap-4 mb-8">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl shadow-xl"
+                >
+                  Start Your Project
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl border-2 border-white/20"
+                >
+                  View Case Studies
+                </motion.button>
+              </div> */}
 
-          {/* NEW: Project radar + stacked stats (unique for this page) */}
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="md:w-2/5"
-          >
-            <div className="relative rounded-[32px] bg-slate-950 border border-emerald-500/25 shadow-[0_26px_90px_rgba(15,23,42,0.95)] px-6 py-6 overflow-hidden">
-              {/* grid */}
-              <div className="pointer-events-none absolute inset-0 opacity-20">
-                <div
-                  className="w-full h-full"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(rgba(148,163,184,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.25) 1px, transparent 1px)",
-                    backgroundSize: "26px 26px",
-                  }}
-                />
-              </div>
-
-              <div className="relative z-10 flex flex-col gap-5">
-                {/* header */}
-                <div className="flex items-center justify-between text-[10px] text-slate-300">
-                  <span className="inline-flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    LIVE DELIVERY RADAR
-                  </span>
-                  <span className="text-[9px] uppercase tracking-[0.18em] text-slate-400">
-                    ACTIVE SOFTWARE PROJECTS
-                  </span>
-                </div>
-
-                <div className="flex gap-4 items-stretch">
-                  {/* radar / board */}
+              <div className="flex flex-wrap gap-4">
+                {[
+                  { icon: "⚡", text: "Fast delivery" },
+                  { icon: "🎯", text: "Modern stack" },
+                  { icon: "💬", text: "Post-launch support" },
+                ].map((item, i) => (
                   <motion.div
-                    whileHover={{ rotate: -2, scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 220, damping: 18 }}
-                    className="relative flex-1 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 border border-slate-700/70 shadow-[0_18px_50px_rgba(15,23,42,0.8)] overflow-hidden px-4 py-4"
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + i * 0.1 }}
+                    className="flex items-center gap-2 text-sm text-slate-300"
                   >
-                    {/* center glow */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="h-24 w-24 rounded-full bg-emerald-500/25 blur-2xl" />
-                    </div>
-
-                    {/* vertical lanes */}
-                    <div className="absolute inset-y-4 left-1/4 w-px bg-slate-700/60" />
-                    <div className="absolute inset-y-4 left-1/2 w-px bg-slate-700/40" />
-                    <div className="absolute inset-y-4 left-3/4 w-px bg-slate-700/25" />
-                    {/* horizontal lanes */}
-                    <div className="absolute inset-x-4 top-1/3 h-px bg-slate-700/60" />
-                    <div className="absolute inset-x-4 top-2/3 h-px bg-slate-700/40" />
-
-                    {/* project chips */}
-                    {[
-                      { label: "Mobile app", x: "9%", y: "22%", color: "bg-emerald-400" },
-                      { label: "Data platform", x: "56%", y: "18%", color: "bg-sky-400" },
-                      { label: "Portal revamp", x: "33%", y: "52%", color: "bg-fuchsia-400" },
-                      { label: "B2B APIs", x: "68%", y: "60%", color: "bg-amber-300" },
-                      { label: "Ops tooling", x: "18%", y: "72%", color: "bg-emerald-300" },
-                    ].map((p, i) => (
-                      <motion.div
-                        key={p.label}
-                        className={`absolute rounded-xl px-2.5 py-1.5 text-[9px] font-semibold text-slate-950 flex items-center gap-1 shadow-[0_0_18px_rgba(16,185,129,0.55)] ${p.color}`}
-                        style={{ left: p.x, top: p.y }}
-                        animate={{ y: ["0%", "-6%", "0%"] }}
-                        transition={{ repeat: Infinity, duration: 4 + i * 0.6, ease: "easeInOut" }}
-                      >
-                        <span className="h-1.5 w-1.5 rounded-full bg-slate-950/70" />
-                        {p.label}
-                      </motion.div>
-                    ))}
-
-                    {/* sprint ring */}
-                    <motion.div
-                      className="absolute inset-10 rounded-3xl border border-emerald-400/35"
-                      animate={{ opacity: [0.4, 0.9, 0.4] }}
-                      transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
-                    />
+                    <span className="text-lg">{item.icon}</span>
+                    <span>{item.text}</span>
                   </motion.div>
-
-                  {/* stacked KPIs */}
-                  <div className="w-32 flex flex-col justify-between gap-2">
-                    <div className="rounded-2xl bg-slate-900/95 border border-emerald-500/50 px-3 py-2 shadow-[0_0_22px_rgba(16,185,129,0.45)]">
-                      <p className="text-[9px] text-slate-300 uppercase tracking-[0.18em]">
-                        ON‑TIME SPRINTS
-                      </p>
-                      <div className="mt-1 flex items-baseline justify-between">
-                        <span className="text-xl font-bold text-emerald-400">94%</span>
-                        <span className="text-[9px] text-emerald-300 bg-emerald-500/15 px-1.5 py-0.5 rounded-full">
-                          ▲ stable
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-slate-900/85 border border-sky-500/45 px-3 py-2">
-                      <p className="text-[9px] text-slate-300 uppercase tracking-[0.18em]">
-                        ACTIVE PROJECTS
-                      </p>
-                      <div className="mt-1 flex items-baseline justify-between">
-                        <span className="text-xl font-bold text-sky-300">11</span>
-                        <span className="text-[9px] text-sky-300">3 in discovery</span>
-                      </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-slate-900/80 border border-fuchsia-500/40 px-3 py-2">
-                      <p className="text-[9px] text-slate-300 uppercase tracking-[0.18em]">
-                        POST‑LAUNCH ISSUES
-                      </p>
-                      <div className="mt-1 flex items-baseline justify-between">
-                        <span className="text-xl font-bold text-fuchsia-300">Low</span>
-                        <span className="text-[9px] text-fuchsia-300">SLA 24/7</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+
+            {/* Right content - Floating code */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative h-96 hidden lg:block"
+            >
+              <FloatingCodeBlocks />
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Wave separator */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 120" className="w-full h-auto">
+            <path
+              fill="#f8fafc"
+              d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
+            />
+          </svg>
         </div>
       </section>
 
-      {/* WHY CHOOSE OUR CUSTOM SOFTWARE – 4 COMPACT CARDS */}
-      <section className="py-16 px-6 bg-slate-50">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8 text-center">
-            <p className="text-sm md:text-base lg:text-lg font-semibold tracking-[0.35em] text-emerald-500">
-              WHY TEAMS WORK WITH US
-            </p>
-            <h2 className="mt-3 text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-900">
-              Custom software that ships, scales, and keeps improving.
-            </h2>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* Card 1 – Product & solution design */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-emerald-400/70 hover:shadow-[0_18px_60px_rgba(16,185,129,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400">
-                <span className="text-2xl text-white">💡</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-emerald-500">
-                  PRODUCT & SOLUTION DESIGN
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Product & solution design
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Discovery workshops, UX, and technical blueprints so the right product is
-                  defined before any code is written.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 2 – Engineering & integrations */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-sky-500/70 hover:shadow-[0_18px_60px_rgba(59,130,246,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-sky-500 via-blue-500 to-cyan-400">
-                <span className="text-2xl text-white">⚙️</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-sky-500">
-                  ENGINEERING & INTEGRATIONS
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Engineering & integrations
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Web, mobile, and API‑first backends on modern stacks, connected cleanly to
-                  your existing systems.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 3 – QA & launch */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-emerald-400/70 hover:shadow-[0_18px_60px_rgba(16,185,129,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400">
-                <span className="text-2xl text-white">✅</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-emerald-500">
-                  QA & LAUNCH
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Testing, QA & launch
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Functional, security, and performance testing plus rollout support, training,
-                  and documentation.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 4 – Support & evolution */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-sky-500/70 hover:shadow-[0_18px_60px_rgba(59,130,246,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-sky-500 via-blue-500 to-cyan-400">
-                <span className="text-2xl text-white">🔄</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-sky-500">
-                  SUPPORT & EVOLUTION
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Support & continuous enhancement
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Ongoing monitoring, fixes, and new features so your platform keeps pace with
-                  your business.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* STEPS – HORIZONTAL STEPPER */}
-      <section className="py-20 px-6 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 text-slate-50">
-        <div className="max-w-6xl mx-auto relative">
-          <div className="pointer-events-none absolute -inset-x-32 -top-16 -bottom-10 opacity-40">
-            <div className="mx-auto h-full w-full max-w-5xl bg-gradient-to-tr from-emerald-500/20 via-teal-500/10 to-sky-500/20 blur-3xl" />
-          </div>
-
+      {/* FEATURES SECTION - Card Grid */}
+      <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}
-            className="relative z-10 text-center mb-12"
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
           >
-            <p className="text-xs md:text-sm font-semibold tracking-[0.3em] text-emerald-400">
-              FROM IDEA TO PRODUCTION
-            </p>
-            <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
-              How we deliver your custom solution
+            <p className="text-purple-600 font-semibold tracking-wider uppercase mb-3">Why Teams Work With Us</p>
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4">
+              Custom software that ships, scales, and keeps improving
             </h2>
-            <p className="mt-3 text-sm md:text-base text-slate-300 max-w-3xl mx-auto">
-              A transparent, collaborative flow from first workshop to launch and beyond—so you
-              always know what is coming next.
-            </p>
           </motion.div>
 
-          <div className="relative z-10 rounded-3xl bg-slate-900/80 border border-emerald-500/20 shadow-[0_24px_80px_rgba(15,23,42,0.9)] px-4 py-6 md:px-8 md:py-8">
-            <div className="overflow-x-auto">
-              <div className="min-w-[720px] md:min-w-0">
-                <div className="relative flex items-start justify-between gap-6">
-                  <div className="pointer-events-none absolute left-0 right-0 top-10 h-0.5 bg-gradient-to-r from-emerald-300 via-teal-400 to-sky-400" />
-
-                  {steps.map((stage, idx) => (
-                    <motion.div
-                      key={stage.title}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1, duration: 0.6 }}
-                      className="relative z-10 flex-1"
-                    >
-                      <div className="flex flex-col items-center text-center px-2">
-                        <div
-                          className={`flex items=center justify-center h-10 w-10 rounded-2xl border-2 bg-slate-950 shadow-md
-                            ${
-                              idx === 0
-                                ? "border-fuchsia-400 text-fuchsia-300"
-                                : idx === 1
-                                ? "border-sky-400 text-sky-300"
-                                : idx === 2
-                                ? "border-amber-400 text-amber-300"
-                                : idx === 3
-                                ? "border-emerald-400 text-emerald-300"
-                                : "border-emerald-500 text-emerald-300"
-                            }`}
-                        >
-                          <span className="text-xs font-bold">0{idx + 1}</span>
-                        </div>
-
-                        <p className="mt-3 text-[11px] font-semibold tracking-[0.22em] text-emerald-300 uppercase">
-                          {idx === 0 && "DISCOVER & PLAN"}
-                          {idx === 1 && "DESIGN & VALIDATE"}
-                          {idx === 2 && "BUILD & ITERATE"}
-                          {idx === 3 && "TEST & LAUNCH"}
-                          {idx === 4 && "SUPPORT & GROW"}
-                        </p>
-
-                        <h3 className="mt-1 text-sm md:text-base font-semibold text-slate-50">
-                          {stage.title}
-                        </h3>
-                        <p className="mt-1 text-[11px] md:text-[12px] text-slate-300 max-w-xs">
-                          {stage.desc}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* EXAMPLE APPLICATIONS */}
-      <section className="px-6 py-24 bg-white">
-        <motion.div
-          className="max-w-6xl mx-auto"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ amount: 0.25, once: true }}
-        >
-          <h2
-            className="text-2xl md:text-3xl font-bold mb-8 text-center"
-            style={{ color: darkTeal }}
-          >
-            Example applications
-          </h2>
-
-          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {exampleUses.map((item, idx) => (
+          <div className="grid md:grid-cols-2 gap-8">
+            {features.map((feature, idx) => (
               <motion.div
-                key={item.title}
-                variants={itemVariants}
-                whileHover={{ y: -8, scale: 1.04 }}
-                className="relative group"
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="group"
               >
-                <div
-                  className={`absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300
-                    ${
-                      idx % 3 === 0 &&
-                      "bg-gradient-to-br from-emerald-400 via-teal-400 to-sky-400"
-                    }
-                    ${
-                      idx % 3 === 1 &&
-                      "bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400"
-                    }
-                    ${
-                      idx % 3 === 2 &&
-                      "bg-gradient-to-br from-indigo-500 via-sky-500 to-cyan-400"
-                    }
-                  `}
-                />
-                <div className="relative rounded-2xl bg-white border border-slate-100 px-5 py-5 shadow-[0_12px_40px_rgba(15,23,42,0.12)] transition-shadow duration-300 group-hover:shadow-[0_20px_70px_rgba(15,23,42,0.18)]">
-                  <div className="mb-3 flex items-center justify-center">
-                    <div
-                      className={`h-10 w-10 rounded-xl flex items-center justify-center text-lg text-white
-                        ${
-                          idx % 3 === 0 &&
-                          "bg-gradient-to-br from-emerald-500 to-teal-500"
-                        }
-                        ${
-                          idx % 3 === 1 &&
-                          "bg-gradient-to-br from-fuchsia-500 to-orange-400"
-                        }
-                        ${
-                          idx % 3 === 2 &&
-                          "bg-gradient-to-br from-indigo-500 to-sky-500"
-                        }
-                      `}
-                    >
-                      {idx === 0 && "🎓"}
-                      {idx === 1 && "🏥"}
-                      {idx === 2 && "🛍️"}
-                      {idx === 3 && "🏭"}
-                      {idx === 4 && "🚚"}
-                      {idx === 5 && "🏛"}
-                    </div>
+                <div className="bg-white rounded-3xl p-8 shadow-lg border-2 border-slate-100 hover:border-purple-300 hover:shadow-2xl transition-all duration-300 h-full">
+                  <div className={`inline-flex w-16 h-16 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.gradient} text-3xl mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
+                    {feature.icon}
                   </div>
-                  <h4 className="font-semibold mb-1 text-sm md:text-base text-slate-900 text-center">
-                    {item.title}
-                  </h4>
-                  <p className="text-xs md:text-sm text-slate-600 text-center">
-                    {item.desc}
-                  </p>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4">{feature.title}</h3>
+                  <p className="text-slate-600 leading-relaxed">{feature.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </section>
+
+      {/* PROCESS TIMELINE */}
+      <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="container mx-auto max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-20"
+          >
+            <p className="text-purple-600 font-semibold tracking-wider uppercase mb-3">From Idea To Production</p>
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4">
+              How we deliver your custom solution
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              A transparent, collaborative flow from first workshop to launch and beyond
+            </p>
+          </motion.div>
+
+          <DevelopmentTimeline />
+        </div>
+      </section>
+
+      {/* INDUSTRIES SECTION */}
+      <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
+        <div className="container mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <p className="text-emerald-600 font-semibold tracking-wider uppercase mb-3">Industry Expertise</p>
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4">
+              Built for every industry
+            </h2>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {industries.map((industry, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="bg-white rounded-2xl p-6 shadow-lg border-2 border-slate-100 hover:border-emerald-300 transition-all cursor-pointer"
+              >
+                <div className="text-5xl mb-4">{industry.icon}</div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{industry.name}</h3>
+                <p className="text-slate-600 text-sm">{industry.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section> 
     </div>
   );
 }

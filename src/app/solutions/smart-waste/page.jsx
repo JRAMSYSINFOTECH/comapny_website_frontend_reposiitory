@@ -4,503 +4,453 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const logoGreen = "#19B49A";
-const darkTeal = "#0A3D3E";
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.25 } },
+// Animated waste truck
+const AnimatedTruck = () => {
+  return (
+    <div className="relative w-full max-w-lg mx-auto">
+      <motion.div
+        className="relative"
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 1, delay: 0.3 }}
+      >
+        {/* Truck body */}
+        <motion.div
+          animate={{ y: [0, -3, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="relative"
+        >
+          <svg viewBox="0 0 400 200" className="w-full h-auto">
+            {/* Truck container */}
+            <rect x="50" y="40" width="200" height="100" fill="#16A085" rx="8" />
+            <rect x="60" y="50" width="180" height="80" fill="#19B49A" rx="4" />
+            
+            {/* Cab */}
+            <rect x="250" y="60" width="100" height="80" fill="#0D7A68" rx="8" />
+            <rect x="260" y="70" width="35" height="40" fill="#38BDF8" opacity="0.6" rx="2" />
+            
+            {/* Wheels */}
+            <circle cx="100" cy="150" r="20" fill="#1e293b" />
+            <circle cx="100" cy="150" r="12" fill="#475569" />
+            <circle cx="300" cy="150" r="20" fill="#1e293b" />
+            <circle cx="300" cy="150" r="12" fill="#475569" />
+            
+            {/* Waste bins inside */}
+            {[80, 120, 160, 200].map((x, i) => (
+              <motion.rect
+                key={i}
+                x={x}
+                y="70"
+                width="25"
+                height="35"
+                fill={i % 2 === 0 ? "#34D399" : "#F59E0B"}
+                rx="2"
+                initial={{ y: 70 }}
+                animate={{ y: [70, 65, 70] }}
+                transition={{
+                  duration: 0.8,
+                  repeat: Infinity,
+                  delay: i * 0.2,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </svg>
+        </motion.div>
+
+        {/* Route line */}
+        <motion.div
+          className="absolute -bottom-8 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.5, delay: 0.5 }}
+        />
+
+        {/* Waste icons floating */}
+        {[
+          { icon: "🗑️", delay: 0, x: 50, y: -30 },
+          { icon: "♻️", delay: 0.3, x: 150, y: -40 },
+          { icon: "📦", delay: 0.6, x: 250, y: -35 },
+        ].map((item, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-3xl"
+            style={{ left: item.x, top: item.y }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1 + item.delay }}
+          >
+            <motion.span
+              animate={{ y: [0, -10, 0], rotate: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, delay: item.delay }}
+            >
+              {item.icon}
+            </motion.span>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  );
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+// Zigzag process flow
+const ZigzagProcess = () => {
+  const steps = [
+    {
+      num: "01",
+      title: "Bin Integration",
+      desc: "Connect IoT sensors to bins for real-time monitoring",
+      icon: "🔌",
+      side: "left",
+    },
+    {
+      num: "02",
+      title: "Smart Routing",
+      desc: "AI-powered route optimization for efficient collection",
+      icon: "🗺️",
+      side: "right",
+    },
+    {
+      num: "03",
+      title: "Data Analytics",
+      desc: "Track performance with interactive dashboards",
+      icon: "📊",
+      side: "left",
+    },
+    {
+      num: "04",
+      title: "Citizen Engagement",
+      desc: "QR-based service requests and feedback",
+      icon: "📱",
+      side: "right",
+    },
+  ];
+
+  return (
+    <div className="relative max-w-4xl mx-auto">
+      {/* Connecting line */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 via-sky-400 to-fuchsia-400 transform -translate-x-1/2 hidden md:block" />
+
+      <div className="space-y-12 md:space-y-24">
+        {steps.map((step, idx) => (
+          <motion.div
+            key={step.num}
+            initial={{ opacity: 0, x: step.side === "left" ? -50 : 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, delay: idx * 0.2 }}
+            className={`flex flex-col md:flex-row items-center gap-6 ${
+              step.side === "right" ? "md:flex-row-reverse" : ""
+            }`}
+          >
+            {/* Content Card */}
+            <div className="flex-1 w-full">
+              <motion.div
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="bg-white rounded-2xl p-6 shadow-xl border-2 border-slate-100 relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-400/20 to-sky-400/20 rounded-bl-full" />
+                <div className="relative">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="text-4xl">{step.icon}</div>
+                    <div className="text-6xl font-black text-emerald-500/20">{step.num}</div>
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">{step.title}</h3>
+                  <p className="text-slate-600">{step.desc}</p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Center Circle */}
+            <div className="hidden md:flex items-center justify-center shrink-0">
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.2 + 0.3 }}
+                className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg text-white font-bold text-xl relative z-10"
+              >
+                {step.icon}
+              </motion.div>
+            </div>
+
+            {/* Spacer */}
+            <div className="flex-1 hidden md:block" />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
-const steps = [
-  {
-    title: "Bin Integration & Sensor Setup",
-    desc: "We connect IoT sensors to bins and collection vehicles, enabling real-time status, fill-level detection, and event triggers throughout your waste management network.",
-  },
-  {
-    title: "Smart Collection & Routing",
-    desc: "Fill data is used to generate and push optimized routes automatically to drivers—ensuring timely, efficient waste pickup and reducing fuel use.",
-  },
-  {
-    title: "Monitoring & Data Analytics",
-    desc: "Supervisors oversee all collection status, compliance, and performance with interactive dashboards and customizable reports.",
-  },
-  {
-    title: "Citizen Feedback & Service Requests",
-    desc: "End users submit pickup or service requests by simply scanning a QR—improving response and keeping communities clean.",
-  },
-];
+// Card with icon grid
+const IconGrid = () => {
+  const items = [
+    { icon: "🗑️", label: "Bin Tracking" },
+    { icon: "🚛", label: "Fleet Management" },
+    { icon: "📊", label: "Analytics" },
+    { icon: "🔔", label: "Alerts" },
+    { icon: "📱", label: "Mobile App" },
+    { icon: "♻️", label: "Sustainability" },
+  ];
 
-const exampleUses = [
-  {
-    title: "Cities & Municipalities",
-    desc: "Automated collection, cleaner streets, resource savings.",
-  },
-  {
-    title: "Gated Communities",
-    desc: "Digital log of services, faster response for overflow bins.",
-  },
-  {
-    title: "Universities & Campuses",
-    desc: "Track bins, events, and recycling efforts easily.",
-  },
-  {
-    title: "Industrial Parks",
-    desc: "Bulk waste scheduling & compliance for enterprises.",
-  },
-  {
-    title: "Hotels & Events",
-    desc: "Peak-time pickup and hygiene compliance tracking.",
-  },
-  {
-    title: "Government",
-    desc: "Full audit, data-driven planning, transparent operations.",
-  },
-];
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      {items.map((item, idx) => (
+        <motion.div
+          key={item.label}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: idx * 0.1 }}
+          whileHover={{ scale: 1.1, rotate: 5 }}
+          className="aspect-square bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 flex flex-col items-center justify-center gap-3 shadow-lg border border-slate-200 cursor-pointer"
+        >
+          <span className="text-5xl">{item.icon}</span>
+          <span className="text-sm font-semibold text-slate-700 text-center">{item.label}</span>
+        </motion.div>
+      ))}
+    </div>
+  );
+};
 
 export default function SmartWastePage() {
+  const applications = [
+    { name: "Cities", icon: "🏙️", color: "from-emerald-500 to-teal-500" },
+    { name: "Communities", icon: "🏘️", color: "from-sky-500 to-blue-500" },
+    { name: "Universities", icon: "🎓", color: "from-fuchsia-500 to-pink-500" },
+    { name: "Industrial", icon: "🏭", color: "from-amber-500 to-orange-500" },
+    { name: "Hotels", icon: "🏨", color: "from-violet-500 to-purple-500" },
+    { name: "Government", icon: "🏛️", color: "from-cyan-500 to-teal-500" },
+  ];
+
   return (
-    <div className="bg-slate-950 text-white min-h-screen overflow-hidden">
-      {/* HERO */}
-      <section className="relative px-6 py-28 md:py-36">
-        {/* colourful background */}
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -left-32 -top-32 h-80 w-80 rounded-full bg-emerald-500/35 blur-3xl" />
-          <div className="absolute -right-40 -top-10 h-72 w-72 rounded-full bg-sky-500/30 blur-3xl" />
-          <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-fuchsia-500/30 blur-3xl" />
-          <div className="absolute -left-10 bottom-[-120px] h-80 w-[420px] rotate-[-18deg] bg-gradient-to-r from-emerald-400/25 via-cyan-400/25 to-fuchsia-400/25 blur-3xl" />
-          <div
-            className="absolute inset-0 opacity-18"
-            style={{
-              backgroundImage: `
-                linear-gradient(${logoGreen} 1px, transparent 1px),
-                linear-gradient(90deg, ${logoGreen} 1px, transparent 1px)
-              `,
-              backgroundSize: "46px 46px",
-            }}
-          />
+    <div className="bg-white min-h-screen">
+      {/* HERO SECTION - Unique Split Design */}
+      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 overflow-hidden">
+        {/* Animated background patterns */}
+        <div className="absolute inset-0 opacity-20">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-emerald-400"
+              style={{
+                width: Math.random() * 100 + 50,
+                height: Math.random() * 100 + 50,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, Math.random() * 100 - 50, 0],
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{
+                duration: Math.random() * 10 + 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
         </div>
 
-        <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:items-center">
-          {/* hero text */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="md:w-3/5"
-          >
-            <p
-              className="mb-3 inline-flex items-center rounded-full px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.25em]"
-              style={{ backgroundColor: "rgba(25,180,154,0.12)", color: logoGreen }}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left content */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-white"
             >
-              SMART WASTE MANAGEMENT
-            </p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/30 rounded-full px-5 py-2 mb-6"
+              >
+                <motion.span
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                >
+                  ♻️
+                </motion.span>
+                <span className="text-sm font-semibold tracking-wider">SMART WASTE MANAGEMENT</span>
+              </motion.div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4">
-              Make every{" "}
-              <span style={{ color: logoGreen }}>waste pickup</span>
-              <br />
-              visible, efficient, and smart
-            </h1>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
+                Make Every{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
+                  Waste Pickup
+                </span>{" "}
+                Smart
+              </h1>
 
-            <p className="text-sm md:text-base text-slate-200 mb-6 max-w-xl">
-              Transform your waste ecosystem with JRamsys digital, IoT-powered waste management—
-              offering control, efficiency, and sustainability at every stage.
-            </p>
+              <p className="text-lg sm:text-xl text-slate-300 mb-8 max-w-xl">
+                Transform your waste ecosystem with IoT-powered management. Control, efficiency, and sustainability at every stage.
+              </p>
 
-            <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-300">
-              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-400/40 px-3 py-1 bg-slate-950/40 backdrop-blur">
-                🛰 Real-time bin & fleet visibility
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-sky-400/40 px-3 py-1 bg-slate-950/40 backdrop-blur">
-                🗺 Optimised collection routes
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-fuchsia-400/40 px-3 py-1 bg-slate-950/40 backdrop-blur">
-                🧾 Full history & audit logs
-              </span>
-            </div>
-          </motion.div>
-
-          {/* NEW: Smart City Map + KPIs panel */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="md:w-2/5"
-          >
-            <div className="relative rounded-[28px] bg-slate-950 border border-emerald-500/25 shadow-[0_24px_80px_rgba(15,23,42,0.9)] px-6 py-6 overflow-hidden">
-              {/* subtle grid */}
-              <div className="pointer-events-none absolute inset-0 opacity-20">
-                <div
-                  className="w-full h-full"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(rgba(148,163,184,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.25) 1px, transparent 1px)",
-                    backgroundSize: "26px 26px",
-                  }}
-                />
-              </div>
-
-              <div className="relative z-10 flex flex-col gap-5">
-                {/* header */}
-                <div className="flex items-center justify-between text-[10px] text-slate-300">
-                  <span className="inline-flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    LIVE SMART WASTE VIEW
-                  </span>
-                  <span className="text-[9px] uppercase tracking-[0.18em] text-slate-400">
-                    CITY-LEVEL SNAPSHOT
-                  </span>
-                </div>
-
-                <div className="flex gap-4 items-stretch">
-                  {/* circular map */}
+              <div className="flex flex-wrap gap-4 text-sm">
+                {["Real-time Monitoring", "Route Optimization", "Full Audit Logs"].map((feature, i) => (
                   <motion.div
-                    whileHover={{ rotate: -2, scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 220, damping: 18 }}
-                    className="relative flex-1 aspect-square rounded-full bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 border border-slate-700/70 shadow-[0_18px_50px_rgba(15,23,42,0.8)] overflow-hidden"
+                    key={feature}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + i * 0.1 }}
+                    className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20"
                   >
-                    {/* glowing center */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="h-24 w-24 rounded-full bg-emerald-500/25 blur-2xl" />
-                    </div>
-
-                    {/* orbit rings */}
-                    <div className="absolute inset-6 rounded-full border border-emerald-500/25" />
-                    <div className="absolute inset-10 rounded-full border border-sky-500/25" />
-                    <div className="absolute inset-14 rounded-full border border-fuchsia-500/25" />
-
-                    {/* animated bin markers */}
-                    {[
-                      { top: "16%", left: "58%", color: "bg-emerald-400" },
-                      { top: "40%", left: "22%", color: "bg-emerald-300" },
-                      { top: "63%", left: "68%", color: "bg-amber-300" },
-                      { top: "70%", left: "32%", color: "bg-red-400" },
-                      { top: "28%", left: "35%", color: "bg-emerald-400" },
-                    ].map((dot, i) => (
-                      <motion.div
-                        key={i}
-                        className={`absolute h-2.5 w-2.5 rounded-full ${dot.color} shadow-[0_0_12px_rgba(52,211,153,0.9)]`}
-                        style={{ top: dot.top, left: dot.left }}
-                        animate={{ scale: [1, 1.4, 1] }}
-                        transition={{ repeat: Infinity, duration: 1.8 + i * 0.3 }}
-                      />
-                    ))}
-
-                    {/* small truck icon path */}
-                    <motion.div
-                      className="absolute h-6 w-10 rounded-xl bg-emerald-400/80 flex items-center justify-center text-[10px] font-bold text-slate-950"
-                      initial={{ x: "10%", y: "65%" }}
-                      animate={{ x: "65%", y: "25%" }}
-                      transition={{
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                        duration: 6,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      🚛
-                    </motion.div>
+                    <span className="text-emerald-400">✓</span>
+                    <span>{feature}</span>
                   </motion.div>
+                ))}
+              </div>
+            </motion.div>
 
-                  {/* KPIs column */}
-                  <div className="w-32 flex flex-col justify-between gap-2">
-                    <div className="rounded-2xl bg-slate-900/90 border border-emerald-500/40 px-3 py-2">
-                      <p className="text-[9px] text-slate-300 uppercase tracking-[0.18em]">
-                        OVERFILLED BINS
-                      </p>
-                      <div className="mt-1 flex items-baseline justify-between">
-                        <span className="text-xl font-bold text-emerald-400">18</span>
-                        <span className="text-[9px] text-emerald-300 bg-emerald-500/15 px-1.5 py-0.5 rounded-full">
-                          -32%
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-slate-900/80 border border-sky-500/40 px-3 py-2">
-                      <p className="text-[9px] text-slate-300 uppercase tracking-[0.18em]">
-                        ACTIVE TRUCKS
-                      </p>
-                      <div className="mt-1 flex items-baseline justify-between">
-                        <span className="text-xl font-bold text-sky-300">12</span>
-                        <span className="text-[9px] text-sky-300">on route</span>
-                      </div>
-                    </div>
-
-                    <div className="rounded-2xl bg-slate-900/80 border border-fuchsia-500/35 px-3 py-2">
-                      <p className="text-[9px] text-slate-300 uppercase tracking-[0.18em]">
-                        TODAY&apos;S PICKUPS
-                      </p>
-                      <div className="mt-1 flex items-baseline justify-between">
-                        <span className="text-xl font-bold text-fuchsia-300">842</span>
-                        <span className="text-[9px] text-fuchsia-300">97% on‑time</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* WHAT WE PROVIDE – 4 COMPACT CARDS */}
-      <section className="py-16 px-6 bg-slate-50">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8 text-center">
-            <p className="text-sm md:text-base lg:text-lg font-semibold tracking-[0.35em] text-emerald-500">
-              WHAT WE PROVIDE
-            </p>
-            <h2 className="mt-3 text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-900">
-              End-to-end digital control over your waste network.
-            </h2>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* card 1 */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-emerald-400/70 hover:shadow-[0_18px_60px_rgba(16,185,129,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-emerald-500 via-teal-500 to-sky-400">
-                <span className="text-2xl text-white">🗑️</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-emerald-500">
-                  IOT & BIN VISIBILITY
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Live bin tracking & alerts
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  End-to-end bin tracking, fill alerts, and predictive maintenance across your
-                  full container network.
-                </p>
-              </div>
-            </div>
-
-            {/* card 2 */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-sky-500/70 hover:shadow-[0_18px_60px_rgba(59,130,246,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-sky-500 via-blue-500 to-cyan-400">
-                <span className="text-2xl text-white">🛣️</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-sky-500">
-                  FLEET & ROUTING
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Dynamic route optimisation
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Dynamic route optimization for collection fleets so drivers only visit bins
-                  that actually need service.
-                </p>
-              </div>
-            </div>
-
-            {/* card 3 */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-emerald-400/70 hover:shadow-[0_18px_60px_rgba(16,185,129,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400">
-                <span className="text-2xl text-white">📊</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-emerald-500">
-                  CONTROL ROOMS
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Dashboards & audit history
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Real-time dashboards, mobile staff apps, and full audit logs for every route,
-                  pickup, and alert.
-                </p>
-              </div>
-            </div>
-
-            {/* card 4 */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-sky-500/70 hover:shadow-[0_18px_60px_rgba(59,130,246,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-sky-500 via-blue-500 to-cyan-400">
-                <span className="text-2xl text-white">📱</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-sky-500">
-                  QR & CITIZEN APPS
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  QR requests & managed rollout
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Citizen-facing QR for service and instant feedback, plus full deployment,
-                  support, and ongoing analytics insights.
-                </p>
-              </div>
-            </div>
+            {/* Right content - Animated truck */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <AnimatedTruck />
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* STEPS – HORIZONTAL STEPPER */}
-      <section className="py-20 px-6 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 text-slate-50">
-        <div className="max-w-6xl mx-auto relative">
-          <div className="pointer-events-none absolute -inset-x-32 -top-16 -bottom-10 opacity-40">
-            <div className="mx-auto h-full w-full max-w-5xl bg-gradient-to-tr from-emerald-500/20 via-teal-500/10 to-sky-500/20 blur-3xl" />
-          </div>
-
+      {/* FEATURES GRID SECTION */}
+      <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
+        <div className="container mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}
-            className="relative z-10 text-center mb-12"
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
           >
-            <p className="text-xs md:text-sm font-semibold tracking-[0.3em] text-emerald-400">
-              HOW SMART COLLECTION RUNS
-            </p>
-            <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
-              From sensor to clean street, in four steps
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4">
+              Everything You Need
             </h2>
-            <p className="mt-3 text-sm md:text-base text-slate-300 max-w-3xl mx-auto">
-              A connected loop that starts at the bin and ends in the control room—so every
-              collection is data‑driven and traceable.
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Complete digital control over your waste management network
             </p>
           </motion.div>
 
-          <div className="relative z-10 rounded-3xl bg-slate-900/80 border border-emerald-500/20 shadow-[0_24px_80px_rgba(15,23,42,0.9)] px-4 py-6 md:px-8 md:py-8">
-            <div className="overflow-x-auto">
-              <div className="min-w-[720px] md:min-w-0">
-                <div className="relative flex items-start justify-between gap-6">
-                  <div className="pointer-events-none absolute left-0 right-0 top-10 h-0.5 bg-gradient-to-r from-emerald-300 via-teal-400 to-sky-400" />
+          <IconGrid />
+        </div>
+      </section>
 
-                  {steps.map((stage, idx) => (
-                    <motion.div
-                      key={stage.title}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1, duration: 0.6 }}
-                      className="relative z-10 flex-1"
-                    >
-                      <div className="flex flex-col items-center text-center px-2">
-                        <div
-                          className={`flex items=center justify-center h-10 w-10 rounded-2xl border-2 bg-slate-950 shadow-md
-                            ${
-                              idx === 0
-                                ? "border-emerald-400 text-emerald-300"
-                                : idx === 1
-                                ? "border-sky-400 text-sky-300"
-                                : idx === 2
-                                ? "border-amber-400 text-amber-300"
-                                : "border-fuchsia-400 text-fuchsia-300"
-                            }`}
-                        >
-                          <span className="text-xs font-bold">0{idx + 1}</span>
-                        </div>
+      {/* ZIGZAG PROCESS SECTION */}
+      <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4">
+              How It Works
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              From sensor to clean street in four simple steps
+            </p>
+          </motion.div>
 
-                        <p className="mt-3 text-[11px] font-semibold tracking-[0.22em] text-emerald-300 uppercase">
-                          {idx === 0 && "SENSE & CONNECT"}
-                          {idx === 1 && "PLAN & DISPATCH"}
-                          {idx === 2 && "MONITOR & ANALYSE"}
-                          {idx === 3 && "ENGAGE & IMPROVE"}
-                        </p>
+          <ZigzagProcess />
+        </div>
+      </section>
 
-                        <h3 className="mt-1 text-sm md:text-base font-semibold text-slate-50">
-                          {stage.title}
-                        </h3>
-                        <p className="mt-1 text-[11px] md:text-[12px] text-slate-300 max-w-xs">
-                          {stage.desc}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
+      {/* APPLICATIONS CAROUSEL */}
+      <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-slate-900">
+        <div className="container mx-auto max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">
+              Built for Every Sector
+            </h2>
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+              Trusted by organizations across industries
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {applications.map((app, idx) => (
+              <motion.div
+                key={app.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                whileHover={{ scale: 1.1, y: -10 }}
+                className={`aspect-square bg-gradient-to-br ${app.color} rounded-2xl p-6 flex flex-col items-center justify-center gap-3 shadow-2xl cursor-pointer`}
+              >
+                <span className="text-5xl">{app.icon}</span>
+                <span className="text-sm font-bold text-white text-center">{app.name}</span>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* EXAMPLE APPLICATIONS */}
-      <section className="px-6 py-24 bg-white">
+      {/* CTA SECTION */}
+      <section className="py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-emerald-500 to-teal-600 relative overflow-hidden">
         <motion.div
-          className="max-w-6xl mx-auto"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ amount: 0.25, once: true }}
-        >
-          <h2
-            className="text-2xl md:text-3xl font-bold mb-8 text-center"
-            style={{ color: darkTeal }}
-          >
-            Example applications
-          </h2>
+          className="absolute inset-0 opacity-20"
+          animate={{
+            backgroundPosition: ["0% 0%", "100% 100%"],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{
+            backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
+            backgroundSize: "50px 50px",
+          }}
+        />
 
-          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {exampleUses.map((item, idx) => (
-              <motion.div
-                key={item.title}
-                variants={itemVariants}
-                whileHover={{ y: -8, scale: 1.04 }}
-                className="relative group"
+        <div className="container mx-auto max-w-4xl text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-4xl sm:text-5xl font-black text-white mb-6">
+              Ready to Go Smart?
+            </h2>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              Join organizations transforming waste management with intelligent solutions
+            </p>
+
+            <div className="flex flex-wrap gap-4 justify-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-white text-emerald-600 font-bold rounded-xl shadow-2xl"
               >
-                <div
-                  className={`absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300
-                    ${
-                      idx % 3 === 0 &&
-                      "bg-gradient-to-br from-emerald-400 via-teal-400 to-sky-400"
-                    }
-                    ${
-                      idx % 3 === 1 &&
-                      "bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400"
-                    }
-                    ${
-                      idx % 3 === 2 &&
-                      "bg-gradient-to-br from-indigo-500 via-sky-500 to-cyan-400"
-                    }
-                  `}
-                />
-                <div className="relative rounded-2xl bg-white border border-slate-100 px-5 py-5 shadow-[0_12px_40px_rgba(15,23,42,0.12)] transition-shadow duration-300 group-hover:shadow-[0_20px_70px_rgba(15,23,42,0.18)]">
-                  <div className="mb-3 flex items-center justify-center">
-                    <div
-                      className={`h-10 w-10 rounded-xl flex items-center justify-center text-lg text-white
-                        ${
-                          idx % 3 === 0 &&
-                          "bg-gradient-to-br from-emerald-500 to-teal-500"
-                        }
-                        ${
-                          idx % 3 === 1 &&
-                          "bg-gradient-to-br from-fuchsia-500 to-orange-400"
-                        }
-                        ${
-                          idx % 3 === 2 &&
-                          "bg-gradient-to-br from-indigo-500 to-sky-500"
-                        }
-                      `}
-                    >
-                      {idx === 0 && "🏙"}
-                      {idx === 1 && "🏘"}
-                      {idx === 2 && "🎓"}
-                      {idx === 3 && "🏭"}
-                      {idx === 4 && "🏨"}
-                      {idx === 5 && "🏛"}
-                    </div>
-                  </div>
-                  <h4 className="font-semibold mb-1 text-sm md:text-base text-slate-900 text-center">
-                    {item.title}
-                  </h4>
-                  <p className="text-xs md:text-sm text-slate-600 text-center">
-                    {item.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                <a href="/contact" className="block">
+                  Contact Us Today
+                </a>
+              </motion.button>
+              {/* <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-transparent text-white font-bold rounded-xl border-2 border-white"
+              >
+                Schedule Demo
+              </motion.button> */}
+            </div>
+          </motion.div>
+        </div>
       </section>
     </div>
   );
