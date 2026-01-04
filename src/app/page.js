@@ -342,7 +342,7 @@ export default function HomePage() {
                 className="relative rounded-2xl overflow-hidden shadow-2xl"
               >
                 <div className="aspect-video overflow-hidden">
-                  <img 
+                  <image
                     src={product.image} 
                     alt={product.title}
                     className="w-full h-full object-cover"
@@ -480,7 +480,7 @@ export default function HomePage() {
           </h2>
 
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            Let's build something extraordinary together. Our team is ready to bring your vision to life.
+            Lets build something extraordinary together. Our team is ready to bring your vision to life.
           </p>
 
           <motion.button
