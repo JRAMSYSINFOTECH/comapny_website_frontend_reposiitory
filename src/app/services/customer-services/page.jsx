@@ -1,475 +1,542 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const logoGreen = "#19B49A";
+// Flowing Lines Background
+const FlowingLines = () => (
+  <div className="absolute inset-0 overflow-hidden opacity-10">
+    {[...Array(8)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="absolute h-px bg-gradient-to-r from-transparent via-violet-400 to-transparent"
+        style={{
+          width: "200%",
+          left: "-50%",
+          top: `${10 + i * 12}%`,
+        }}
+        animate={{
+          x: ["-10%", "10%"],
+        }}
+        transition={{
+          duration: 15 + i * 2,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut",
+        }}
+      />
+    ))}
+  </div>
+);
 
-const containerVariants = { hidden: {}, visible: { transition: { staggerChildren: 0.25 } } };
+// Chat Bubble Animation
+const ChatBubbles = () => {
+  const bubbles = [
+    { x: 10, y: 20, delay: 0, message: "💬" },
+    { x: 80, y: 30, delay: 0.5, message: "✨" },
+    { x: 20, y: 70, delay: 1, message: "🎯" },
+    { x: 85, y: 75, delay: 1.5, message: "📞" },
+  ];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
-  },
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      {bubbles.map((bubble, idx) => (
+        <motion.div
+          key={idx}
+          className="absolute text-4xl"
+          style={{ left: `${bubble.x}%`, top: `${bubble.y}%` }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{
+            scale: [0, 1.2, 1],
+            opacity: [0, 1, 0.3],
+            y: [0, -30, 0],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            delay: bubble.delay,
+          }}
+        >
+          {bubble.message}
+        </motion.div>
+      ))}
+    </div>
+  );
 };
 
-const services = [
-  {
-    title: "Omnichannel Support Integrations",
-    desc: "Connect phone, chat, email, and WhatsApp into a unified ticketing and communication system for world-class, responsive service.",
-  },
-  {
-    title: "Custom CRM Solutions",
-    desc: "Implement or tailor CRMs for customer records, case/issue management, and support workflow digitalization.",
-  },
-  {
-    title: "Chatbot & Self-Service Portals",
-    desc: "Deploy AI-powered or rule-based chatbots and customer self-service to provide 24/7 answers and lower manual workload.",
-  },
-  {
-    title: "Feedback & Survey Automation",
-    desc: "Gather, analyze, and react to customer feedback in real time to continuously improve experiences and satisfaction.",
-  },
-  {
-    title: "Analytics & Quality Monitoring",
-    desc: "Monitor agent/service performance, automate reporting, and keep your support aligned with KPIs and SLAs.",
-  },
-];
-
-const sectors = [
-  { title: "Retail & E-commerce", desc: "Order assistance, product support, and loyalty programs." },
-  { title: "Education", desc: "Student/parent help desks and campus support digitalization." },
-  { title: "Healthcare", desc: "Patient inquiries, appointment coordination, and billing help." },
-  { title: "Government", desc: "Citizen assistance, civic engagement, and public queries." },
-  { title: "Hospitality & Events", desc: "Booking, check-in, and guest services automation." },
-  { title: "Finance", desc: "Account support, fraud response, and service inquiries." },
-];
+// Curved Text Path
+const CurvedText = ({ text, radius = 100 }) => (
+  <svg viewBox="0 0 200 200" className="w-32 h-32">
+    <defs>
+      <path
+        id="circlePath"
+        d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0"
+      />
+    </defs>
+    <text className="text-[10px] fill-violet-400 font-bold tracking-widest">
+      <textPath href="#circlePath" startOffset="0%">
+        {text}
+      </textPath>
+    </text>
+  </svg>
+);
 
 export default function CustomerServicesPage() {
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const [activeService, setActiveService] = useState(0);
+
+  const services = [
+    {
+      number: "01",
+      title: "Omnichannel Symphony",
+      subtitle: "UNIFIED COMMUNICATION",
+      description: "Orchestrate seamless conversations across phone, chat, email, WhatsApp, and social media into one harmonious customer experience.",
+      features: ["Real-time syncing", "Unified inbox", "Channel routing"],
+      icon: "💬",
+      gradient: "from-violet-500 via-purple-500 to-pink-500",
+      bgPattern: "dots",
+    },
+    {
+      number: "02",
+      title: "Intelligence Layer",
+      subtitle: "AI-POWERED AUTOMATION",
+      description: "Deploy smart chatbots and virtual assistants that learn, adapt, and resolve 70% of inquiries instantly—24/7 without human intervention.",
+      features: ["NLP processing", "Intent recognition", "Auto-escalation"],
+      icon: "🤖",
+      gradient: "from-cyan-500 via-blue-500 to-indigo-500",
+      bgPattern: "waves",
+    },
+    {
+      number: "03",
+      title: "Relationship Engine",
+      subtitle: "CUSTOM CRM SOLUTIONS",
+      description: "Build comprehensive customer profiles with interaction history, preferences, and predictive insights to deliver personalized service at scale.",
+      features: ["360° customer view", "Workflow automation", "Custom fields"],
+      icon: "🎯",
+      gradient: "from-emerald-500 via-teal-500 to-cyan-500",
+      bgPattern: "grid",
+    },
+    {
+      number: "04",
+      title: "Insight Amplifier",
+      subtitle: "ANALYTICS & REPORTING",
+      description: "Transform customer conversations into actionable intelligence with sentiment analysis, performance metrics, and predictive analytics.",
+      features: ["Sentiment tracking", "SLA monitoring", "Custom dashboards"],
+      icon: "📊",
+      gradient: "from-orange-500 via-red-500 to-pink-500",
+      bgPattern: "diagonal",
+    },
+  ];
+
+  const industries = [
+    {
+      name: "Retail & Commerce",
+      icon: "🛍️",
+      stat: "4.8★ avg rating",
+      color: "violet",
+      desc: "Order tracking, returns, and loyalty programs",
+    },
+    {
+      name: "Healthcare",
+      icon: "🏥",
+      stat: "HIPAA certified",
+      color: "cyan",
+      desc: "Patient scheduling, billing, and telehealth support",
+    },
+    {
+      name: "Financial Services",
+      icon: "💳",
+      stat: "SOC 2 compliant",
+      color: "emerald",
+      desc: "Account support, fraud alerts, and transactions",
+    },
+    {
+      name: "Education",
+      icon: "🎓",
+      stat: "500K+ students",
+      color: "orange",
+      desc: "Admissions, campus services, and parent portals",
+    },
+    {
+      name: "Hospitality",
+      icon: "🏨",
+      stat: "Real-time booking",
+      color: "pink",
+      desc: "Reservations, concierge, and guest services",
+    },
+    {
+      name: "Government",
+      icon: "🏛️",
+      stat: "Multi-language",
+      color: "blue",
+      desc: "Citizen services, permits, and public inquiries",
+    },
+  ];
+
+  const benefits = [
+    {
+      title: "Response Time",
+      before: "4.2 hrs",
+      after: "12 min",
+      improvement: "95%",
+      icon: "⚡",
+    },
+    {
+      title: "Resolution Rate",
+      before: "72%",
+      after: "94%",
+      improvement: "30%",
+      icon: "✅",
+    },
+    {
+      title: "Customer Satisfaction",
+      before: "3.8/5",
+      after: "4.7/5",
+      improvement: "24%",
+      icon: "⭐",
+    },
+    {
+      title: "Support Costs",
+      before: "$8.50",
+      after: "$2.40",
+      improvement: "72%",
+      icon: "💰",
+    },
+  ];
+
   return (
-    <div className="bg-slate-950 text-white min-h-screen overflow-hidden">
-      {/* HERO */}
-      <section className="relative px-6 py-28 md:py-36">
-        {/* colourful background */}
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -left-32 -top-32 h-80 w-80 rounded-full bg-emerald-500/35 blur-3xl" />
-          <div className="absolute -right-40 -top-10 h-72 w-72 rounded-full bg-sky-500/30 blur-3xl" />
-          <div className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-fuchsia-500/30 blur-3xl" />
-          <div className="absolute -left-10 bottom-[-120px] h-80 w-[420px] rotate-[-18deg] bg-gradient-to-r from-emerald-400/25 via-cyan-400/25 to-fuchsia-400/25 blur-3xl" />
-          <div
-            className="absolute inset-0 opacity-18"
-            style={{
-              backgroundImage: `
-                linear-gradient(${logoGreen} 1px, transparent 1px),
-                linear-gradient(90deg, ${logoGreen} 1px, transparent 1px)
-              `,
-              backgroundSize: "46px 46px",
-            }}
-          />
-        </div>
+    <div className="bg-white text-slate-900 min-h-screen" style={{ fontFamily: '"IBM Plex Sans", system-ui, sans-serif' }}>
+      {/* Add Fonts */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+      `}</style>
 
-        <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:items-center">
-          {/* hero text */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="md:w-3/5"
-          >
-            <p
-              className="mb-3 inline-flex items-center rounded-full px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.25em]"
-              style={{ backgroundColor: "rgba(25,180,154,0.12)", color: logoGreen }}
+      {/* HERO SECTION - EDITORIAL SPLIT */}
+      <section className="relative min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 overflow-hidden">
+        <FlowingLines />
+        <ChatBubbles />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              DIGITAL CUSTOMER SERVICES
-            </p>
+              {/* Rotating badge */}
+              <motion.div
+                className="mb-8 inline-block"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              >
+                <CurvedText text="CUSTOMER SERVICE • DIGITAL EXPERIENCE • " />
+              </motion.div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4">
-              Turn every{" "}
-              <span style={{ color: logoGreen }}>interaction</span>
-              <br />
-              into a loyal relationship
-            </h1>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 leading-[0.95]" style={{ fontFamily: '"Playfair Display", serif' }}>
+                <span className="block">Every</span>
+                <span className="block mt-2 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent italic">
+                  Conversation
+                </span>
+                <span className="block mt-2">Matters</span>
+              </h1>
 
-            <p className="text-sm md:text-base text-slate-200 mb-6 max-w-xl">
-              Deliver outstanding experiences, build loyalty, and streamline support using JRamsys’
-              suite of digital customer service solutions.
-            </p>
+              <div className="relative mb-8 pl-6">
+                <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-violet-500 to-pink-500" />
+                <p className="text-xl sm:text-2xl text-slate-700 leading-relaxed max-w-xl">
+                  Transform customer service from a cost center into your most powerful competitive advantage.
+                </p>
+              </div>
 
-            <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-300">
-              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-400/40 px-3 py-1 bg-slate-950/40 backdrop-blur">
-                💬 Omnichannel support
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-sky-400/40 px-3 py-1 bg-slate-950/40 backdrop-blur">
-                🤖 Chatbots & self‑service
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-fuchsia-400/40 px-3 py-1 bg-slate-950/40 backdrop-blur">
-                📊 CRM & SLA analytics
-              </span>
-            </div>
-          </motion.div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.05, rotate: -1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-bold rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                >
+                  <a href="/contact" className="block">
+                    Contact Us
+                  </a>
+                </motion.button>
+                
+              </div>
+            </motion.div>
 
-          {/* mini support ops card */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="md:w-2/5"
-          >
-            <div className="rounded-[28px] bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border border-slate-800/80 shadow-[0_24px_80px_rgba(15,23,42,0.85)] px-5 py-5 md:px-6 md:py-6 relative overflow-hidden">
-              <div className="pointer-events-none absolute inset-0 opacity-25">
-                <div
-                  className="w-full h-full"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(rgba(148,163,184,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.25) 1px, transparent 1px)",
-                    backgroundSize: "26px 26px",
-                  }}
+            {/* Right Visualization */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative h-[600px] hidden lg:block"
+            >
+              {/* Decorative elements */}
+              <div className="absolute inset-0">
+                {/* Large circle */}
+                <motion.div
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border-4 border-violet-300"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 />
-              </div>
+                
+                {/* Customer service elements */}
+                {[
+                  { icon: "💬", x: "50%", y: "10%", color: "violet", delay: 0 },
+                  { icon: "📞", x: "85%", y: "40%", color: "pink", delay: 0.5 },
+                  { icon: "✉️", x: "70%", y: "80%", color: "purple", delay: 1 },
+                  { icon: "🤖", x: "15%", y: "70%", color: "cyan", delay: 1.5 },
+                  { icon: "📊", x: "10%", y: "30%", color: "orange", delay: 2 },
+                ].map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    className={`absolute w-20 h-20 bg-gradient-to-br from-${item.color}-400 to-${item.color}-600 rounded-full flex items-center justify-center text-3xl shadow-2xl border-4 border-white`}
+                    style={{ left: item.x, top: item.y, transform: 'translate(-50%, -50%)' }}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{
+                      scale: [0, 1.2, 1],
+                      opacity: 1,
+                      y: [0, -20, 0],
+                    }}
+                    transition={{
+                      scale: { delay: item.delay, duration: 0.5 },
+                      y: { duration: 3, repeat: Infinity, delay: item.delay },
+                    }}
+                  >
+                    {item.icon}
+                  </motion.div>
+                ))}
 
-              <div className="relative z-10">
-                <div className="mb-3 flex items-center justify-between text-[10px] text-slate-300">
-                  <span>SUPPORT OPERATIONS SNAPSHOT</span>
-                  <span className="flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    LIVE QUEUES
-                  </span>
-                </div>
+                {/* Central hub */}
+                <motion.div
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-violet-600 to-pink-600 rounded-full flex items-center justify-center text-5xl shadow-2xl border-8 border-white z-10"
+                  animate={{
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  🎯
+                </motion.div>
 
-                <div className="grid grid-cols-5 gap-3 items-stretch">
-                  {/* left: channels load */}
-                  <div className="col-span-3 flex flex-col">
-                    <p className="mb-1 text-[10px] uppercase tracking-wide text-slate-400">
-                      Channel load
-                    </p>
-                    <div className="relative flex-1 rounded-2xl bg-slate-950/85 border border-slate-800/70 px-3 py-2 overflow-hidden">
-                      <div className="pointer-events-none absolute inset-x-4 bottom-0 h-14 bg-gradient-to-t from-emerald-500/30 via-cyan-400/10 to-transparent blur-xl" />
-                      <div className="relative flex flex-col gap-2 text-[10px] text-slate-300">
-                        {[
-                          { label: "Chat", value: 68 },
-                          { label: "Email", value: 47 },
-                          { label: "Phone", value: 39 },
-                        ].map((c, i) => (
-                          <div key={c.label}>
-                            <div className="flex items-center justify-between">
-                              <span>{c.label}</span>
-                              <span className="text-emerald-300 font-semibold">
-                                {c.value}%
-                              </span>
-                            </div>
-                            <div className="h-1 rounded-full bg-slate-800">
-                              <motion.div
-                                className="h-1 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400"
-                                initial={{ width: 0 }}
-                                animate={{ width: `${c.value}%` }}
-                                transition={{ delay: 0.15 + i * 0.08, duration: 0.45 }}
-                              />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* right: metrics */}
-                  <div className="col-span-2 flex flex-col">
-                    <p className="mb-1 text-[10px] uppercase tracking-wide text-slate-400">
-                      CX metrics
-                    </p>
-                    <div className="space-y-1.5">
-                      <div className="rounded-2xl bg-slate-950/80 border border-emerald-500/40 px-3 py-2 flex flex-col gap-1">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[9px] text-slate-200">
-                            First response time
-                          </span>
-                          <span className="text-[10px] font-semibold text-emerald-400">
-                            ‑32%
-                          </span>
-                        </div>
-                      </div>
-                      <div className="rounded-2xl bg-slate-950/70 border border-sky-500/40 px-3 py-2 flex flex-col gap-1">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[9px] text-slate-200">
-                            Self‑service resolution
-                          </span>
-                          <span className="text-[10px] font-semibold text-sky-300">
-                            61%
-                          </span>
-                        </div>
-                      </div>
-                      <div className="rounded-2xl bg-slate-950/70 border border-fuchsia-500/35 px-3 py-2 flex flex-col gap-1">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[9px] text-slate-200">CSAT</span>
-                          <span className="text-[10px] font-semibold text-fuchsia-300">
-                            4.6 / 5
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+                {/* Connection lines */}
+                <svg className="absolute inset-0 w-full h-full">
+                  {[
+                    { x1: "50%", y1: "50%", x2: "50%", y2: "10%" },
+                    { x1: "50%", y1: "50%", x2: "85%", y2: "40%" },
+                    { x1: "50%", y1: "50%", x2: "70%", y2: "80%" },
+                    { x1: "50%", y1: "50%", x2: "15%", y2: "70%" },
+                    { x1: "50%", y1: "50%", x2: "10%", y2: "30%" },
+                  ].map((line, idx) => (
+                    <motion.line
+                      key={idx}
+                      x1={line.x1}
+                      y1={line.y1}
+                      x2={line.x2}
+                      y2={line.y2}
+                      stroke="#a78bfa"
+                      strokeWidth="3"
+                      strokeDasharray="10,10"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{
+                        delay: idx * 0.3,
+                        duration: 1.5,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                      }}
+                    />
+                  ))}
+                </svg>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* WHAT WE PROVIDE – 4 COMPACT CARDS */}
-      <section className="py-16 px-6 bg-slate-50">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-8 text-center">
-            <p className="text-sm md:text-base lg:text-lg font-semibold tracking-[0.35em] text-emerald-500">
-              WHAT WE PROVIDE
-            </p>
-            <h2 className="mt-3 text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-900">
-              Everything you need to modernise support.
-            </h2>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* Card 1 */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-emerald-400/70 hover:shadow-[0_18px_60px_rgba(16,185,129,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-emerald-500 via-teal-500 to-sky-400">
-                <span className="text-2xl text-white">📞</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-emerald-500">
-                  OMNICHANNEL CASES
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Integrated multi‑channel case management
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Integrated multi-channel case management that joins phone, chat, email, and
-                  more into one view.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-sky-500/70 hover:shadow-[0_18px_60px_rgba(59,130,246,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-sky-500 via-blue-500 to-cyan-400">
-                <span className="text-2xl text-white">🤖</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-sky-500">
-                  AUTOMATION & BOTS
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Ticketing, chatbots & help desks
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Automated ticketing, chatbots, and help desk portals to keep agents focused on
-                  complex issues.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-emerald-400/70 hover:shadow-[0_18px_60px_rgba(16,185,129,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400">
-                <span className="text-2xl text-white">📂</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-emerald-500">
-                  CRM & SLA
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Custom CRM & reporting
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Custom CRM and SLA reporting solutions that match how your teams actually
-                  serve customers.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 4 */}
-            <div className="group flex items-center gap-4 rounded-2xl bg-white px-5 py-4 shadow-[0_12px_40px_rgba(15,23,42,0.06)] border border-slate-100 transition-all duration-200 hover:border-sky-500/70 hover:shadow-[0_18px_60px_rgba(59,130,246,0.18)]">
-              <div className="h-16 w-16 shrink-0 rounded-2xl flex items-center justify-center shadow-md bg-gradient-to-br from-sky-500 via-blue-500 to-cyan-400">
-                <span className="text-2xl text-white">📈</span>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-[11px] font-semibold tracking-[0.22em] text-sky-500">
-                  FEEDBACK & INSIGHT
-                </p>
-                <h3 className="text-base md:text-lg font-semibold text-slate-900 mt-1">
-                  Feedback & improvement loops
-                </h3>
-                <p className="mt-1 text-[12px] text-slate-600">
-                  Customer feedback, analytics, and continuous improvement loops built into your
-                  service.
-                </p>
-              </div>
-            </div>
+            </motion.div>
           </div>
         </div>
+
+        {/* Decorative corner elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-pink-300/30 to-transparent rounded-bl-full" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-violet-300/30 to-transparent rounded-tr-full" />
       </section>
 
-      {/* SERVICES – HORIZONTAL STEPPER STYLE */}
-      <section className="py-20 px-6 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 text-slate-50">
-        <div className="max-w-6xl mx-auto relative">
-          <div className="pointer-events-none absolute -inset-x-32 -top-16 -bottom-10 opacity-40">
-            <div className="mx-auto h-full w-full max-w-5xl bg-gradient-to-tr from-emerald-500/20 via-teal-500/10 to-sky-500/20 blur-3xl" />
-          </div>
-
+      {/* SERVICES SECTION - TABBED INTERFACE */}
+      <section className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50">
+        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}
-            className="relative z-10 text-center mb-12"
+            viewport={{ once: true }}
+            className="text-center mb-16"
           >
-            <p className="text-xs md:text-sm font-semibold tracking-[0.3em] text-emerald-400">
-              HOW OUR CUSTOMER SERVICES STACK
-            </p>
-            <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
-              From first touch to ongoing loyalty
+            <div className="inline-block mb-4 px-6 py-2 bg-violet-100 border-4 border-black">
+              <span className="font-bold text-sm uppercase tracking-widest">Our Capabilities</span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4" style={{ fontFamily: '"Playfair Display", serif' }}>
+              <span className="italic">Complete</span> Service Stack
             </h2>
-            <p className="mt-3 text-sm md:text-base text-slate-300 max-w-3xl mx-auto">
-              Layered capabilities that can sit on top of your tools or power a fully new
-              service operation.
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              End-to-end customer experience platform that grows with your business
             </p>
           </motion.div>
 
-          <div className="relative z-10 rounded-3xl bg-slate-900/80 border border-emerald-500/20 shadow-[0_24px_80px_rgba(15,23,42,0.9)] px-4 py-6 md:px-8 md:py-8">
-            <div className="overflow-x-auto">
-              <div className="min-w-[720px] md:min-w-0">
-                <div className="relative flex items-start justify-between gap-6">
-                  <div className="pointer-events-none absolute left-0 right-0 top-10 h-0.5 bg-gradient-to-r from-emerald-300 via-teal-400 to-sky-400" />
+          {/* Service tabs */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+            {services.map((service, idx) => (
+              <motion.button
+                key={service.number}
+                onClick={() => setActiveService(idx)}
+                whileHover={{ scale: 1.05, rotate: activeService === idx ? 0 : -2 }}
+                className={`p-6 text-left border-4 border-black transition-all ${
+                  activeService === idx
+                    ? "bg-gradient-to-br " + service.gradient + " text-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+                    : "bg-white hover:bg-slate-50"
+                }`}
+              >
+                <div className="text-4xl mb-3">{service.icon}</div>
+                <div className="text-xs font-bold uppercase tracking-widest opacity-70 mb-2">
+                  {service.subtitle}
+                </div>
+                <div className="text-xl font-bold">{service.title}</div>
+              </motion.button>
+            ))}
+          </div>
 
-                  {services.map((service, idx) => (
+          {/* Active service details */}
+          <motion.div
+            key={activeService}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white border-4 border-black p-8 sm:p-12 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]"
+          >
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className={`inline-block text-8xl font-black bg-gradient-to-br ${services[activeService].gradient} bg-clip-text text-transparent mb-4`}>
+                  {services[activeService].number}
+                </div>
+                <h3 className="text-3xl sm:text-4xl font-black mb-4" style={{ fontFamily: '"Playfair Display", serif' }}>
+                  {services[activeService].title}
+                </h3>
+                <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+                  {services[activeService].description}
+                </p>
+                <div className="space-y-3">
+                  {services[activeService].features.map((feature, idx) => (
                     <motion.div
-                      key={service.title}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1, duration: 0.6 }}
-                      className="relative z-10 flex-1"
+                      key={feature}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="flex items-center gap-3"
                     >
-                      <div className="flex flex-col items-center text-center px-2">
-                        <div
-                          className={`flex items=center justify-center h-10 w-10 rounded-2xl border-2 bg-slate-950 shadow-md
-                            ${
-                              idx === 0
-                                ? "border-emerald-400 text-emerald-300"
-                                : idx === 1
-                                ? "border-sky-400 text-sky-300"
-                                : idx === 2
-                                ? "border-amber-400 text-amber-300"
-                                : idx === 3
-                                ? "border-fuchsia-400 text-fuchsia-300"
-                                : "border-emerald-500 text-emerald-300"
-                            }`}
-                        >
-                          <span className="text-xs font-bold">0{idx + 1}</span>
-                        </div>
-
-                        <p className="mt-3 text-[11px] font-semibold tracking-[0.22em] text-emerald-300 uppercase">
-                          {idx === 0 && "UNIFY CHANNELS"}
-                          {idx === 1 && "STRUCTURE DATA"}
-                          {idx === 2 && "AUTOMATE ANSWERS"}
-                          {idx === 3 && "LISTEN & LEARN"}
-                          {idx === 4 && "MEASURE & IMPROVE"}
-                        </p>
-
-                        <h3 className="mt-1 text-sm md:text-base font-semibold text-slate-50">
-                          {service.title}
-                        </h3>
-                        <p className="mt-1 text-[11px] md:text-[12px] text-slate-300 max-w-xs">
-                          {service.desc}
-                        </p>
+                      <div className={`w-6 h-6 bg-gradient-to-br ${services[activeService].gradient} rounded-full flex items-center justify-center text-white text-xs font-bold`}>
+                        ✓
                       </div>
+                      <span className="font-semibold">{feature}</span>
                     </motion.div>
                   ))}
                 </div>
               </div>
+
+              {/* Visualization */}
+              <div className="relative h-80 bg-gradient-to-br from-slate-100 to-slate-200 border-4 border-black flex items-center justify-center">
+                <div className={`text-9xl opacity-20 ${services[activeService].icon}`}>
+                  {services[activeService].icon}
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-6xl animate-bounce">
+                    {services[activeService].icon}
+                  </div>
+                </div>
+              </div>
             </div>
+          </motion.div>
+        </div>
+      </section>
+   {/* INDUSTRIES SECTION - BENTO GRID */}
+      <section className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-pink-50 via-violet-50 to-cyan-50">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4" style={{ fontFamily: '"Playfair Display", serif' }}>
+              Trusted Across <span className="italic bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">Industries</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {industries.map((industry, idx) => (
+              <motion.div
+                key={industry.name}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  rotate: [0, -2, 2, -2, 0],
+                  transition: { duration: 0.3 }
+                }}
+                className={`relative bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_${
+                  industry.color === 'violet' ? 'rgba(139,92,246,0.3)' :
+                  industry.color === 'cyan' ? 'rgba(6,182,212,0.3)' :
+                  industry.color === 'emerald' ? 'rgba(16,185,129,0.3)' :
+                  industry.color === 'orange' ? 'rgba(249,115,22,0.3)' :
+                  industry.color === 'pink' ? 'rgba(236,72,153,0.3)' :
+                  'rgba(59,130,246,0.3)'
+                })] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all`}
+              >
+                <div className="flex justify-between items-start mb-4">
+                  <div className="text-5xl">{industry.icon}</div>
+                  <div className={`px-3 py-1 bg-${industry.color}-500 text-white text-xs font-bold`}>
+                    {industry.stat}
+                  </div>
+                </div>
+                <h3 className="text-xl font-black mb-2">{industry.name}</h3>
+                <p className="text-sm text-slate-600">{industry.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* SECTORS – GRADIENT CARDS */}
-      <section className="px-6 py-24 bg-white">
-        <motion.div
-          className="max-w-6xl mx-auto"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ amount: 0.25, once: true }}
-        >
-          <h2
-            className="text-2xl md:text-3xl font-bold mb-8 text-center"
-            style={{ color: "#0A3D3E" }}
+      {/* CTA SECTION - BOLD */}
+      <section className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
           >
-            Sectors we serve
-          </h2>
+            <div className="inline-block mb-8 px-8 py-3 bg-black text-white font-bold uppercase tracking-widest transform -rotate-2">
+              Ready to Transform?
+            </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {sectors.map((item, idx) => (
-              <motion.div
-                key={item.title}
-                variants={itemVariants}
-                whileHover={{ y: -8, scale: 1.04 }}
-                className="relative group"
+            <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black mb-8 text-white leading-tight" style={{ fontFamily: '"Playfair Display", serif' }}>
+              Let's Build Your
+              <br />
+              <span className="italic">Customer Experience</span>
+            </h2>
+
+            <p className="text-xl sm:text-2xl text-violet-100 mb-12 max-w-2xl mx-auto leading-relaxed">
+              Join hundreds of companies delivering world-class service with our platform
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-12 py-6 bg-white text-purple-600 font-black text-xl uppercase tracking-wider shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
               >
-                <div
-                  className={`absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300
-                    ${
-                      idx % 3 === 0 &&
-                      "bg-gradient-to-br from-emerald-400 via-teal-400 to-sky-400"
-                    }
-                    ${
-                      idx % 3 === 1 &&
-                      "bg-gradient-to-br from-fuchsia-500 via-pink-500 to-orange-400"
-                    }
-                    ${
-                      idx % 3 === 2 &&
-                      "bg-gradient-to-br from-indigo-500 via-sky-500 to-cyan-400"
-                    }
-                  `}
-                />
-                <div className="relative rounded-2xl bg-white border border-slate-100 px-5 py-5 shadow-[0_12px_40px_rgba(15,23,42,0.12)] transition-shadow duration-300 group-hover:shadow-[0_20px_70px_rgba(15,23,42,0.18)]">
-                  <div className="mb-3 flex items-center justify-center">
-                    <div
-                      className={`h-10 w-10 rounded-xl flex items-center justify-center text-lg text-white
-                        ${
-                          idx % 3 === 0 &&
-                          "bg-gradient-to-br from-emerald-500 to-teal-500"
-                        }
-                        ${
-                          idx % 3 === 1 &&
-                          "bg-gradient-to-br from-fuchsia-500 to-orange-400"
-                        }
-                        ${
-                          idx % 3 === 2 &&
-                          "bg-gradient-to-br from-indigo-500 to-sky-500"
-                        }
-                      `}
-                    >
-                      {idx === 0 && "🛍️"}
-                      {idx === 1 && "🎓"}
-                      {idx === 2 && "🏥"}
-                      {idx === 3 && "🏛"}
-                      {idx === 4 && "🏨"}
-                      {idx === 5 && "💳"}
-                    </div>
-                  </div>
-                  <h4 className="font-semibold mb-1 text-sm md:text-base text-slate-900 text-center">
-                    {item.title}
-                  </h4>
-                  <p className="text-xs md:text-sm text-slate-600 text-center">
-                    {item.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                <a href="/contact">Get Started Now</a>
+              </motion.button>
+             
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-10 left-10 w-32 h-32 border-8 border-white/20 rounded-full" />
+        <div className="absolute bottom-10 right-10 w-40 h-40 border-8 border-white/20" />
       </section>
     </div>
   );
