@@ -47,7 +47,7 @@ const NetworkBackground = () => {
         // Draw node with stronger visibility
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(230, 240, 238, 0.9)`;
+        ctx.fillStyle = `rgba(238, 230, 240, 0.9)`;
         ctx.fill();
 
         // Add glow effect
@@ -66,8 +66,8 @@ const NetworkBackground = () => {
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(otherNode.x, otherNode.y);
-            const opacity = 0.4 * (1 - distance / 180);
-            ctx.strokeStyle = `rgba(230, 240, 238, ${opacity})`;
+            const opacity = 0.8 * (1 - distance / 180);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
             ctx.lineWidth = 1.5;
             ctx.stroke();
           }

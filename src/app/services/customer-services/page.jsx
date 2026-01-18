@@ -3,17 +3,21 @@
 import React, { useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+const logoGreen = "#19B49A";
+const darkTeal = "#0A3D3E";
+
 // Flowing Lines Background
 const FlowingLines = () => (
   <div className="absolute inset-0 overflow-hidden opacity-10">
     {[...Array(8)].map((_, i) => (
       <motion.div
         key={i}
-        className="absolute h-px bg-gradient-to-r from-transparent via-violet-400 to-transparent"
+        className="absolute h-px"
         style={{
           width: "200%",
           left: "-50%",
           top: `${10 + i * 12}%`,
+          background: `linear-gradient(to right, transparent, ${logoGreen}, transparent)`
         }}
         animate={{
           x: ["-10%", "10%"],
@@ -73,7 +77,7 @@ const CurvedText = ({ text, radius = 100 }) => (
         d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0"
       />
     </defs>
-    <text className="text-[10px] fill-violet-400 font-bold tracking-widest">
+    <text className="text-[10px] font-bold tracking-widest" fill={logoGreen}>
       <textPath href="#circlePath" startOffset="0%">
         {text}
       </textPath>
@@ -94,7 +98,7 @@ export default function CustomerServicesPage() {
       description: "Orchestrate seamless conversations across phone, chat, email, WhatsApp, and social media into one harmonious customer experience.",
       features: ["Real-time syncing", "Unified inbox", "Channel routing"],
       icon: "💬",
-      gradient: "from-violet-500 via-purple-500 to-pink-500",
+      gradient: `linear-gradient(to bottom right, ${darkTeal}, ${logoGreen})`,
       bgPattern: "dots",
     },
     {
@@ -104,7 +108,7 @@ export default function CustomerServicesPage() {
       description: "Deploy smart chatbots and virtual assistants that learn, adapt, and resolve 70% of inquiries instantly—24/7 without human intervention.",
       features: ["NLP processing", "Intent recognition", "Auto-escalation"],
       icon: "🤖",
-      gradient: "from-cyan-500 via-blue-500 to-indigo-500",
+      gradient: `linear-gradient(to bottom right, ${logoGreen}, ${darkTeal})`,
       bgPattern: "waves",
     },
     {
@@ -114,7 +118,7 @@ export default function CustomerServicesPage() {
       description: "Build comprehensive customer profiles with interaction history, preferences, and predictive insights to deliver personalized service at scale.",
       features: ["360° customer view", "Workflow automation", "Custom fields"],
       icon: "🎯",
-      gradient: "from-emerald-500 via-teal-500 to-cyan-500",
+      gradient: `linear-gradient(to bottom right, ${darkTeal}, #0d5650, ${logoGreen})`,
       bgPattern: "grid",
     },
     {
@@ -124,7 +128,7 @@ export default function CustomerServicesPage() {
       description: "Transform customer conversations into actionable intelligence with sentiment analysis, performance metrics, and predictive analytics.",
       features: ["Sentiment tracking", "SLA monitoring", "Custom dashboards"],
       icon: "📊",
-      gradient: "from-orange-500 via-red-500 to-pink-500",
+      gradient: `linear-gradient(to bottom right, ${logoGreen}, #0d5650, ${darkTeal})`,
       bgPattern: "diagonal",
     },
   ];
@@ -134,74 +138,43 @@ export default function CustomerServicesPage() {
       name: "Retail & Commerce",
       icon: "🛍️",
       stat: "4.8★ avg rating",
-      color: "violet",
+      color: darkTeal,
       desc: "Order tracking, returns, and loyalty programs",
     },
     {
       name: "Healthcare",
       icon: "🏥",
       stat: "HIPAA certified",
-      color: "cyan",
+      color: logoGreen,
       desc: "Patient scheduling, billing, and telehealth support",
     },
     {
       name: "Financial Services",
       icon: "💳",
       stat: "SOC 2 compliant",
-      color: "emerald",
+      color: darkTeal,
       desc: "Account support, fraud alerts, and transactions",
     },
     {
       name: "Education",
       icon: "🎓",
       stat: "500K+ students",
-      color: "orange",
+      color: logoGreen,
       desc: "Admissions, campus services, and parent portals",
     },
     {
       name: "Hospitality",
       icon: "🏨",
       stat: "Real-time booking",
-      color: "pink",
+      color: "#0d5650",
       desc: "Reservations, concierge, and guest services",
     },
     {
       name: "Government",
       icon: "🏛️",
       stat: "Multi-language",
-      color: "blue",
+      color: darkTeal,
       desc: "Citizen services, permits, and public inquiries",
-    },
-  ];
-
-  const benefits = [
-    {
-      title: "Response Time",
-      before: "4.2 hrs",
-      after: "12 min",
-      improvement: "95%",
-      icon: "⚡",
-    },
-    {
-      title: "Resolution Rate",
-      before: "72%",
-      after: "94%",
-      improvement: "30%",
-      icon: "✅",
-    },
-    {
-      title: "Customer Satisfaction",
-      before: "3.8/5",
-      after: "4.7/5",
-      improvement: "24%",
-      icon: "⭐",
-    },
-    {
-      title: "Support Costs",
-      before: "$8.50",
-      after: "$2.40",
-      improvement: "72%",
-      icon: "💰",
     },
   ];
 
@@ -212,8 +185,13 @@ export default function CustomerServicesPage() {
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
       `}</style>
 
-      {/* HERO SECTION - EDITORIAL SPLIT */}
-      <section className="relative min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 overflow-hidden">
+      {/* HERO SECTION */}
+      <section 
+        className="relative min-h-screen overflow-hidden"
+        style={{
+          background: `linear-gradient(to bottom right, ${darkTeal}, #0d5650, ${darkTeal})`
+        }}
+      >
         <FlowingLines />
         <ChatBubbles />
 
@@ -234,17 +212,23 @@ export default function CustomerServicesPage() {
                 <CurvedText text="CUSTOMER SERVICE • DIGITAL EXPERIENCE • " />
               </motion.div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 leading-[0.95]" style={{ fontFamily: '"Playfair Display", serif' }}>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 leading-[0.95] text-white" style={{ fontFamily: '"Playfair Display", serif' }}>
                 <span className="block">Every</span>
-                <span className="block mt-2 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent italic">
+                <span 
+                  className="block mt-2 italic"
+                  style={{ color: logoGreen }}
+                >
                   Conversation
                 </span>
                 <span className="block mt-2">Matters</span>
               </h1>
 
               <div className="relative mb-8 pl-6">
-                <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-violet-500 to-pink-500" />
-                <p className="text-xl sm:text-2xl text-slate-700 leading-relaxed max-w-xl">
+                <div 
+                  className="absolute left-0 top-0 w-1 h-full"
+                  style={{ background: `linear-gradient(to bottom, ${darkTeal}, ${logoGreen})` }}
+                />
+                <p className="text-xl sm:text-2xl text-gray-200 leading-relaxed max-w-xl">
                   Transform customer service from a cost center into your most powerful competitive advantage.
                 </p>
               </div>
@@ -253,13 +237,13 @@ export default function CustomerServicesPage() {
                 <motion.button
                   whileHover={{ scale: 1.05, rotate: -1 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-bold rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  className="px-8 py-4 text-white font-bold rounded-none shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  style={{ background: logoGreen }}
                 >
                   <a href="/contact" className="block">
                     Contact Us
                   </a>
                 </motion.button>
-                
               </div>
             </motion.div>
 
@@ -270,27 +254,32 @@ export default function CustomerServicesPage() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="relative h-[600px] hidden lg:block"
             >
-              {/* Decorative elements */}
               <div className="absolute inset-0">
                 {/* Large circle */}
                 <motion.div
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border-4 border-violet-300"
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border-4"
+                  style={{ borderColor: `${logoGreen}50` }}
                   animate={{ rotate: 360 }}
                   transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 />
                 
                 {/* Customer service elements */}
                 {[
-                  { icon: "💬", x: "50%", y: "10%", color: "violet", delay: 0 },
-                  { icon: "📞", x: "85%", y: "40%", color: "pink", delay: 0.5 },
-                  { icon: "✉️", x: "70%", y: "80%", color: "purple", delay: 1 },
-                  { icon: "🤖", x: "15%", y: "70%", color: "cyan", delay: 1.5 },
-                  { icon: "📊", x: "10%", y: "30%", color: "orange", delay: 2 },
+                  { icon: "💬", x: "50%", y: "10%", delay: 0 },
+                  { icon: "📞", x: "85%", y: "40%", delay: 0.5 },
+                  { icon: "✉️", x: "70%", y: "80%", delay: 1 },
+                  { icon: "🤖", x: "15%", y: "70%", delay: 1.5 },
+                  { icon: "📊", x: "10%", y: "30%", delay: 2 },
                 ].map((item, idx) => (
                   <motion.div
                     key={idx}
-                    className={`absolute w-20 h-20 bg-gradient-to-br from-${item.color}-400 to-${item.color}-600 rounded-full flex items-center justify-center text-3xl shadow-2xl border-4 border-white`}
-                    style={{ left: item.x, top: item.y, transform: 'translate(-50%, -50%)' }}
+                    className="absolute w-20 h-20 rounded-full flex items-center justify-center text-3xl shadow-2xl border-4 border-white"
+                    style={{ 
+                      left: item.x, 
+                      top: item.y, 
+                      transform: 'translate(-50%, -50%)',
+                      background: idx % 2 === 0 ? logoGreen : darkTeal
+                    }}
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{
                       scale: [0, 1.2, 1],
@@ -308,7 +297,8 @@ export default function CustomerServicesPage() {
 
                 {/* Central hub */}
                 <motion.div
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-violet-600 to-pink-600 rounded-full flex items-center justify-center text-5xl shadow-2xl border-8 border-white z-10"
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full flex items-center justify-center text-5xl shadow-2xl border-8 border-white z-10"
+                  style={{ background: `linear-gradient(to bottom right, ${darkTeal}, ${logoGreen})` }}
                   animate={{
                     scale: [1, 1.1, 1],
                   }}
@@ -332,7 +322,7 @@ export default function CustomerServicesPage() {
                       y1={line.y1}
                       x2={line.x2}
                       y2={line.y2}
-                      stroke="#a78bfa"
+                      stroke={logoGreen}
                       strokeWidth="3"
                       strokeDasharray="10,10"
                       initial={{ pathLength: 0 }}
@@ -352,11 +342,17 @@ export default function CustomerServicesPage() {
         </div>
 
         {/* Decorative corner elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-pink-300/30 to-transparent rounded-bl-full" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-violet-300/30 to-transparent rounded-tr-full" />
+        <div 
+          className="absolute top-0 right-0 w-64 h-64 rounded-bl-full"
+          style={{ background: `linear-gradient(to bottom right, ${logoGreen}30, transparent)` }}
+        />
+        <div 
+          className="absolute bottom-0 left-0 w-64 h-64 rounded-tr-full"
+          style={{ background: `linear-gradient(to top right, ${darkTeal}30, transparent)` }}
+        />
       </section>
 
-      {/* SERVICES SECTION - TABBED INTERFACE */}
+      {/* SERVICES SECTION */}
       <section className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-slate-50">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -365,10 +361,16 @@ export default function CustomerServicesPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <div className="inline-block mb-4 px-6 py-2 bg-violet-100 border-4 border-black">
+            <div 
+              className="inline-block mb-4 px-6 py-2 border-4 border-black"
+              style={{ backgroundColor: `${logoGreen}20` }}
+            >
               <span className="font-bold text-sm uppercase tracking-widest">Our Capabilities</span>
             </div>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4" style={{ fontFamily: '"Playfair Display", serif' }}>
+            <h2 
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4" 
+              style={{ fontFamily: '"Playfair Display", serif', color: darkTeal }}
+            >
               <span className="italic">Complete</span> Service Stack
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
@@ -385,9 +387,10 @@ export default function CustomerServicesPage() {
                 whileHover={{ scale: 1.05, rotate: activeService === idx ? 0 : -2 }}
                 className={`p-6 text-left border-4 border-black transition-all ${
                   activeService === idx
-                    ? "bg-gradient-to-br " + service.gradient + " text-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+                    ? "text-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
                     : "bg-white hover:bg-slate-50"
                 }`}
+                style={activeService === idx ? { background: service.gradient } : {}}
               >
                 <div className="text-4xl mb-3">{service.icon}</div>
                 <div className="text-xs font-bold uppercase tracking-widest opacity-70 mb-2">
@@ -407,10 +410,21 @@ export default function CustomerServicesPage() {
           >
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
-                <div className={`inline-block text-8xl font-black bg-gradient-to-br ${services[activeService].gradient} bg-clip-text text-transparent mb-4`}>
+                <div 
+                  className="inline-block text-8xl font-black mb-4"
+                  style={{ 
+                    background: services[activeService].gradient,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}
+                >
                   {services[activeService].number}
                 </div>
-                <h3 className="text-3xl sm:text-4xl font-black mb-4" style={{ fontFamily: '"Playfair Display", serif' }}>
+                <h3 
+                  className="text-3xl sm:text-4xl font-black mb-4" 
+                  style={{ fontFamily: '"Playfair Display", serif', color: darkTeal }}
+                >
                   {services[activeService].title}
                 </h3>
                 <p className="text-lg text-slate-600 mb-6 leading-relaxed">
@@ -425,7 +439,10 @@ export default function CustomerServicesPage() {
                       transition={{ delay: idx * 0.1 }}
                       className="flex items-center gap-3"
                     >
-                      <div className={`w-6 h-6 bg-gradient-to-br ${services[activeService].gradient} rounded-full flex items-center justify-center text-white text-xs font-bold`}>
+                      <div 
+                        className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                        style={{ background: services[activeService].gradient }}
+                      >
                         ✓
                       </div>
                       <span className="font-semibold">{feature}</span>
@@ -449,8 +466,12 @@ export default function CustomerServicesPage() {
           </motion.div>
         </div>
       </section>
-   {/* INDUSTRIES SECTION - BENTO GRID */}
-      <section className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-pink-50 via-violet-50 to-cyan-50">
+
+      {/* INDUSTRIES SECTION */}
+      <section 
+        className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8"
+        style={{ background: `linear-gradient(to bottom right, ${logoGreen}10, ${darkTeal}10, white)` }}
+      >
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -458,8 +479,11 @@ export default function CustomerServicesPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4" style={{ fontFamily: '"Playfair Display", serif' }}>
-              Trusted Across <span className="italic bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">Industries</span>
+            <h2 
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4" 
+              style={{ fontFamily: '"Playfair Display", serif', color: darkTeal }}
+            >
+              Trusted Across <span className="italic" style={{ color: logoGreen }}>Industries</span>
             </h2>
           </motion.div>
 
@@ -476,22 +500,19 @@ export default function CustomerServicesPage() {
                   rotate: [0, -2, 2, -2, 0],
                   transition: { duration: 0.3 }
                 }}
-                className={`relative bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_${
-                  industry.color === 'violet' ? 'rgba(139,92,246,0.3)' :
-                  industry.color === 'cyan' ? 'rgba(6,182,212,0.3)' :
-                  industry.color === 'emerald' ? 'rgba(16,185,129,0.3)' :
-                  industry.color === 'orange' ? 'rgba(249,115,22,0.3)' :
-                  industry.color === 'pink' ? 'rgba(236,72,153,0.3)' :
-                  'rgba(59,130,246,0.3)'
-                })] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all`}
+                className="relative bg-white border-4 border-black p-8 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                style={{ boxShadow: `8px 8px 0px 0px ${logoGreen}50` }}
               >
                 <div className="flex justify-between items-start mb-4">
                   <div className="text-5xl">{industry.icon}</div>
-                  <div className={`px-3 py-1 bg-${industry.color}-500 text-white text-xs font-bold`}>
+                  <div 
+                    className="px-3 py-1 text-white text-xs font-bold"
+                    style={{ backgroundColor: industry.color }}
+                  >
                     {industry.stat}
                   </div>
                 </div>
-                <h3 className="text-xl font-black mb-2">{industry.name}</h3>
+                <h3 className="text-xl font-black mb-2" style={{ color: darkTeal }}>{industry.name}</h3>
                 <p className="text-sm text-slate-600">{industry.desc}</p>
               </motion.div>
             ))}
@@ -499,8 +520,11 @@ export default function CustomerServicesPage() {
         </div>
       </section>
 
-      {/* CTA SECTION - BOLD */}
-      <section className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600">
+      {/* CTA SECTION */}
+      <section 
+        className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8"
+        style={{ background: `linear-gradient(to right, ${darkTeal}, #0d5650, ${logoGreen})` }}
+      >
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -517,7 +541,7 @@ export default function CustomerServicesPage() {
               <span className="italic">Customer Experience</span>
             </h2>
 
-            <p className="text-xl sm:text-2xl text-violet-100 mb-12 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl sm:text-2xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
               Join hundreds of companies delivering world-class service with our platform
             </p>
 
@@ -525,11 +549,11 @@ export default function CustomerServicesPage() {
               <motion.button
                 whileHover={{ scale: 1.1, rotate: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-12 py-6 bg-white text-purple-600 font-black text-xl uppercase tracking-wider shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                className="px-12 py-6 bg-white font-black text-xl uppercase tracking-wider shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
+                style={{ color: darkTeal }}
               >
                 <a href="/contact">Get Started Now</a>
               </motion.button>
-             
             </div>
           </motion.div>
         </div>
