@@ -132,7 +132,7 @@ const solutions = [
     )
   },
   {
-    title: "BPM & IoT Solutions",
+    title: "IoT - Driven Workflow Automation",
     tagline: "Connect Everything",
     desc: "Automate workflows with IoT sensors, real-time monitoring, and intelligent process orchestration.",
     gradient: "from-green-500 to-teal-500",
@@ -182,7 +182,7 @@ const featuredSolutions = [
   },
   {
     title: "IoT Command Center",
-    category: "BPM & IoT",
+    category: "IoT - Driven Workflow Automation",
     desc: "Centralized control for thousands of connected devices with predictive maintenance.",
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80"
   },
@@ -239,13 +239,13 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight text-white">
-              Transform Your Business with
+              From Idea to Scalable Product 
               <br />
-              <span style={{ color: logoGreen }}>Intelligent Technology</span>
+              <span style={{ color: logoGreen }}> We Build It Right.</span>
             </h1>
 
             <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
-              From AI & Cloud to IoT & Automation — Complete digital solutions that drive real results
+              AI-powered, cloud-native, and automation-driven solutions for modern businesses.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -398,10 +398,10 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4" style={{ color: darkTeal }}>
-              Our IoT Approach
+              How We Turn IoT Data into Business Action 
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              End-to-end integration from device to insight
+              From device data to automated business action
             </p>
           </div>
 
@@ -409,11 +409,11 @@ export default function HomePage() {
             <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-teal-400 to-green-400 hidden md:block" />
             
             {[
-              { title: "Connect", desc: "IoT devices & sensors", icon: "🔌" },
-              { title: "Collect", desc: "Real-time data streams", icon: "📊" },
-              { title: "Analyze", desc: "AI-powered insights", icon: "🧠" },
-              { title: "Automate", desc: "Smart workflows & actions", icon: "⚡" },
-              { title: "Optimize", desc: "Continuous improvement", icon: "🎯" }
+              { title: "Connect", desc: "IoT devices, sensors, machines, and edge systems securely connected to the cloud.", icon: "🔌" },
+              { title: "Collect", desc: "High-frequency, real-time data ingestion with validation, storage, and monitoring.", icon: "📊" },
+              { title: "Analyze", desc: "AI & rule-based analytics to detect patterns, anomalies, and actionable events.", icon: "🧠" },
+              { title: "Automate", desc: "Event-driven workflows that trigger alerts, tickets, approvals, and system actions automatically.", icon: "⚡" },
+              { title: "Optimize", desc: "Performance tracking and feedback loops to reduce downtime, improve efficiency, and cut costs.", icon: "🎯" }
             ].map((step, idx) => (
               <motion.div key={idx} initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }} transition={{ delay: idx * 0.15 }}
