@@ -3,427 +3,495 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const brandTeal = "#1B5B6F";
-const brandNavy = "#0F3B57";
-const brandOrange = "#E8681A";
-const brandLight = "#2D8BA3";
-
-const fadeUp = {
-  initial: { opacity: 0, y: 28 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6 },
+/* ─── Brand tokens ─────────────────────────── */
+const C = {
+  navy:    "#0D2B3E",
+  teal:    "#1A6B7C",
+  tealLt:  "#2A8FA3",
+  orange:  "#E8681A",
+  cream:   "#F5F3EF",
+  stone:   "#E8E3DB",
+  offwhite:"#FAFAF8",
+  ink:     "#111111",
+  body:    "#444444",
+  muted:   "#717171",
 };
 
-const SectionLabel = ({ children }) => (
-  <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase mb-4"
-    style={{ backgroundColor: "#FEF0E7", color: brandOrange }}>
-    {children}
-  </span>
+/* ─── Motion ───────────────────────────────── */
+const ease = [0.22, 1, 0.36, 1];
+const up  = (d=0) => ({ initial:{opacity:0,y:36},  whileInView:{opacity:1,y:0},  viewport:{once:true}, transition:{duration:0.72,ease,delay:d} });
+const lft = (d=0) => ({ initial:{opacity:0,x:-48}, whileInView:{opacity:1,x:0},  viewport:{once:true}, transition:{duration:0.75,ease,delay:d} });
+const rgt = (d=0) => ({ initial:{opacity:0,x:48},  whileInView:{opacity:1,x:0},  viewport:{once:true}, transition:{duration:0.75,ease,delay:d} });
+
+/* ─── Data ─────────────────────────────────── */
+const WHY = [
+  { title:"Focused, Not Bloated",    body:"A lean engineering team making clear decisions fast — no bureaucracy, no overhead." },
+  { title:"Built by Practitioners",  body:"We design and build end-to-end, ensuring every solution is practical and production-ready." },
+  { title:"Automation with Purpose", body:"Every workflow removes manual effort and eliminates operational friction by design." },
+  { title:"Scalable by Design",      body:"Clean architecture from day one — no shortcuts that create bigger problems later." },
+  { title:"Direct Collaboration",    body:"Clients work directly with the engineers building their systems — faster delivery." },
+  { title:"Honest Delivery",         body:"We commit only to what we can deliver, communicate clearly, and own end-to-end." },
+];
+
+/* SVG icons — one per WHY item, no numbers */
+const WHY_ICONS = [
+  /* Focused */
+  <svg key="i0" width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <circle cx="13" cy="13" r="9" stroke={C.teal} strokeWidth="1.7"/>
+    <circle cx="13" cy="13" r="4" stroke={C.teal} strokeWidth="1.7"/>
+    <circle cx="13" cy="13" r="1.5" fill={C.teal}/>
+  </svg>,
+  /* Practitioners */
+  <svg key="i1" width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <path d="M4 20V8l9-4 9 4v12" stroke={C.teal} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+    <rect x="9" y="14" width="8" height="6" rx="1" stroke={C.teal} strokeWidth="1.7"/>
+  </svg>,
+  /* Automation */
+  <svg key="i2" width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <path d="M13 4v4M13 18v4M4 13h4M18 13h4" stroke={C.teal} strokeWidth="1.7" strokeLinecap="round"/>
+    <circle cx="13" cy="13" r="4" stroke={C.teal} strokeWidth="1.7"/>
+  </svg>,
+  /* Scalable */
+  <svg key="i3" width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <rect x="3" y="15" width="6" height="8" rx="1" stroke={C.teal} strokeWidth="1.7"/>
+    <rect x="10" y="10" width="6" height="13" rx="1" stroke={C.teal} strokeWidth="1.7"/>
+    <rect x="17" y="4" width="6" height="19" rx="1" stroke={C.teal} strokeWidth="1.7"/>
+  </svg>,
+  /* Collaboration */
+  <svg key="i4" width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <circle cx="9" cy="9" r="4" stroke={C.teal} strokeWidth="1.7"/>
+    <circle cx="19" cy="9" r="3" stroke={C.teal} strokeWidth="1.7"/>
+    <path d="M2 22c0-4 3.1-7 7-7s7 3 7 7" stroke={C.teal} strokeWidth="1.7" strokeLinecap="round"/>
+    <path d="M19 14c2.5 0 5 2 5 5" stroke={C.teal} strokeWidth="1.7" strokeLinecap="round"/>
+  </svg>,
+  /* Honest */
+  <svg key="i5" width="26" height="26" viewBox="0 0 26 26" fill="none">
+    <path d="M7 13l4 4 8-8" stroke={C.teal} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="13" cy="13" r="10" stroke={C.teal} strokeWidth="1.7"/>
+  </svg>,
+];
+
+const CULTURE = [
+  { label:"Learning by building",    body:"We improve through iteration and hands-on feedback, not slides." },
+  { label:"Direct communication",    body:"Fewer layers, faster decisions, shared ownership across the team." },
+  { label:"Responsible flexibility", body:"Focus and measurable results matter more than rigid process." },
+  { label:"Continuous improvement",  body:"We review, fix, and move forward — always." },
+];
+
+const CORE    = ["Internet of Things (IoT)", "Automation & System Integration", "Cloud Platforms", "Data & Analytics"];
+const SUPPORT = ["AI & Machine Learning", "Edge Computing", "Smart Sensors & Devices", "Wireless & Connectivity", "Mobile Applications", "Web Applications", "Security-by-Design"];
+
+/* ─── Fonts ─────────────────────────────────── */
+const Fonts = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@300;400;500;600&display=swap');
+    .jra *, .jra *::before, .jra *::after { box-sizing:border-box; margin:0; padding:0; }
+    .jra { font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+    .s   { font-family:'Cormorant Garamond',Georgia,serif; }
+  `}</style>
 );
 
-const SectionHeading = ({ children, center = true }) => (
-  <h2 className={`text-3xl sm:text-4xl font-bold mb-3 ${center ? "text-center" : ""}`}
-    style={{ color: brandNavy }}>
+const Eyebrow = ({ children, light=false }) => (
+  <p style={{ fontSize:"0.68rem", fontWeight:600, letterSpacing:"0.26em",
+    textTransform:"uppercase", color: light ? "rgba(255,255,255,0.45)" : C.teal, marginBottom:14 }}>
     {children}
-  </h2>
+  </p>
 );
 
-const Divider = () => (
-  <div className="flex items-center justify-center gap-2 mb-8">
-    <div className="h-0.5 w-8 rounded" style={{ backgroundColor: brandOrange }} />
-    <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: brandOrange }} />
-    <div className="h-0.5 w-8 rounded" style={{ backgroundColor: brandOrange }} />
+const Hover = ({ dark=false, children, style={} }) => (
+  <div
+    style={{ transition:"transform 0.26s ease, box-shadow 0.26s ease", ...style }}
+    onMouseEnter={e=>{
+      e.currentTarget.style.transform="translateY(-5px)";
+      e.currentTarget.style.boxShadow= dark
+        ? "0 20px 52px rgba(0,0,0,0.35)"
+        : "0 20px 52px rgba(13,43,62,0.13)";
+    }}
+    onMouseLeave={e=>{
+      e.currentTarget.style.transform="translateY(0)";
+      e.currentTarget.style.boxShadow="none";
+    }}
+  >
+    {children}
   </div>
 );
 
-/* ─── WHY CHOOSE ITEMS ─── */
-const whyItems = [
-  {
-    title: "Focused, Not Bloated",
-    desc: "As a lean engineering team, we move fast, make clear decisions, and adapt quickly without layers of bureaucracy.",
-    icon: "🎯",
-  },
-  {
-    title: "Built by Practitioners",
-    desc: "We design and build systems ourselves — from device integration to automation — ensuring practical, production-ready solutions.",
-    icon: "🛠️",
-  },
-  {
-    title: "Automation with Purpose",
-    desc: "We don't add tools for the sake of it. Every workflow and automation is designed to remove manual effort and operational friction.",
-    icon: "⚡",
-  },
-  {
-    title: "Scalable by Design",
-    desc: "Even as a startup, we architect systems to scale cleanly — avoiding shortcuts that create problems later.",
-    icon: "📐",
-  },
-  {
-    title: "Direct Client Collaboration",
-    desc: "You work directly with the people building your system, not account managers passing messages.",
-    icon: "🤝",
-  },
-  {
-    title: "Honest Delivery",
-    desc: "We commit only to what we can deliver, communicate clearly, and take ownership through deployment and support.",
-    icon: "✅",
-  },
-];
-
-/* ─── CULTURE VALUES ─── */
-const cultureValues = [
-  "Learning by building – we improve through hands-on work, iteration, and feedback",
-  "Direct communication – fewer layers, faster decisions, shared ownership",
-  "Responsible flexibility – we value focus and results over rigid processes",
-  "Continuous improvement – we review what worked, fix what didn't, and move forward",
-];
-
-/* ─── TECH STACK ─── */
-const coretech = [
-  { name: "Internet of Things (IoT)", icon: "🌐" },
-  { name: "Automation & System Integration", icon: "⚙️" },
-  { name: "Cloud Platforms", icon: "☁️" },
-  { name: "Data & Analytics", icon: "📊" },
-];
-
-const supportingTech = [
-  { name: "AI & Machine Learning (applied, not research)", icon: "🤖" },
-  { name: "Edge Computing", icon: "💻" },
-  { name: "Smart Sensors & Devices", icon: "📡" },
-  { name: "Wireless & Connectivity", icon: "📶" },
-  { name: "Mobile Applications", icon: "📱" },
-  { name: "Web Applications", icon: "🌍" },
-  { name: "Security-by-Design", icon: "🔐" },
-];
-
-const cultureImages = [
-  "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80",
-  "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=600&q=80",
-  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
-  "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80",
-];
-
+/* ══════════════════════════════════════════════
+   PAGE
+══════════════════════════════════════════════ */
 export default function About() {
   return (
-    <section className="bg-white overflow-hidden">
+    <div className="jra" style={{ backgroundColor:"#fff", overflow:"hidden" }}>
+      <Fonts />
 
-      {/* ═══════════════════════════════ HERO ═══════════════════════════════ */}
-      <div className="relative min-h-[92vh] flex items-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0F3B57] via-[#1B5B6F] to-[#0e4a5c]" />
-        {/* subtle grid overlay */}
-        <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px)] bg-[size:48px_48px]" />
-        {/* accent circle */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-10"
-          style={{ background: "radial-gradient(circle, #E8681A 0%, transparent 70%)" }} />
+      {/* ── HERO ──────────────────────────────────── */}
+      <section style={{ position:"relative", minHeight:"100vh",
+        display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden" }}>
+        <Image
+          src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2000&q=88"
+          alt="JRAMSYS office" fill sizes="100vw"
+          style={{ objectFit:"cover", objectPosition:"center 35%" }} priority
+        />
+        <div style={{ position:"absolute", inset:0,
+          background:"linear-gradient(175deg,rgba(10,28,40,0.94) 0%,rgba(10,28,40,0.88) 50%,rgba(10,28,40,0.96) 100%)" }}/>
+        <div style={{ position:"absolute", bottom:-200, right:-200, width:600, height:600,
+          borderRadius:"50%", background:"radial-gradient(circle,rgba(26,107,124,0.18) 0%,transparent 65%)",
+          pointerEvents:"none" }}/>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium mb-6"
-              style={{ backgroundColor: "rgba(232,104,26,0.18)", color: "#FDBA74" }}>
-              🚀 About JRAMSYS
-            </span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-5 leading-tight">
-              We are <span style={{ color: "#FDBA74" }}>JRAMSYS</span>
-            </h1>
-            <p className="text-base sm:text-lg text-blue-100 mb-8 leading-relaxed max-w-xl">
-              A focused team building practical technology solutions — turning complex systems into
-              tools that actually work in day-to-day operations.
-            </p>
-            <a href="/contact"
-              className="inline-block px-8 py-3.5 rounded-xl font-semibold text-white transition-all hover:scale-105 hover:brightness-110"
-              style={{ backgroundColor: brandOrange }}>
-              Get in Touch
-            </a>
-          </motion.div>
+        <div style={{ position:"relative", zIndex:10, maxWidth:860, margin:"0 auto",
+          padding:"120px 32px 80px", textAlign:"center" }}>
+          <motion.div initial={{ opacity:0, y:48 }} animate={{ opacity:1, y:0 }}
+            transition={{ duration:1.0, ease }}>
 
-          <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative hidden lg:block">
-            <div className="relative h-[480px] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10">
-              <Image
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
-                alt="JRAMSYS Team"
-                fill sizes="50vw"
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0F3B57]/60 to-transparent" />
-            </div>
-            {/* floating badge */}
-            <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl px-6 py-4 flex items-center gap-3">
-              <span className="text-3xl">💡</span>
-              <div>
-                <p className="text-xs text-gray-500 font-medium">Our Focus</p>
-                <p className="text-sm font-bold" style={{ color: brandNavy }}>Practical Technology</p>
+            <div style={{ display:"inline-flex", alignItems:"center", gap:9,
+              backgroundColor:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.13)",
+              borderRadius:50, padding:"8px 20px 8px 12px", marginBottom:48 }}>
+              <div style={{ width:26, height:26, borderRadius:"50%", backgroundColor:C.teal,
+                display:"flex", alignItems:"center", justifyContent:"center" }}>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M1.5 1.5h5l4 4.5-4 4.5H1.5V1.5Z" fill="#fff"/>
+                </svg>
               </div>
+              <span style={{ fontSize:"0.7rem", fontWeight:600, letterSpacing:"0.22em",
+                textTransform:"uppercase", color:"rgba(255,255,255,0.6)" }}>
+                JRAMSYS Infotech Private Limited
+              </span>
+            </div>
+
+            <h1 className="s" style={{ fontSize:"clamp(3.4rem,7.5vw,6.2rem)", fontWeight:700,
+              lineHeight:1.04, letterSpacing:"-0.02em", color:"#fff", marginBottom:12 }}>
+              Engineering Solutions
+            </h1>
+            <h1 className="s" style={{ fontSize:"clamp(3.4rem,7.5vw,6.2rem)", fontWeight:700,
+              lineHeight:1.04, letterSpacing:"-0.02em", fontStyle:"italic",
+              color:C.tealLt, marginBottom:36 }}>
+              That Deliver.
+            </h1>
+
+            <p style={{ fontSize:"clamp(1.05rem,2vw,1.2rem)", lineHeight:1.85, fontWeight:300,
+              color:"rgba(255,255,255,0.68)", maxWidth:560, margin:"0 auto 52px" }}>
+              Reliable, production-ready technology that makes complex systems
+              work in real operational environments.
+            </p>
+
+            <div style={{ display:"flex", gap:14, justifyContent:"center", flexWrap:"wrap" }}>
+              <a href="/contact" style={{ display:"inline-flex", alignItems:"center", gap:9,
+                backgroundColor:C.teal, color:"#fff", fontWeight:600, fontSize:"0.9rem",
+                letterSpacing:"0.04em", padding:"16px 36px", borderRadius:4, textDecoration:"none" }}
+                onMouseEnter={e=>(e.currentTarget.style.backgroundColor=C.tealLt)}
+                onMouseLeave={e=>(e.currentTarget.style.backgroundColor=C.teal)}>
+                Get in Touch
+              </a>
+             
             </div>
           </motion.div>
         </div>
-      </div>
+      </section>
 
-      {/* ═══════════════════════════════ OUR STORY ════════════════════════════ */}
-      <div className="py-20 sm:py-28 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div {...fadeUp}>
-            <SectionLabel>Our Story</SectionLabel>
-            <SectionHeading>A focused team building practical technology solutions</SectionHeading>
-            <Divider />
-            <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-6">
-              JRAMSYS is a technology startup founded to solve a simple but common problem: organizations
-              struggle to turn complex systems and raw data into solutions that actually work in
-              day-to-day operations.
-            </p>
-            <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
-              We build with a strong emphasis on clarity, reliability, and real-world usability —
-              ensuring technology supports business processes instead of complicating them.
-            </p>
-          </motion.div>
 
-          {/* What We're Building */}
-          <motion.div {...fadeUp} className="mt-14 text-left bg-gray-50 rounded-2xl p-8 sm:p-10 border border-gray-100">
-            <h3 className="text-xl sm:text-2xl font-bold mb-4" style={{ color: brandOrange }}>
-              What We're Building
-            </h3>
-            <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
-              Our work focuses on IoT platforms, automation, and data-driven systems designed to integrate
-              devices, applications, and workflows. From early-stage deployments to scalable architectures,
-              we design solutions that are production-ready from day one.
-            </p>
-          </motion.div>
+      {/* ── STORY ─────────────────────────────────── */}
+      <section style={{ backgroundColor:C.offwhite, padding:"110px 0" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto", padding:"0 48px" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:80, alignItems:"center" }}>
 
-          {/* Where We're Headed */}
-          <motion.div {...fadeUp} className="mt-6 text-left bg-gray-50 rounded-2xl p-8 sm:p-10 border border-gray-100">
-            <h3 className="text-xl sm:text-2xl font-bold mb-4" style={{ color: brandOrange }}>
-              Where We're Headed
-            </h3>
-            <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
-              As we enter the market, our priority is execution. We're partnering with early customers to
-              validate, refine, and scale solutions that deliver measurable operational value. Every project
-              is an opportunity to build smarter, simpler, and more reliable systems.
-            </p>
-          </motion.div>
+            <motion.div {...lft()} style={{ position:"relative" }}>
+              <div style={{ position:"relative", height:540, borderRadius:18, overflow:"hidden",
+                boxShadow:"0 28px 72px rgba(13,43,62,0.18)" }}>
+                <Image src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=88"
+                  alt="Technology" fill sizes="45vw" style={{ objectFit:"cover" }}/>
+                <div style={{ position:"absolute", inset:0,
+                  background:"linear-gradient(to top,rgba(13,43,62,0.45) 0%,transparent 55%)" }}/>
+              </div>
+              <div style={{ position:"absolute", bottom:-28, right:-28, width:190, height:190,
+                borderRadius:14, overflow:"hidden", border:"5px solid #fff",
+                boxShadow:"0 16px 40px rgba(13,43,62,0.18)" }}>
+                <Image src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=85"
+                  alt="Engineering" fill sizes="190px" style={{ objectFit:"cover" }}/>
+              </div>
+              <div style={{ position:"absolute", top:-18, left:-18, width:110, height:110,
+                borderRadius:12, zIndex:-1, backgroundColor:C.stone }}/>
+            </motion.div>
+
+            <motion.div {...rgt()}>
+              <Eyebrow>Our Story</Eyebrow>
+              <h2 className="s" style={{ fontSize:"clamp(2.4rem,3.8vw,3.4rem)", fontWeight:700,
+                color:C.navy, lineHeight:1.1, letterSpacing:"-0.025em" }}>
+                A focused team building practical technology
+              </h2>
+              <div style={{ width:48, height:2, backgroundColor:C.teal, borderRadius:2, margin:"24px 0 32px" }}/>
+              <p style={{ fontSize:"1.08rem", lineHeight:1.88, color:C.body, marginBottom:20 }}>
+                JRAMSYS Infotech helps organisations convert complex systems and
+                data into dependable, usable solutions. We prioritise clarity,
+                reliability, and real-world usability above everything else.
+              </p>
+              <p style={{ fontSize:"1.08rem", lineHeight:1.88, color:C.body, marginBottom:44 }}>
+                Every solution we build is designed to support your business
+                processes — not complicate them. From concept to production,
+                we own it end-to-end.
+              </p>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16 }}>
+                {[
+                  { label:"What We Build", accent:C.teal,
+                    text:"IoT platforms, automation systems, and data pipelines built with real production constraints in mind." },
+                  { label:"Where We're Headed", accent:C.orange,
+                    text:"Disciplined execution — validating and scaling solutions with measurable operational value." },
+                ].map((card,i) => (
+                  <div key={i} style={{ backgroundColor:"#fff", borderRadius:14, padding:"24px 22px",
+                    border:`1px solid ${C.stone}`, borderTop:`3px solid ${card.accent}` }}>
+                    <p style={{ fontSize:"0.65rem", fontWeight:700, letterSpacing:"0.2em",
+                      textTransform:"uppercase", color:card.accent, marginBottom:10 }}>{card.label}</p>
+                    <p style={{ fontSize:"0.88rem", lineHeight:1.72, color:C.body }}>{card.text}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* ══════════════════════════ WHY CHOOSE JRAMSYS ════════════════════════ */}
-      <div className="py-20 sm:py-28" style={{ backgroundColor: "#F8FAFC" }}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp} className="text-center mb-14">
-            <SectionLabel>Why Us</SectionLabel>
-            <SectionHeading>Why Choose JRAMSYS</SectionHeading>
-            <Divider />
+
+      {/* ── WHY US ────────────────────────────────────────────────────────────
+          Layout: Left = sticky dark panel with heading + big quote
+                  Right = 2-col card grid, all same style, no numbers
+      ──────────────────────────────────────────────────────────────────────── */}
+      <section style={{ backgroundColor:"#fff", padding:"120px 0" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto", padding:"0 48px" }}>
+
+          {/* ── Centered heading block ── */}
+          <motion.div {...up()} style={{ maxWidth:640, margin:"0 auto 72px", textAlign:"center" }}>
+            <Eyebrow>Why Choose Us</Eyebrow>
+            <h2 className="s" style={{ fontSize:"clamp(2.6rem,4.5vw,3.8rem)", fontWeight:700,
+              color:C.navy, lineHeight:1.08, letterSpacing:"-0.025em", marginBottom:20 }}>
+              Why companies trust JRAMSYS
+            </h2>
+            <p style={{ fontSize:"1.05rem", lineHeight:1.82, color:C.muted }}>
+              We combine deep engineering expertise with a commitment to honest,
+              practical delivery — building long-term partnerships, not short-term projects.
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {whyItems.map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.5 }}
-                className="group bg-white rounded-2xl p-7 border border-gray-100 hover:border-transparent hover:shadow-xl transition-all duration-300 relative overflow-hidden"
-              >
-                {/* hover accent */}
-                <div className="absolute inset-x-0 top-0 h-1 rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{ backgroundColor: brandOrange }} />
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-5"
-                  style={{ backgroundColor: "#FEF0E7" }}>
-                  {item.icon}
+          {/* ── Two-column feature row: large horizontal cards ── */}
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20, marginBottom:20 }}>
+            {WHY.slice(0,2).map((item, idx) => (
+              <motion.div key={idx} {...up(idx * 0.1)}>
+                <Hover dark style={{
+                  display:"flex", alignItems:"flex-start", gap:28,
+                  backgroundColor:C.navy,
+                  borderRadius:18, padding:"44px 40px", height:"100%",
+                  borderLeft:`4px solid ${C.teal}`,
+                }}>
+                  {/* Icon container */}
+                  <div style={{ flexShrink:0, width:60, height:60, borderRadius:14,
+                    backgroundColor:"rgba(42,143,163,0.15)",
+                    border:"1px solid rgba(42,143,163,0.3)",
+                    display:"flex", alignItems:"center", justifyContent:"center" }}>
+                    {WHY_ICONS[idx]}
+                  </div>
+                  <div>
+                    <h3 className="s" style={{ fontSize:"1.55rem", fontWeight:700, color:"#fff",
+                      lineHeight:1.2, letterSpacing:"-0.015em", marginBottom:12 }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ fontSize:"1rem", lineHeight:1.8, color:"rgba(255,255,255,0.52)" }}>
+                      {item.body}
+                    </p>
+                  </div>
+                </Hover>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* ── Four-column grid: remaining cards ── */}
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:20 }}>
+            {WHY.slice(2).map((item, idx) => (
+              <motion.div key={idx} {...up(0.18 + idx * 0.07)}>
+                <Hover style={{
+                  backgroundColor:C.cream, borderRadius:18,
+                  padding:"36px 30px", height:"100%",
+                  border:`1px solid ${C.stone}`,
+                  borderTop:`3px solid ${C.teal}`,
+                }}>
+                  {/* Icon */}
+                  <div style={{ width:52, height:52, borderRadius:12,
+                    backgroundColor:"rgba(26,107,124,0.08)",
+                    border:"1px solid rgba(26,107,124,0.14)",
+                    display:"flex", alignItems:"center", justifyContent:"center", marginBottom:24 }}>
+                    {WHY_ICONS[idx + 2]}
+                  </div>
+                  <h3 style={{ fontSize:"1rem", fontWeight:600, color:C.navy,
+                    lineHeight:1.3, letterSpacing:"-0.01em", marginBottom:12 }}>
+                    {item.title}
+                  </h3>
+                  <p style={{ fontSize:"0.875rem", lineHeight:1.78, color:C.muted }}>
+                    {item.body}
+                  </p>
+                </Hover>
+              </motion.div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* ── CULTURE ───────────────────────────────── */}
+      <section style={{ backgroundColor:C.cream, padding:"110px 0" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto", padding:"0 48px" }}>
+          <motion.div {...up()} style={{ display:"grid", gridTemplateColumns:"1fr 1fr",
+            gap:48, alignItems:"flex-end", marginBottom:56 }}>
+            <div>
+              <Eyebrow>Our Culture</Eyebrow>
+              <h2 className="s" style={{ fontSize:"clamp(2.4rem,4vw,3.6rem)", fontWeight:700,
+                color:C.navy, lineHeight:1.08, letterSpacing:"-0.025em" }}>
+                How we work
+              </h2>
+            </div>
+            <p style={{ fontSize:"1.05rem", lineHeight:1.82, color:C.body, alignSelf:"flex-end" }}>
+              Engineers and problem-solvers who believe great outcomes come from
+              clear thinking, direct ownership, and practical execution.
+            </p>
+          </motion.div>
+
+          <motion.div {...up(0.1)} style={{ position:"relative", height:380,
+            borderRadius:20, overflow:"hidden", marginBottom:52 }}>
+            <Image src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=1800&q=88"
+              alt="Team collaboration" fill sizes="100vw"
+              style={{ objectFit:"cover", objectPosition:"center 42%" }}/>
+            <div style={{ position:"absolute", inset:0,
+              background:"linear-gradient(to right,rgba(13,43,62,0.82) 0%,rgba(13,43,62,0.18) 55%,transparent 100%)" }}/>
+            <div style={{ position:"absolute", left:52, top:"50%", transform:"translateY(-50%)", maxWidth:440 }}>
+              <p className="s" style={{ fontSize:"clamp(1.4rem,2.5vw,2rem)", color:"#fff",
+                lineHeight:1.36, fontWeight:700 }}>
+                "Clarity, ownership, and practical execution — above everything else."
+              </p>
+              <p style={{ fontSize:"0.75rem", color:"rgba(255,255,255,0.45)", marginTop:16,
+                fontWeight:500, letterSpacing:"0.14em", textTransform:"uppercase" }}>
+                — JRAMSYS Engineering Team
+              </p>
+            </div>
+          </motion.div>
+
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:20 }}>
+            {CULTURE.map((val, idx) => (
+              <motion.div key={idx} {...up(idx*0.08)}>
+                <div style={{ backgroundColor:"#fff", borderRadius:16, padding:"34px 28px",
+                  border:`1px solid ${C.stone}`, borderBottom:`3px solid ${C.teal}`, height:"100%" }}>
+                  <div style={{ width:36, height:36, borderRadius:8,
+                    backgroundColor:"rgba(26,107,124,0.08)",
+                    display:"flex", alignItems:"center", justifyContent:"center", marginBottom:20 }}>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <path d="M3 9l4 4 8-8" stroke={C.teal} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <p style={{ fontSize:"0.98rem", fontWeight:600, color:C.navy,
+                    marginBottom:10, lineHeight:1.35 }}>{val.label}</p>
+                  <p style={{ fontSize:"0.875rem", lineHeight:1.72, color:C.muted }}>{val.body}</p>
                 </div>
-                <h3 className="text-base sm:text-lg font-bold mb-2" style={{ color: brandNavy }}>
-                  {item.title}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ═══════════════════════════════ CULTURE ══════════════════════════════ */}
-      <div className="py-20 sm:py-28 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-            {/* Text */}
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <SectionLabel>Our Culture</SectionLabel>
-              <SectionHeading center={false}>Our Culture</SectionHeading>
-              <div className="flex items-center gap-2 mb-6">
-                <div className="h-0.5 w-8 rounded" style={{ backgroundColor: brandOrange }} />
-                <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: brandOrange }} />
-                <div className="h-0.5 w-8 rounded" style={{ backgroundColor: brandOrange }} />
-              </div>
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-8">
-                We're a small, focused team of engineers and problem-solvers who value clear thinking,
-                ownership, and practical execution. We believe strong teams build reliable technology —
-                especially in complex, real-world environments.
+
+      {/* ── TECH STACK ────────────────────────────── */}
+      <section style={{ backgroundColor:"#fff", padding:"110px 0" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto", padding:"0 48px" }}>
+          <motion.div {...up()} style={{ display:"grid", gridTemplateColumns:"1fr 2fr",
+            gap:72, alignItems:"start" }}>
+            <div>
+              <Eyebrow>Technology</Eyebrow>
+              <h2 className="s" style={{ fontSize:"clamp(2rem,3.2vw,3rem)", fontWeight:700,
+                color:C.navy, lineHeight:1.1, letterSpacing:"-0.025em" }}>
+                Our technology stack
+              </h2>
+              <div style={{ width:40, height:2, backgroundColor:C.teal,
+                borderRadius:2, margin:"22px 0 24px" }}/>
+              <p style={{ fontSize:"1rem", lineHeight:1.8, color:C.body }}>
+                We apply the right tools to solve real operational problems —
+                keeping every solution maintainable and cost-effective.
               </p>
-              <div className="space-y-4">
-                {cultureValues.map((val, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, x: -16 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.12 }}
-                    className="flex items-start gap-3"
-                  >
-                    <div className="mt-0.5 w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"
-                      style={{ backgroundColor: brandOrange }}>
-                      ✓
-                    </div>
-                    <span className="text-gray-700 text-sm sm:text-base leading-relaxed">{val}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Images grid */}
-            <motion.div
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="grid grid-cols-2 gap-4"
-            >
-              {cultureImages.map((src, idx) => (
-                <div key={idx} className={`relative rounded-2xl overflow-hidden shadow-md ${idx % 2 === 1 ? "mt-6" : ""}`}
-                  style={{ height: "200px" }}>
-                  <Image src={src} alt="Team culture" fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover" />
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
+              {[
+                { label:"Core Technologies",       items:CORE,    accent:C.navy,   dot:C.teal   },
+                { label:"Supporting Technologies", items:SUPPORT, accent:C.orange, dot:C.orange },
+              ].map((col,ci) => (
+                <div key={ci} style={{ backgroundColor:C.cream, borderRadius:18,
+                  padding:"36px 30px", border:`1px solid ${C.stone}`,
+                  borderTop:`3px solid ${col.dot}` }}>
+                  <p style={{ fontSize:"0.65rem", fontWeight:700, letterSpacing:"0.22em",
+                    textTransform:"uppercase", color:col.accent, marginBottom:24 }}>{col.label}</p>
+                  <ul style={{ listStyle:"none", padding:0, display:"flex", flexDirection:"column", gap:14 }}>
+                    {col.items.map((t,i) => (
+                      <li key={i} style={{ display:"flex", alignItems:"center", gap:12 }}>
+                        <span style={{ width:6, height:6, borderRadius:"50%",
+                          backgroundColor:col.dot, flexShrink:0 }}/>
+                        <span style={{ fontSize:"0.95rem", color:C.ink, fontWeight:500, lineHeight:1.4 }}>{t}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ))}
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-      {/* ════════════════════════ TECHNOLOGY STACK ════════════════════════════ */}
-      <div className="py-20 sm:py-28" style={{ backgroundColor: "#F8FAFC" }}>
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp} className="text-center mb-14">
-            <SectionLabel>Tech Stack</SectionLabel>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-2" style={{ color: brandNavy }}>
-              Our Technology Stack
-            </h2>
-            <p className="text-gray-400 text-base mb-3">— Core Technologies We Work With —</p>
-            <Divider />
-            <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-              We focus on applying the right technologies to solve real operational problems —
-              not forcing complexity where it isn't needed.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="rounded-3xl border-2 border-gray-200 bg-white overflow-hidden shadow-sm"
-          >
-            <div className="grid grid-cols-1 sm:grid-cols-2">
-              {/* Core Technologies */}
-              <div className="p-8 sm:p-10 border-b sm:border-b-0 sm:border-r border-gray-200">
-                <div className="flex items-center gap-3 mb-7">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold"
-                    style={{ backgroundColor: brandNavy }}>C</div>
-                  <h3 className="text-lg font-bold" style={{ color: brandNavy }}>Core Technologies</h3>
-                </div>
-                <ul className="space-y-4">
-                  {coretech.map((tech, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
-                      <span className="text-2xl w-8 flex-shrink-0">{tech.icon}</span>
-                      <span className="font-medium">{tech.name}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Supporting Technologies */}
-              <div className="p-8 sm:p-10">
-                <div className="flex items-center gap-3 mb-7">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold"
-                    style={{ backgroundColor: brandOrange }}>S</div>
-                  <h3 className="text-lg font-bold" style={{ color: brandNavy }}>Supporting Technologies</h3>
-                </div>
-                <ul className="space-y-4">
-                  {supportingTech.map((tech, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-gray-700 text-sm sm:text-base">
-                      <span className="text-2xl w-8 flex-shrink-0">{tech.icon}</span>
-                      <span className="font-medium">{tech.name}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
           </motion.div>
         </div>
-      </div>
+      </section>
 
-      {/* ═══════════════════════════ MISSION & VISION ════════════════════════ */}
-      <div className="py-20 sm:py-28 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <motion.div {...fadeUp} className="text-center mb-14">
-            <SectionLabel>Who We Are</SectionLabel>
-            <SectionHeading>Mission & Vision</SectionHeading>
-            <Divider />
+
+      {/* ── MISSION & VISION — cream bg, no image ─── */}
+      <section style={{ backgroundColor:C.cream, padding:"110px 0" }}>
+        <div style={{ maxWidth:1280, margin:"0 auto", padding:"0 48px" }}>
+          <motion.div {...up()} style={{ textAlign:"center", marginBottom:72 }}>
+            <Eyebrow>Who We Are</Eyebrow>
+            <h2 className="s" style={{ fontSize:"clamp(2.4rem,4vw,3.6rem)", fontWeight:700,
+              color:C.navy, lineHeight:1.08, letterSpacing:"-0.025em" }}>
+              Mission & Vision
+            </h2>
+            <div style={{ width:48, height:2, backgroundColor:C.teal,
+              borderRadius:2, margin:"24px auto 0" }}/>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Mission */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-3xl p-10 text-white"
-              style={{ background: `linear-gradient(135deg, ${brandNavy} 0%, #1B5B6F 100%)` }}
-            >
-              <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white" />
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6"
-                  style={{ backgroundColor: "rgba(255,255,255,0.15)" }}>
-                  🎯
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:28,
+            maxWidth:1000, margin:"0 auto" }}>
+            {[
+              {
+                accent:C.teal, label:"Mission",
+                icon:<svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <circle cx="11" cy="11" r="8" stroke={C.teal} strokeWidth="1.6"/>
+                  <circle cx="11" cy="11" r="4" stroke={C.teal} strokeWidth="1.6"/>
+                  <circle cx="11" cy="11" r="1.5" fill={C.teal}/>
+                </svg>,
+                text:"To convert complex technology into practical solutions that improve operational performance and reliability for every client we work with.",
+              },
+              {
+                accent:C.orange, label:"Vision",
+                icon:<svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <path d="M4 18L11 4l7 14" stroke={C.orange} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M7 13h8" stroke={C.orange} strokeWidth="1.6" strokeLinecap="round"/>
+                </svg>,
+                text:"To be the trusted technology partner for businesses seeking intelligent, scalable solutions that drive sustained operational efficiency and growth.",
+              },
+            ].map((card,i) => (
+              <motion.div key={i} {...(i===0 ? lft(0.1) : rgt(0.1))}>
+                <div style={{ backgroundColor:"#fff", borderRadius:20, padding:"52px 48px",
+                  border:`1px solid ${C.stone}`, borderTop:`3px solid ${card.accent}` }}>
+                  <div style={{ width:52, height:52, borderRadius:14,
+                    backgroundColor: i===0 ? "rgba(26,107,124,0.08)" : "rgba(232,104,26,0.08)",
+                    display:"flex", alignItems:"center", justifyContent:"center", marginBottom:28 }}>
+                    {card.icon}
+                  </div>
+                  <p style={{ fontSize:"0.65rem", fontWeight:700, letterSpacing:"0.24em",
+                    textTransform:"uppercase", color:card.accent, marginBottom:16 }}>{card.label}</p>
+                  <p className="s" style={{ fontSize:"clamp(1.25rem,2vw,1.55rem)", fontWeight:600,
+                    lineHeight:1.62, color:C.navy }}>{card.text}</p>
                 </div>
-                <p className="text-xs font-semibold tracking-widest uppercase mb-3 opacity-60">Mission</p>
-                <p className="text-base sm:text-lg leading-relaxed text-blue-50">
-                  To turn complex technology into practical solutions that help businesses operate smarter,
-                  faster, and more reliably — starting today.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Vision */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="relative overflow-hidden rounded-3xl p-10 text-white"
-              style={{ background: `linear-gradient(135deg, ${brandOrange} 0%, #c9540e 100%)` }}
-            >
-              <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full opacity-10 bg-white" />
-              <div className="relative z-10">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6"
-                  style={{ backgroundColor: "rgba(255,255,255,0.15)" }}>
-                  🚀
-                </div>
-                <p className="text-xs font-semibold tracking-widest uppercase mb-3 opacity-70">Vision</p>
-                <p className="text-base sm:text-lg leading-relaxed text-orange-50">
-                  To be the go-to technology partner for businesses seeking intelligent, scalable solutions —
-                  building the future of operational efficiency one innovation at a time.
-                </p>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-    </section>
+    </div>
   );
 }

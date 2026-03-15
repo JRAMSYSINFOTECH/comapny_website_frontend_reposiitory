@@ -35,8 +35,17 @@ export default function Navbar() {
     pathname === path || pathname.startsWith(path + "/");
 
   const linkClass = (path) =>
-    `relative px-1 pb-1 text-[15px] font-medium transition-colors duration-300
-     ${isActive(path) ? "text-[#0F3B57]" : "text-[#222A35] hover:text-[#0F3B57]"}`;
+    `relative px-1 pb-1 text-[15px] font-medium transform transition duration-300
+     ${isActive(path) ? "text-[#0F3B57]" : "text-[#222A35] hover:text-[#0F3B57] hover:scale-105"}`;
+
+  const NavLink = ({ href, children }) => (
+    <Link href={href} className={`${linkClass(href)} group inline-block`}>{/* group for hover */}
+      <span className="relative inline-block">
+        {children}
+        <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-[#E8681A] transition-all duration-300 group-hover:w-full" />
+      </span>
+    </Link>
+  );
 
   const dropdownVariants = {
     hidden: { opacity: 0, y: -8 },
@@ -117,7 +126,7 @@ export default function Navbar() {
         <ul className="hidden lg:flex items-center space-x-7 xl:space-x-9 flex-1 justify-center">
 
           <li>
-            <Link href="/" className={linkClass("/")}>Home</Link>
+            <NavLink href="/">Home</NavLink>
           </li>
 
           {/* COMPANY */}
@@ -126,8 +135,11 @@ export default function Navbar() {
             onMouseEnter={() => setOpenMenu("company")}
             onMouseLeave={() => setOpenMenu(null)}
           >
-            <button className={linkClass("/about")}>
-              Our Company <span className="ml-1 text-xs">▼</span>
+            <button className={`${linkClass("/about")} group`}> 
+              <span className="relative inline-block">
+                Our Company <span className="ml-1 text-xs">▼</span>
+                <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-[#E8681A] transition-all duration-300 group-hover:w-full" />
+              </span>
             </button>
 
             <AnimatePresence>
@@ -160,9 +172,7 @@ export default function Navbar() {
             onMouseEnter={() => setOpenMenu("solutions")}
             onMouseLeave={() => setOpenMenu(null)}
           >
-            <Link href="/solutions" className={linkClass("/solutions")}>
-              Solutions <span className="ml-1 text-xs">▼</span>
-            </Link>
+            <NavLink href="/solutions">Solutions <span className="ml-1 text-xs">▼</span></NavLink>
 
             <AnimatePresence>
               {openMenu === "solutions" && (
@@ -194,8 +204,11 @@ export default function Navbar() {
             onMouseEnter={() => setOpenMenu("services")}
             onMouseLeave={() => setOpenMenu(null)}
           >
-            <button className={linkClass("/services")}>
-              Services <span className="ml-1 text-xs">▼</span>
+            <button className={`${linkClass("/services")} group`}>
+              <span className="relative inline-block">
+                Services <span className="ml-1 text-xs">▼</span>
+                <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-[#E8681A] transition-all duration-300 group-hover:w-full" />
+              </span>
             </button>
 
             <AnimatePresence>
@@ -223,11 +236,11 @@ export default function Navbar() {
           </li>
 
           <li>
-            <Link href="/careers" className={linkClass("/careers")}>Careers</Link>
+            <NavLink href="/careers">Careers</NavLink>
           </li>
 
           <li>
-            <Link href="/contact" className={linkClass("/contact")}>Contact</Link>
+            <NavLink href="/contact">Contact</NavLink>
           </li>
         </ul>
 
