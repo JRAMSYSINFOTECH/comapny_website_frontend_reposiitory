@@ -25,17 +25,17 @@ const AnimatedTruck = () => {
             {/* Truck container */}
             <rect x="50" y="40" width="200" height="100" fill="#16A085" rx="8" />
             <rect x="60" y="50" width="180" height="80" fill="#19B49A" rx="4" />
-            
+
             {/* Cab */}
             <rect x="250" y="60" width="100" height="80" fill="#0D7A68" rx="8" />
             <rect x="260" y="70" width="35" height="40" fill="#38BDF8" opacity="0.6" rx="2" />
-            
+
             {/* Wheels */}
             <circle cx="100" cy="150" r="20" fill="#1e293b" />
             <circle cx="100" cy="150" r="12" fill="#475569" />
             <circle cx="300" cy="150" r="20" fill="#1e293b" />
             <circle cx="300" cy="150" r="12" fill="#475569" />
-            
+
             {/* Waste bins inside */}
             {[80, 120, 160, 200].map((x, i) => (
               <motion.rect
@@ -100,28 +100,28 @@ const ZigzagProcess = () => {
     {
       num: "01",
       title: "Bin Integration",
-      desc: "Connect IoT sensors to bins for real-time monitoring",
+      desc: "Connect QR-linked bins for real-time tracking of fill levels, pickup status, and asset usage",
       icon: "🔌",
       side: "left",
     },
     {
       num: "02",
       title: "Smart Routing",
-      desc: "AI-powered route optimization for efficient collection",
+      desc: "Reduce fuel cost and missed pickups with data-driven route optimization",
       icon: "🗺️",
       side: "right",
     },
     {
       num: "03",
-      title: "Data Analytics",
-      desc: "Track performance with interactive dashboards",
+      title: "Verified Pickups",
+      desc: "Every pickup is QR-verified, timestamped, and logged for full transparency and compliance",
       icon: "📊",
       side: "left",
     },
     {
       num: "04",
-      title: "Citizen Engagement",
-      desc: "QR-based service requests and feedback",
+      title: "Citizen Feedback",
+      desc: "Enable issue reporting and service feedback via scan-based access for operators and residents",
       icon: "📱",
       side: "right",
     },
@@ -187,12 +187,36 @@ const ZigzagProcess = () => {
 // Card with icon grid
 const IconGrid = () => {
   const items = [
-    { icon: "🗑️", label: "Bin Tracking" },
-    { icon: "🚛", label: "Fleet Management" },
-    { icon: "📊", label: "Analytics" },
-    { icon: "🔔", label: "Alerts" },
-    { icon: "📱", label: "Mobile App" },
-    { icon: "♻️", label: "Sustainability" },
+    {
+      icon: "🗑️",
+      label: "Bin Tracking",
+      desc: "Track bin location, fill level, scan history, and pickup status in real time.",
+    },
+    {
+      icon: "🚛",
+      label: "Fleet Management",
+      desc: "Assign routes, track vehicles, and confirm collections using QR-verified actions.",
+    },
+    {
+      icon: "📊",
+      label: "Analytics",
+      desc: "Measure pickup frequency, missed collections, route efficiency, and asset utilization.",
+    },
+    {
+      icon: "🔔",
+      label: "Alerts",
+      desc: "Get alerts for overfilled bins, missed pickups, or unusual activity.",
+    },
+    {
+      icon: "📱",
+      label: "Mobile App",
+      desc: "Drivers and operators scan, update, and verify actions directly from their phones.",
+    },
+    {
+      icon: "♻️",
+      label: "Sustainability",
+      desc: "Lower unnecessary trips and improve recycling outcomes through data-backed decisions.",
+    },
   ];
 
   return (
@@ -204,11 +228,12 @@ const IconGrid = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: idx * 0.1 }}
-          whileHover={{ scale: 1.1, rotate: 5 }}
-          className="aspect-square bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 flex flex-col items-center justify-center gap-3 shadow-lg border border-slate-200 cursor-pointer"
+          whileHover={{ scale: 1.05, y: -4 }}
+          className="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 flex flex-col items-start gap-3 shadow-lg border border-slate-200 cursor-pointer"
         >
-          <span className="text-5xl">{item.icon}</span>
-          <span className="text-sm font-semibold text-slate-700 text-center">{item.label}</span>
+          <span className="text-4xl">{item.icon}</span>
+          <span className="text-base font-bold text-slate-800">{item.label}</span>
+          <span className="text-sm text-slate-500 leading-relaxed">{item.desc}</span>
         </motion.div>
       ))}
     </div>
@@ -227,7 +252,7 @@ export default function SmartWastePage() {
 
   return (
     <div className="bg-white min-h-screen">
-      {/* HERO SECTION - Unique Split Design */}
+      {/* HERO SECTION */}
       <section className="relative min-h-screen flex items-center bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 overflow-hidden">
         {/* Animated background patterns */}
         <div className="absolute inset-0 opacity-20">
@@ -279,30 +304,31 @@ export default function SmartWastePage() {
               </motion.div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-                Make Every{" "}
+                Turn Waste Collection Into a{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
-                  Waste Pickup
-                </span>{" "}
-                Smart
+                  Trackable System
+                </span>
               </h1>
 
               <p className="text-lg sm:text-xl text-slate-300 mb-8 max-w-xl">
-                Transform your waste ecosystem with IoT-powered management. Control, efficiency, and sustainability at every stage.
+                A QR + IoT-powered solution for municipalities, campuses, and private waste operators to monitor, optimize, and audit waste operations in real time.
               </p>
 
               <div className="flex flex-wrap gap-4 text-sm">
-                {["Real-time Monitoring", "Route Optimization", "Full Audit Logs"].map((feature, i) => (
-                  <motion.div
-                    key={feature}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 + i * 0.1 }}
-                    className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20"
-                  >
-                    <span className="text-emerald-400">✓</span>
-                    <span>{feature}</span>
-                  </motion.div>
-                ))}
+                {["Bin-Level Visibility", "Optimized Collection Routes", "Verified Pickups & Audit Logs"].map(
+                  (feature, i) => (
+                    <motion.div
+                      key={feature}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 + i * 0.1 }}
+                      className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20"
+                    >
+                      <span className="text-emerald-400">✓</span>
+                      <span>{feature}</span>
+                    </motion.div>
+                  )
+                )}
               </div>
             </motion.div>
 
@@ -332,7 +358,7 @@ export default function SmartWastePage() {
               Everything You Need
             </h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              Complete digital control over your waste management network
+              Operational control across your entire waste network
             </p>
           </motion.div>
 
@@ -350,9 +376,7 @@ export default function SmartWastePage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4">
-              How It Works
-            </h2>
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4">How It Works</h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
               From sensor to clean street in four simple steps
             </p>
@@ -424,11 +448,9 @@ export default function SmartWastePage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl sm:text-5xl font-black text-white mb-6">
-              Ready to Go Smart?
-            </h2>
+            <h2 className="text-4xl sm:text-5xl font-black text-white mb-6">Ready to Go Smart?</h2>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Join organizations transforming waste management with intelligent solutions
+              Join municipalities, campuses, and waste operators transforming their operations with intelligent QR + IoT solutions
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
@@ -441,13 +463,6 @@ export default function SmartWastePage() {
                   Contact Us Today
                 </a>
               </motion.button>
-              {/* <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-transparent text-white font-bold rounded-xl border-2 border-white"
-              >
-                Schedule Demo
-              </motion.button> */}
             </div>
           </motion.div>
         </div>

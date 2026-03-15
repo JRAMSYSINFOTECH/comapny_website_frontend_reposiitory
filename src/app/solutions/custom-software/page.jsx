@@ -100,32 +100,32 @@ const FloatingCodeBlocks = () => {
 const DevelopmentTimeline = () => {
   const phases = [
     {
-      title: "Consultation & Discovery",
-      desc: "Understanding your business, users, and systems to define a clear solution vision.",
+      title: "Problem Definition",
+      desc: "We understand your business context, users, and existing systems to define a solution that solves a real operational problem — not just a feature request.",
       icon: "💡",
       color: "purple",
     },
     {
-      title: "Design & Blueprinting",
-      desc: "Wireframes, UX flows, and technical specs that validate features before development.",
+      title: "Design & Technical Planning",
+      desc: "UX flows and technical architecture are defined early so scope, risks, and integrations are clear before development starts.",
       icon: "🎨",
       color: "pink",
     },
     {
-      title: "Agile Development",
-      desc: "Building in short sprints with regular demos so you can see progress early.",
+      title: "Iterative Development",
+      desc: "We build in controlled sprints with regular demos, allowing early feedback and course correction — no surprises at the end.",
       icon: "⚙️",
       color: "blue",
     },
     {
-      title: "Testing & Launch",
-      desc: "Comprehensive testing ensures a stable release with training and documentation.",
+      title: "Production Readiness & Launch",
+      desc: "We test for performance, security, and failure scenarios, then support rollout with documentation and team handover.",
       icon: "🚀",
       color: "amber",
     },
     {
-      title: "Support & Enhancement",
-      desc: "Continuous improvement with fixes, optimizations, and new features.",
+      title: "Support & Improvement",
+      desc: "Post-launch, we monitor usage, fix issues, and enhance features as real-world needs evolve.",
       icon: "🔄",
       color: "teal",
     },
@@ -181,26 +181,26 @@ const DevelopmentTimeline = () => {
 export default function CustomSoftwareDevelopmentPage() {
   const features = [
     {
-      title: "Product & Solution Design",
-      desc: "Discovery workshops, UX, and technical blueprints so the right product is defined before any code is written.",
+      title: "Product & Solution Definition",
+      desc: "We start by clarifying the problem, constraints, and success metrics — so what gets built is useful, not just technically correct.",
       icon: "💡",
       gradient: "from-purple-500 to-violet-500",
     },
     {
       title: "Engineering & Integrations",
-      desc: "Web, mobile, and API-first backends on modern stacks, connected cleanly to your existing systems.",
+      desc: "We build web, mobile, and backend systems designed to integrate cleanly with existing tools, devices, and workflows.",
       icon: "⚙️",
       gradient: "from-blue-500 to-cyan-500",
     },
     {
-      title: "Testing, QA & Launch",
-      desc: "Functional, security, and performance testing plus rollout support, training, and documentation.",
+      title: "Testing, Readiness & Launch",
+      desc: "We test for real usage — performance, security, and failure scenarios — and support rollout with documentation and handover.",
       icon: "✅",
       gradient: "from-pink-500 to-rose-500",
     },
     {
-      title: "Support & Evolution",
-      desc: "Ongoing monitoring, fixes, and new features so your platform keeps pace with your business.",
+      title: "Support & Continuous Improvement",
+      desc: "After launch, we stay involved — monitoring, fixing, and improving the system as usage grows and requirements evolve.",
       icon: "🔄",
       gradient: "from-amber-500 to-orange-500",
     },
@@ -219,29 +219,9 @@ export default function CustomSoftwareDevelopmentPage() {
     <div className="bg-slate-50 min-h-screen">
       {/* HERO SECTION */}
       <section className="relative bg-gradient-to-br from-purple-950 via-slate-900 to-pink-950 text-white overflow-hidden">
-        {/* Animated background */}
-        <div className="absolute inset-0 opacity-20">
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `
-                linear-gradient(#7C3AED 1px, transparent 1px),
-                linear-gradient(90deg, #7C3AED 1px, transparent 1px)
-              `,
-              backgroundSize: "50px 50px",
-            }}
-            animate={{
-              backgroundPosition: ["0px 0px", "50px 50px"],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 lg:py-40 relative z-10">
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left content */}
             <motion.div
@@ -259,39 +239,22 @@ export default function CustomSoftwareDevelopmentPage() {
               </motion.div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-                Build software that{" "}
+                Production-ready software for{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400">
-                  moves with
+                  real-world
                 </span>{" "}
-                your business
+                operations
               </h1>
 
               <p className="text-lg sm:text-xl text-slate-300 mb-8 max-w-xl">
-                Design, build, and scale digital platforms tailored to your goals, industry, and future roadmap—without fighting rigid off-the-shelf tools.
+                We design and build custom software for organizations that need more than dashboards and demos — systems that integrate devices, data, and workflows, built to run reliably in live environments.
               </p>
-
-              {/* <div className="flex flex-wrap gap-4 mb-8">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl shadow-xl"
-                >
-                  Start Your Project
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-8 py-4 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl border-2 border-white/20"
-                >
-                  View Case Studies
-                </motion.button>
-              </div> */}
 
               <div className="flex flex-wrap gap-4">
                 {[
-                  { icon: "⚡", text: "Fast delivery" },
-                  { icon: "🎯", text: "Modern stack" },
-                  { icon: "💬", text: "Post-launch support" },
+                  { icon: "⚡", text: "Focused delivery" },
+                  { icon: "🎯", text: "Right-fit architecture" },
+                  { icon: "💬", text: "Ongoing ownership" },
                 ].map((item, i) => (
                   <motion.div
                     key={i}
@@ -342,7 +305,7 @@ export default function CustomSoftwareDevelopmentPage() {
           >
             <p className="text-purple-600 font-semibold tracking-wider uppercase mb-3">Why Teams Work With Us</p>
             <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4">
-              Custom software that ships, scales, and keeps improving
+              We build systems that actually run in production
             </h2>
           </motion.div>
 
@@ -382,7 +345,7 @@ export default function CustomSoftwareDevelopmentPage() {
           >
             <p className="text-purple-600 font-semibold tracking-wider uppercase mb-3">From Idea To Production</p>
             <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-4">
-              How we deliver your custom solution
+              How we deliver software that's ready for real use
             </h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
               A transparent, collaborative flow from first workshop to launch and beyond
@@ -427,7 +390,7 @@ export default function CustomSoftwareDevelopmentPage() {
             ))}
           </div>
         </div>
-      </section> 
+      </section>
     </div>
   );
 }

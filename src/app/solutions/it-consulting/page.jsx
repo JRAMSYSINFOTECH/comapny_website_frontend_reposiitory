@@ -22,47 +22,47 @@ const itemVariants = {
 
 const steps = [
   {
-    title: "Discovery & Technology Assessment",
-    desc: "Analyze your current IT landscape, business goals, pain points, and opportunities for digital transformation.",
+    title: "Technology & System Review",
+    desc: "We assess your existing systems, workflows, and constraints to understand what's working, what's risky, and where improvement is needed.",
   },
   {
-    title: "Strategy Development",
-    desc: "Design an actionable IT roadmap—prioritizing technologies and projects for maximum ROI and minimal risk.",
+    title: "Actionable Roadmap",
+    desc: "We define a realistic roadmap based on impact, cost, and feasibility — prioritizing what should be built now versus later.",
   },
   {
-    title: "Solution Selection & Architecture",
-    desc: "Evaluate vendors, platforms, and frameworks; architect best-fit solutions with integration, scalability, and security built in.",
+    title: "Architecture & Platform Guidance",
+    desc: "We help evaluate platforms, vendors, and architectures to ensure solutions integrate cleanly, scale appropriately, and remain maintainable.",
   },
   {
-    title: "Implementation Guidance",
-    desc: "Oversee rollouts, resolve roadblocks, and ensure all technical projects stay aligned with your business aims.",
+    title: "Implementation Support",
+    desc: "We support delivery teams during build and rollout — reviewing designs, resolving technical blockers, and keeping decisions aligned.",
   },
   {
-    title: "Ongoing Support & Optimization",
-    desc: "Refine processes, monitor KPIs, and keep your digital ecosystem agile with trends and compliance support.",
+    title: "Post-Launch Refinement",
+    desc: "After deployment, we help refine systems based on real usage, performance observations, and evolving needs.",
   },
 ];
 
 const benefits = [
   {
     icon: "⚡",
-    title: "Faster Time-to-Value",
-    desc: "Accelerate digital initiatives with proven frameworks and battle-tested strategies.",
+    title: "Faster Time to Working Systems",
+    desc: "We focus on getting usable systems into production quickly — so value comes from real usage, not long planning cycles.",
   },
   {
     icon: "💰",
-    title: "Optimized IT Spend",
-    desc: "Reduce waste and focus budgets on high-impact technology investments.",
+    title: "Cost-Conscious Engineering",
+    desc: "We design solutions that fit your budget and team capacity, avoiding over-engineering and unnecessary tooling.",
   },
   {
     icon: "🎯",
-    title: "Strategic Alignment",
-    desc: "Ensure every technology decision directly supports your business objectives.",
+    title: "Problem-Driven Decisions",
+    desc: "Every technical choice is tied to a specific operational need, not trends or assumptions.",
   },
   {
     icon: "🔒",
-    title: "Risk Mitigation",
-    desc: "Identify and address vulnerabilities before they become costly problems.",
+    title: "Built-In Reliability",
+    desc: "We address performance, security basics, and failure scenarios early — before they become expensive fixes.",
   },
 ];
 
@@ -97,86 +97,37 @@ export default function ITConsultingPage() {
   return (
     <div className="bg-slate-950 text-white min-h-screen overflow-hidden">
       {/* HERO */}
-      <section className="relative px-6 py-32 md:py-40">
+      <section className="relative px-6 pt-16 pb-20 md:pt-20 md:pb-28">
         {/* Animated Background */}
         <div className="pointer-events-none absolute inset-0 -z-10">
-          {/* Floating orbs */}
           <motion.div
             className="absolute left-[10%] top-[20%] h-64 w-64 rounded-full bg-emerald-500/40 blur-3xl"
-            animate={{
-              y: [0, 30, 0],
-              scale: [1, 1.1, 1],
-              opacity: [0.4, 0.6, 0.4],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            animate={{ y: [0, 30, 0], scale: [1, 1.1, 1], opacity: [0.4, 0.6, 0.4] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
             className="absolute right-[15%] top-[10%] h-80 w-80 rounded-full bg-sky-500/35 blur-3xl"
-            animate={{
-              y: [0, -40, 0],
-              scale: [1, 1.15, 1],
-              opacity: [0.35, 0.5, 0.35],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
+            animate={{ y: [0, -40, 0], scale: [1, 1.15, 1], opacity: [0.35, 0.5, 0.35] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           />
           <motion.div
             className="absolute left-[5%] bottom-[10%] h-72 w-72 rounded-full bg-fuchsia-500/30 blur-3xl"
-            animate={{
-              y: [0, 25, 0],
-              x: [0, 20, 0],
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
+            animate={{ y: [0, 25, 0], x: [0, 20, 0], scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           />
           <motion.div
             className="absolute right-[8%] bottom-[15%] h-96 w-96 rounded-full bg-cyan-500/25 blur-3xl"
-            animate={{
-              y: [0, -30, 0],
-              x: [0, -25, 0],
-              scale: [1, 1.1, 1],
-              opacity: [0.25, 0.45, 0.25],
-            }}
-            transition={{
-              duration: 9,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 0.5,
-            }}
+            animate={{ y: [0, -30, 0], x: [0, -25, 0], scale: [1, 1.1, 1], opacity: [0.25, 0.45, 0.25] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
           />
-          
-          {/* Animated grid */}
           <motion.div
             className="absolute inset-0 opacity-10"
             style={{
-              backgroundImage: `
-                linear-gradient(${logoGreen} 1px, transparent 1px),
-                linear-gradient(90deg, ${logoGreen} 1px, transparent 1px)
-              `,
+              backgroundImage: `linear-gradient(${logoGreen} 1px, transparent 1px), linear-gradient(90deg, ${logoGreen} 1px, transparent 1px)`,
               backgroundSize: "60px 60px",
             }}
-            animate={{
-              backgroundPosition: ["0px 0px", "60px 60px"],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
+            animate={{ backgroundPosition: ["0px 0px", "60px 60px"] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           />
         </div>
 
@@ -194,9 +145,9 @@ export default function ITConsultingPage() {
             </p>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6">
-              Turn IT from{" "}
+              Practical technology guidance,{" "}
               <span className="relative">
-                <span style={{ color: logoGreen }}>cost centre</span>
+                <span style={{ color: logoGreen }}>grounded in</span>
                 <motion.span
                   className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400"
                   initial={{ scaleX: 0 }}
@@ -206,12 +157,11 @@ export default function ITConsultingPage() {
                 />
               </span>
               <br />
-              into a growth engine
+              execution
             </h1>
 
             <p className="text-base md:text-lg text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Accelerate innovation and lower long‑term IT cost with expert strategy, solution
-              architecture, and digital transformation leadership from JRamsys.
+              We help organizations make clear, realistic technology decisions — from system architecture to platform selection — with a focus on long-term maintainability and operational fit. Our advisory work is tightly connected to implementation, ensuring recommendations can actually be built, deployed, and supported.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 text-xs text-slate-300 mb-10">
@@ -222,7 +172,7 @@ export default function ITConsultingPage() {
                 transition={{ delay: 0.6 }}
               >
                 <span className="text-base">📊</span>
-                Roadmaps aligned to business
+                Technology roadmaps that reflect reality
               </motion.span>
               <motion.span
                 className="inline-flex items-center gap-2 rounded-full border border-sky-400/40 px-4 py-2 bg-slate-950/40 backdrop-blur"
@@ -231,7 +181,7 @@ export default function ITConsultingPage() {
                 transition={{ delay: 0.7 }}
               >
                 <span className="text-base">☁️</span>
-                Cloud, security & data focus
+                Cloud, security & data foundations
               </motion.span>
               <motion.span
                 className="inline-flex items-center gap-2 rounded-full border border-fuchsia-400/40 px-4 py-2 bg-slate-950/40 backdrop-blur"
@@ -240,7 +190,7 @@ export default function ITConsultingPage() {
                 transition={{ delay: 0.8 }}
               >
                 <span className="text-base">🤝</span>
-                Vendor‑neutral advice
+                Hands-on collaboration
               </motion.span>
             </div>
 
@@ -256,6 +206,29 @@ export default function ITConsultingPage() {
                 Get in Touch
               </a>
             </motion.button>
+
+            {/* Divider */}
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ delay: 1.1, duration: 0.8, ease: "easeOut" }}
+              className="mt-12 flex items-center justify-center gap-4"
+              style={{ transformOrigin: "center" }}
+            >
+              <div className="h-px w-24 bg-gradient-to-r from-transparent to-emerald-400/50" />
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="w-2 h-2 rounded-full bg-emerald-400/70"
+              />
+              <div className="h-px w-32 bg-gradient-to-r from-emerald-400/50 via-cyan-400/50 to-sky-400/50" />
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                className="w-2 h-2 rounded-full bg-cyan-400/70"
+              />
+              <div className="h-px w-24 bg-gradient-to-l from-transparent to-sky-400/50" />
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -274,7 +247,7 @@ export default function ITConsultingPage() {
               WHY PARTNER WITH US
             </p>
             <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
-              Tangible outcomes from day one
+              Clear execution, not empty promises
             </h2>
           </motion.div>
 
@@ -292,12 +265,8 @@ export default function ITConsultingPage() {
                 <div className="absolute -inset-[1px] bg-gradient-to-br from-emerald-400 via-cyan-400 to-sky-400 rounded-2xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300" />
                 <div className="relative rounded-2xl bg-slate-900/90 border border-slate-800 px-6 py-8 backdrop-blur-sm">
                   <div className="text-5xl mb-4">{benefit.icon}</div>
-                  <h3 className="text-lg font-bold text-white mb-2">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-sm text-slate-400">
-                    {benefit.desc}
-                  </p>
+                  <h3 className="text-lg font-bold text-white mb-2">{benefit.title}</h3>
+                  <p className="text-sm text-slate-400">{benefit.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -313,7 +282,7 @@ export default function ITConsultingPage() {
               WHAT WE PROVIDE
             </p>
             <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900">
-              Strategy, architecture, and governance in one place
+              Practical advisory to de-risk technology decisions
             </h2>
           </div>
 
@@ -335,13 +304,9 @@ export default function ITConsultingPage() {
                 <p className="text-xs font-semibold tracking-[0.22em] text-emerald-400 mb-2">
                   AUDITS & INSIGHT
                 </p>
-                <h3 className="text-2xl font-bold mb-3">
-                  Independent IT audits & analysis
-                </h3>
+                <h3 className="text-2xl font-bold mb-3">Focused IT assessments</h3>
                 <p className="text-sm text-slate-300 leading-relaxed">
-                  Independent IT audits, risk and opportunity analysis across infrastructure,
-                  applications, security, and data. Get a clear picture of where you stand and
-                  where to invest next.
+                  We review existing systems, architecture, and data flows to identify technical risks, inefficiencies, and quick wins — producing clear, actionable recommendations.
                 </p>
               </div>
             </motion.div>
@@ -361,11 +326,9 @@ export default function ITConsultingPage() {
               <p className="text-xs font-semibold tracking-[0.22em] text-sky-600 mb-2">
                 CLOUD & MODERNISATION
               </p>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">
-                Cloud adoption & hybrid strategies
-              </h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Right-fit cloud decisions</h3>
               <p className="text-sm text-slate-600">
-                Balance performance, cost, and compliance with tailored cloud strategies.
+                Guidance on cloud adoption, hybrid setups, and modernization paths that balance cost, performance, and operational reality.
               </p>
             </motion.div>
 
@@ -382,13 +345,11 @@ export default function ITConsultingPage() {
                 <span className="text-2xl">🛡️</span>
               </div>
               <p className="text-xs font-semibold tracking-[0.22em] text-emerald-600 mb-2">
-                SECURITY & COMPLIANCE
+                SECURITY & READINESS
               </p>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">
-                Cybersecurity & compliance programs
-              </h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Security basics done right</h3>
               <p className="text-sm text-slate-600">
-                Meet regulations and reduce risk with comprehensive security frameworks.
+                We help teams identify common security gaps and improve access control, data handling, and system hardening — aligned with real deployment needs.
               </p>
             </motion.div>
 
@@ -409,12 +370,9 @@ export default function ITConsultingPage() {
                 <p className="text-xs font-semibold tracking-[0.22em] text-cyan-300 mb-2">
                   VENDORS & CHANGE
                 </p>
-                <h3 className="text-2xl font-bold mb-3">
-                  RFP support & change leadership
-                </h3>
+                <h3 className="text-2xl font-bold mb-3">Technical support for vendor and system transitions</h3>
                 <p className="text-sm text-slate-200 leading-relaxed">
-                  Navigate vendor selection, technical due diligence, and lead end‑to‑end IT 
-                  change management with confidence and clarity.
+                  Support during vendor selection, architecture review, and system transitions — ensuring technical decisions are sound and buildable.
                 </p>
               </div>
             </motion.div>
@@ -427,28 +385,13 @@ export default function ITConsultingPage() {
         <div className="pointer-events-none absolute inset-0">
           <motion.div
             className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.2, 0.3, 0.2],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
             className="absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.2, 0.3, 0.2],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
+            animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.3, 0.2] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           />
         </div>
 
@@ -461,14 +404,13 @@ export default function ITConsultingPage() {
             className="text-center mb-16"
           >
             <p className="text-sm font-semibold tracking-[0.3em] text-emerald-400">
-              HOW OUR ADVISORY ENGAGEMENTS RUN
+              HOW OUR ADVISORY ENGAGEMENTS WORK
             </p>
             <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
-              A clear arc from assessment to optimisation
+              Focused technical guidance from assessment to execution
             </h2>
             <p className="mt-4 text-base text-slate-300 max-w-2xl mx-auto">
-              A structured journey from IT assessment to execution and ongoing optimisation—so
-              every initiative tracks back to your business goals.
+              A practical engagement model that helps teams make better technology decisions — and build with confidence.
             </p>
           </motion.div>
 
@@ -486,7 +428,6 @@ export default function ITConsultingPage() {
                   transition={{ delay: idx * 0.15, duration: 0.6 }}
                   className="relative pl-20"
                 >
-                  {/* Step number circle */}
                   <div
                     className={`absolute left-0 flex items-center justify-center h-16 w-16 rounded-2xl border-2 bg-slate-950 shadow-xl z-10
                       ${idx === 0 && "border-fuchsia-400"}
@@ -499,21 +440,16 @@ export default function ITConsultingPage() {
                     <span className="text-xl font-bold text-white">0{idx + 1}</span>
                   </div>
 
-                  {/* Content card */}
                   <div className="rounded-2xl bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm p-6 hover:bg-slate-800/70 transition-colors duration-300">
                     <p className="text-xs font-semibold tracking-[0.22em] text-emerald-400 mb-2">
                       {idx === 0 && "DISCOVER & ASSESS"}
                       {idx === 1 && "PLAN & PRIORITISE"}
-                      {idx === 2 && "ARCHITECT & SELECT"}
-                      {idx === 3 && "GUIDE DELIVERY"}
-                      {idx === 4 && "OPTIMISE & EVOLVE"}
+                      {idx === 2 && "ARCHITECT & EVALUATE"}
+                      {idx === 3 && "SUPPORT DELIVERY"}
+                      {idx === 4 && "IMPROVE & ITERATE"}
                     </p>
-                    <h3 className="text-xl font-bold text-white mb-2">
-                      {stage.title}
-                    </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed">
-                      {stage.desc}
-                    </p>
+                    <h3 className="text-xl font-bold text-white mb-2">{stage.title}</h3>
+                    <p className="text-sm text-slate-300 leading-relaxed">{stage.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -572,12 +508,8 @@ export default function ITConsultingPage() {
                       {idx === 5 && "🚀"}
                     </div>
                   </div>
-                  <h4 className="font-bold text-lg text-slate-900 text-center mb-3">
-                    {item.title}
-                  </h4>
-                  <p className="text-sm text-slate-600 text-center flex-1">
-                    {item.desc}
-                  </p>
+                  <h4 className="font-bold text-lg text-slate-900 text-center mb-3">{item.title}</h4>
+                  <p className="text-sm text-slate-600 text-center flex-1">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
