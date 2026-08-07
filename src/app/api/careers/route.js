@@ -1,29 +1,44 @@
 import nodemailer from "nodemailer";
+import { NextResponse } from "next/server";
 
-export default async function handler(req, res) {
-  // ── CORS headers ──
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+function corsHeaders() {
+  return {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
 
-  if (req.method === "OPTIONS") return res.status(200).end();
+export async function OPTIONS() {
+  return new NextResponse(null, { status: 200, headers: corsHeaders() });
+}
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ success: false, message: "Method not allowed" });
+export async function POST(request) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Invalid JSON body" },
+      { status: 400, headers: corsHeaders() }
+    );
   }
 
-  const { email } = req.body;
+  const { email } = body;
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).json({ success: false, message: "A valid email is required" });
+    return NextResponse.json(
+      { success: false, message: "A valid email is required" },
+      { status: 400, headers: corsHeaders() }
+    );
   }
 
   // ── Gmail transporter ──
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_USER,   // e.g. officejram@gmail.com
-      pass: process.env.EMAIL_PASS,   // Gmail App Password (16 chars, no spaces)
+      user: process.env.EMAIL_USER, // e.g. officejram@gmail.com
+      pass: process.env.EMAIL_PASS, // Gmail App Password (16 chars, no spaces)
     },
   });
 
@@ -78,13 +93,18 @@ export default async function handler(req, res) {
       `,
     });
 
-    return res.status(200).json({ success: true, message: "Subscribed successfully!" });
-
+    return NextResponse.json(
+      { success: true, message: "Subscribed successfully!" },
+      { status: 200, headers: corsHeaders() }
+    );
   } catch (error) {
     console.error("Gmail SMTP error:", error.message);
-    return res.status(500).json({
-      success: false,
-      message: "Failed to subscribe. Please check your Gmail App Password in .env",
-    });
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to subscribe. Please check your Gmail App Password in .env",
+      },
+      { status: 500, headers: corsHeaders() }
+    );
   }
 }
