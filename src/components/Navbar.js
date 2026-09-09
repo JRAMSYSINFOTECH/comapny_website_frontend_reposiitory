@@ -114,7 +114,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center h-12 flex-shrink-0">
           <Image
             src="/JRAMSYS_logo-removebg-preview.png"
-            alt="JRAMSYS Logo"
+            alt="Jramsys Infotech Private Limited"
             width={160}
             height={40}
             priority
