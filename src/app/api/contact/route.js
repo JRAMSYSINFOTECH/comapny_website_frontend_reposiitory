@@ -49,12 +49,15 @@ export async function POST(request) {
   const countryLabel =
     { in: "India", us: "United States", uk: "United Kingdom" }[country] || country || "N/A";
 
-  // ── Gmail transporter ──
+  // ── Zoho Mail transporter ──
+  // Use smtp.zoho.eu instead of smtp.zoho.com if this account is on Zoho's EU data center.
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: process.env.ZOHO_SMTP_HOST || "smtp.zoho.com",
+    port: 465,
+    secure: true, // true for port 465 (SSL)
     auth: {
-      user: process.env.EMAIL_USER, // e.g. officejram@gmail.com
-      pass: process.env.EMAIL_PASS, // Gmail App Password (16 chars, no spaces)
+      user: process.env.EMAIL_USER, // e.g. officejram@yourdomain.com
+      pass: process.env.EMAIL_PASS, // Zoho app-specific password (Settings > Security > App Passwords)
     },
   });
 
@@ -120,11 +123,11 @@ export async function POST(request) {
       { status: 200, headers: corsHeaders() }
     );
   } catch (error) {
-    console.error("Gmail SMTP error:", error.message);
+    console.error("Zoho SMTP error:", error.message);
     return NextResponse.json(
       {
         success: false,
-        message: "Failed to send message. Please check your Gmail App Password in .env",
+        message: "Failed to send message. Please check EMAIL_USER / EMAIL_PASS (Zoho app password) in your environment variables.",
       },
       { status: 500, headers: corsHeaders() }
     );

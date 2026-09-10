@@ -33,12 +33,15 @@ export async function POST(request) {
     );
   }
 
-  // ── Gmail transporter ──
+  // ── Zoho Mail transporter ──
+  // Use smtp.zoho.eu instead of smtp.zoho.com if this account is on Zoho's EU data center.
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: process.env.ZOHO_SMTP_HOST || "smtp.zoho.com",
+    port: 465,
+    secure: true, // true for port 465 (SSL)
     auth: {
-      user: process.env.EMAIL_USER, // e.g. officejram@gmail.com
-      pass: process.env.EMAIL_PASS, // Gmail App Password (16 chars, no spaces)
+      user: process.env.EMAIL_USER, // e.g. officejram@yourdomain.com
+      pass: process.env.EMAIL_PASS, // Zoho app-specific password (Settings > Security > App Passwords)
     },
   });
 
@@ -84,7 +87,7 @@ export async function POST(request) {
           <div style="padding:28px 24px;">
             <p style="font-size:16px;color:#333;line-height:1.6;">Thank you for your interest in joining <strong>JRAMSYS</strong>! We'll notify you as soon as a new career opportunity becomes available.</p>
             <div style="margin-top:24px;padding:16px 18px;background:#f0f9fb;border-left:4px solid #1B5B6F;border-radius:6px;">
-              <p style="margin:0;color:#1B5B6F;font-size:15px;">💼 Can't wait? Send your CV directly to:<br/><strong>officejram@gmail.com</strong></p>
+              <p style="margin:0;color:#1B5B6F;font-size:15px;">💼 Can't wait? Send your CV directly to:<br/><strong>hr@jramsysinfotech.com</strong></p>
             </div>
             <p style="margin-top:24px;color:#555;font-size:14px;line-height:1.6;">Best regards,<br/><strong style="color:#1B5B6F;">The JRAMSYS Team</strong></p>
           </div>
@@ -98,11 +101,11 @@ export async function POST(request) {
       { status: 200, headers: corsHeaders() }
     );
   } catch (error) {
-    console.error("Gmail SMTP error:", error.message);
+    console.error("Zoho SMTP error:", error.message);
     return NextResponse.json(
       {
         success: false,
-        message: "Failed to subscribe. Please check your Gmail App Password in .env",
+        message: "Failed to subscribe. Please check EMAIL_USER / EMAIL_PASS (Zoho app password) in your environment variables.",
       },
       { status: 500, headers: corsHeaders() }
     );
