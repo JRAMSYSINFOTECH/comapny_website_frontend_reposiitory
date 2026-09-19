@@ -4,9 +4,9 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 
 export const metadata = {
-  title: "Jramsys Infotech Private Limited",
+  title: "JRAMSYS Infotech | AI, Cloud & IoT Solutions for Modern Businesses",
   description:
-    "Jramsys Infotech Private Limited is a technology-driven IT solutions company.",
+    "JRAMSYS Infotech builds AI-powered, cloud-native, and automation-driven solutions — predictive analytics, IoT workflow automation, cloud migration, and custom software for every industry.",
 };
 
 export default function RootLayout({ children }) {

@@ -16,6 +16,32 @@ export default function Contact() {
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    // ── Decorative background positions ──
+    // Generated only on the client (inside useEffect) so the server-rendered
+    // HTML and the first client render match exactly. This prevents the
+    // "hydration mismatch" warning caused by calling Math.random() during render.
+    const [particles, setParticles] = useState([]);
+    const [lines, setLines] = useState([]);
+
+    useEffect(() => {
+        setParticles(
+            Array.from({ length: 15 }, () => ({
+                left: Math.random() * 100,
+                top: Math.random() * 100,
+                duration: 3 + Math.random() * 2,
+                delay: Math.random() * 2,
+            }))
+        );
+        setLines(
+            Array.from({ length: 8 }, () => ({
+                left: Math.random() * 100,
+                top: Math.random() * 100,
+                duration: 4 + Math.random() * 2,
+                delay: Math.random() * 3,
+            }))
+        );
+    }, []);
+
     useEffect(() => {
         const handleBeforeUnload = (e) => {
             if (name || email || message) {
@@ -178,14 +204,14 @@ export default function Contact() {
                     <motion.div className="absolute -bottom-20 -right-20 w-64 h-64 sm:w-96 sm:h-96 lg:w-[600px] lg:h-[600px] rounded-full bg-gradient-to-tl from-emerald-400/25 to-teal-400/25 blur-3xl" animate={{ x: [0, -60, 0], y: [0, -40, 0], scale: [1, 1.3, 1] }} transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 1 }} />
                     <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-80 sm:h-80 lg:w-[500px] lg:h-[500px] rounded-full bg-gradient-to-r from-cyan-400/20 to-blue-400/20 blur-3xl" animate={{ scale: [1, 1.4, 1], rotate: [0, 180, 360] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} />
 
-                    {/* Floating Particles */}
-                    {[...Array(15)].map((_, i) => (
-                        <motion.div key={i} className="absolute w-2 h-2 rounded-full bg-white/20" style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }} animate={{ y: [0, -30, 0], opacity: [0.2, 0.5, 0.2], scale: [1, 1.5, 1] }} transition={{ duration: 3 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 2 }} />
+                    {/* Floating Particles — positions generated client-side only (see useEffect above) */}
+                    {particles.map((p, i) => (
+                        <motion.div key={i} className="absolute w-2 h-2 rounded-full bg-white/20" style={{ left: `${p.left}%`, top: `${p.top}%` }} animate={{ y: [0, -30, 0], opacity: [0.2, 0.5, 0.2], scale: [1, 1.5, 1] }} transition={{ duration: p.duration, repeat: Infinity, delay: p.delay }} />
                     ))}
 
-                    {/* Animated Lines */}
-                    {[...Array(8)].map((_, i) => (
-                        <motion.div key={`line-${i}`} className="absolute h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" style={{ width: "200px", left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }} animate={{ x: ["-100%", "200%"], opacity: [0, 1, 0] }} transition={{ duration: 4 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 3 }} />
+                    {/* Animated Lines — positions generated client-side only (see useEffect above) */}
+                    {lines.map((l, i) => (
+                        <motion.div key={`line-${i}`} className="absolute h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" style={{ width: "200px", left: `${l.left}%`, top: `${l.top}%` }} animate={{ x: ["-100%", "200%"], opacity: [0, 1, 0] }} transition={{ duration: l.duration, repeat: Infinity, delay: l.delay }} />
                     ))}
 
                     {/* Pulsing Rings */}

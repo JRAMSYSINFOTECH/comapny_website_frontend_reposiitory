@@ -127,7 +127,7 @@ export async function POST(request) {
 
   // ── Zoho Mail transporter ──
   const transporter = nodemailer.createTransport({
-    host: process.env.ZOHO_SMTP_HOST || "smtp.zoho.com",
+    host: process.env.ZOHO_SMTP_HOST || "smtp.zoho.eu",
     port: 465,
     secure: true,
     auth: {
@@ -189,7 +189,7 @@ export async function POST(request) {
           </div>
           <div style="padding:28px 24px;">
             <p style="font-size:16px;color:#333;line-height:1.6;">Thank you for applying for the <strong>${jobTitle}</strong> position at <strong>JRAMSYS</strong>. Our team will review your application and get back to you if there's a match.</p>
-            <p style="margin-top:24px;color:#555;font-size:14px;line-height:1.6;">Best regards,<br/><strong style="color:#1B5B6F;">The JRAMSYS Team</strong></p>
+            <p style="margin-top:24px;color:#555;font-size:14px;line-height:1.6;">Best regards,<br/><strong style="color:#1B5B6F;">JRAMSYS Team</strong></p>
           </div>
           <div style="background:#f5f5f5;padding:14px;text-align:center;color:#aaa;font-size:12px;">© JRAMSYS</div>
         </div>

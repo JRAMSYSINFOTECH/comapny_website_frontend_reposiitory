@@ -52,7 +52,7 @@ export async function POST(request) {
   // ── Zoho Mail transporter ──
   // Use smtp.zoho.eu instead of smtp.zoho.com if this account is on Zoho's EU data center.
   const transporter = nodemailer.createTransport({
-    host: process.env.ZOHO_SMTP_HOST || "smtp.zoho.com",
+    host: process.env.ZOHO_SMTP_HOST || "smtp.zoho.eu",
     port: 465,
     secure: true, // true for port 465 (SSL)
     auth: {
@@ -111,7 +111,7 @@ export async function POST(request) {
               <p style="margin:0 0 8px;font-weight:bold;color:#555;font-size:14px;">Your message:</p>
               <p style="margin:0;color:#222;font-size:15px;line-height:1.7;white-space:pre-line;">${message}</p>
             </div>
-            <p style="margin-top:24px;color:#555;font-size:14px;line-height:1.6;">Best regards,<br/><strong style="color:#1B5B6F;">The JRAMSYS Team</strong></p>
+            <p style="margin-top:24px;color:#555;font-size:14px;line-height:1.6;">Best regards,<br/><strong style="color:#1B5B6F;">JRAMSYS Team</strong></p>
           </div>
           <div style="background:#f5f5f5;padding:14px;text-align:center;color:#aaa;font-size:12px;">© JRAMSYS</div>
         </div>
